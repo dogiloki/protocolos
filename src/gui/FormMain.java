@@ -2,34 +2,33 @@ package gui;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import objects.drivers.PC;
-import multitaks.Function;
 
 /**
  *
  * @author dogi_
  */
 
-public class Main extends javax.swing.JFrame {
+public class FormMain extends javax.swing.JFrame {
     
-    public Scenery scenery=new Scenery();
+    //public PanelScenery scenery;
+    public PanelDrivers drivers;
     
-    public Main() {
+    public FormMain() {
         initComponents();
-        this.scenery.entities.add(new PC());
-        this.setPanel(scenery);
+        //this.scenery=new PanelScenery();
+        this.drivers=new PanelDrivers();
+        //this.setPanel(this.panel_scenery,this.scenery);
+        this.setPanel(this.panel_drivers,this.drivers);
     }
     
-    public void getDrivers(){
-        
-    }
-    
-    public void setPanel(JPanel panel){
-        panel.setVisible(true);
-        this.canvas.removeAll();
-        this.canvas.add(panel,BorderLayout.CENTER);
-        this.canvas.revalidate();
-        this.canvas.repaint();
+    public void setPanel(JPanel panel1, JPanel panel2){
+        panel2.setVisible(true);
+        panel2.setBounds(0,0,panel1.getWidth(),panel1.getHeight());
+        panel1.removeAll();
+        panel1.add(panel2,BorderLayout.CENTER);
+        panel1.revalidate();
+        panel1.repaint();
+        panel1.updateUI();
     }
     
     @SuppressWarnings("unchecked")
@@ -38,7 +37,7 @@ public class Main extends javax.swing.JFrame {
 
         panel_protocols = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        canvas = new javax.swing.JPanel();
+        panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,15 +57,23 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 405, Short.MAX_VALUE))
         );
 
-        canvas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        canvas.setMaximumSize(new java.awt.Dimension(700, 700));
-        canvas.setMinimumSize(new java.awt.Dimension(0, 0));
-        canvas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                canvasMousePressed(evt);
+        panel_scenery.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panel_scenery.setMaximumSize(new java.awt.Dimension(700, 700));
+        panel_scenery.setMinimumSize(new java.awt.Dimension(0, 0));
+        panel_scenery.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_sceneryMouseDragged(evt);
             }
         });
-        canvas.setLayout(new java.awt.BorderLayout());
+        panel_scenery.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_sceneryMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                panel_sceneryMouseReleased(evt);
+            }
+        });
+        panel_scenery.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout panel_driversLayout = new javax.swing.GroupLayout(panel_drivers);
         panel_drivers.setLayout(panel_driversLayout);
@@ -87,7 +94,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panel_protocols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_drivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -98,7 +105,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_protocols, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_drivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -106,26 +113,41 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void canvasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvasMousePressed
-        int hola=5;
-        Function.isRange(hola,10,20);
-        this.scenery.getEntity(evt.getX(),evt.getY(),(entity)->{
-            
-        });
-    }//GEN-LAST:event_canvasMousePressed
+    private void panel_sceneryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMousePressed
+        /*this.scenery.getEntity(evt.getX(),evt.getY(),(entity)->{
+            this.scenery.selection.x=evt.getX();
+            this.scenery.selection.y=evt.getY();
+            this.scenery.selection.entity=entity;
+            this.scenery.selection.tool=ToolType.MOVE;
+        });*/
+    }//GEN-LAST:event_panel_sceneryMousePressed
+
+    private void panel_sceneryMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseDragged
+        /*if(this.scenery.selection.tool!=ToolType.MOVE){
+            return;
+        }
+        Entity entity=this.scenery.selection.entity;
+        entity.x=evt.getX();
+        entity.y=evt.getY();
+        this.panel_scenery.updateUI();*/
+    }//GEN-LAST:event_panel_sceneryMouseDragged
+
+    private void panel_sceneryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseReleased
+        //this.scenery.selection.tool=ToolType.DEFAULT;
+    }//GEN-LAST:event_panel_sceneryMouseReleased
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new FormMain().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel canvas;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;
+    private javax.swing.JPanel panel_scenery;
     // End of variables declaration//GEN-END:variables
 }
