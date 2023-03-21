@@ -2,7 +2,6 @@ package objects.drivers;
 
 import objects.driver.Driver;
 import enums.DriverType;
-import objects.scenery.Entity;
 
 /**
  *

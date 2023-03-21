@@ -1,19 +1,15 @@
 package gui;
 
 import enums.ToolType;
-import java.awt.BorderLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import objects.driver.Driver;
-import objects.scenery.Entity;
 
 /**
  *
  * @author dogi_
  */
 
-public class FormMain extends javax.swing.JFrame {
+public final class FormMain extends javax.swing.JFrame {
     
     //public PanelScenery scenery;
     public PanelDrivers drivers;
@@ -21,19 +17,23 @@ public class FormMain extends javax.swing.JFrame {
     
     public FormMain() {
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
         this.setPanel(this.panel_drivers,this.drivers);
         this.setPanel(this.panel_scenery,this.scenery);
     }
     
+    public void resizable(){
+        // Pendiente
+    }
+    
     public void setPanel(JPanel panel1, JPanel panel2){
         panel2.setVisible(true);
         panel2.setBounds(0,0,panel1.getWidth(),panel1.getHeight());
         panel1.removeAll();
-        panel1.add(panel2,BorderLayout.CENTER);
-        panel1.revalidate();
-        panel1.repaint();
+        panel1.add(panel2);
         panel1.updateUI();
     }
     
@@ -45,6 +45,9 @@ public class FormMain extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
+        panel_tools = new javax.swing.JPanel();
+        btn_scenery_start = new javax.swing.JButton();
+        btn_tools_remove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,7 +63,7 @@ public class FormMain extends javax.swing.JFrame {
             panel_protocolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_protocolsLayout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addGap(0, 405, Short.MAX_VALUE))
+                .addGap(0, 360, Short.MAX_VALUE))
         );
 
         panel_scenery.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -92,27 +95,57 @@ public class FormMain extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        btn_scenery_start.setText("Simular");
+
+        btn_tools_remove.setText("Eliminar");
+
+        javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
+        panel_tools.setLayout(panel_toolsLayout);
+        panel_toolsLayout.setHorizontalGroup(
+            panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_toolsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_scenery_start)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_tools_remove)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_toolsLayout.setVerticalGroup(
+            panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_toolsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_scenery_start)
+                    .addComponent(btn_tools_remove))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel_protocols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_drivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_tools, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panel_protocols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_drivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_protocols, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_drivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel_tools, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel_drivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_protocols, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_scenery, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -165,9 +198,12 @@ public class FormMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_scenery_start;
+    private javax.swing.JButton btn_tools_remove;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;
     private javax.swing.JPanel panel_scenery;
+    private javax.swing.JPanel panel_tools;
     // End of variables declaration//GEN-END:variables
 }

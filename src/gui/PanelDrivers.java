@@ -18,7 +18,7 @@ import objects.driver.DriverSelection;
  * @author dogiloki
  */
 
-public class PanelDrivers extends javax.swing.JPanel{
+public final class PanelDrivers extends javax.swing.JPanel{
 
     public Map<DriverType,Class<?>> drivers=DriverList.drivers();
     public DriverSelection selection=new DriverSelection();
@@ -26,13 +26,16 @@ public class PanelDrivers extends javax.swing.JPanel{
     
     public PanelDrivers(){
         initComponents();
-        this.setDrivers();
+    }
+    
+    public void resizable(){
+        // Pendiente
     }
     
     private void setDrivers(){
         this.panel_drivers.removeAll();
         this.panel_drivers.updateUI();
-        int width_total=this.panel_drivers.getWidth()-20, height_total=0;
+        int width_total=this.panel_drivers_scroll.getWidth()-20, height_total=0;
         int width=width_total, height=width;
         int x=0, y=0;
         for(Map.Entry<DriverType,Class<?>> entry:this.drivers.entrySet()){
@@ -102,9 +105,9 @@ public class PanelDrivers extends javax.swing.JPanel{
         panel_drivers_scroll = new javax.swing.JScrollPane();
         panel_drivers = new javax.swing.JPanel();
 
-        addComponentListener(new java.awt.event.ComponentAdapter() {
+        panel_drivers_scroll.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
-                formComponentResized(evt);
+                panel_drivers_scrollComponentResized(evt);
             }
         });
 
@@ -133,9 +136,9 @@ public class PanelDrivers extends javax.swing.JPanel{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+    private void panel_drivers_scrollComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panel_drivers_scrollComponentResized
         this.setDrivers();
-    }//GEN-LAST:event_formComponentResized
+    }//GEN-LAST:event_panel_drivers_scrollComponentResized
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
