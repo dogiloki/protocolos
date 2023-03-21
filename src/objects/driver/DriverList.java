@@ -4,6 +4,7 @@ import enums.DriverType;
 import java.util.HashMap;
 import java.util.Map;
 import objects.drivers.PC;
+import objects.drivers.Switch;
 
 /**
  *
@@ -25,7 +26,7 @@ public class DriverList{
         this.drivers.put(DriverType.PRINTER,PC.class);
         this.drivers.put(DriverType.ROUTER,PC.class);
         this.drivers.put(DriverType.SERVER,PC.class);
-        this.drivers.put(DriverType.SWITCH,PC.class);
+        this.drivers.put(DriverType.SWITCH,Switch.class);
     }
     
     public Class<?> get(DriverType type){

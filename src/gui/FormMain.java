@@ -1,7 +1,12 @@
 package gui;
 
+import enums.ToolType;
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JPanel;
+import objects.driver.Driver;
+import objects.scenery.Entity;
 
 /**
  *
@@ -12,13 +17,14 @@ public class FormMain extends javax.swing.JFrame {
     
     //public PanelScenery scenery;
     public PanelDrivers drivers;
+    public PanelScenery scenery;
     
     public FormMain() {
         initComponents();
-        //this.scenery=new PanelScenery();
+        this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
-        //this.setPanel(this.panel_scenery,this.scenery);
         this.setPanel(this.panel_drivers,this.drivers);
+        this.setPanel(this.panel_scenery,this.scenery);
     }
     
     public void setPanel(JPanel panel1, JPanel panel2){
@@ -79,7 +85,7 @@ public class FormMain extends javax.swing.JFrame {
         panel_drivers.setLayout(panel_driversLayout);
         panel_driversLayout.setHorizontalGroup(
             panel_driversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
+            .addGap(0, 70, Short.MAX_VALUE)
         );
         panel_driversLayout.setVerticalGroup(
             panel_driversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +100,7 @@ public class FormMain extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panel_protocols, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                .addComponent(panel_scenery, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_drivers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -114,26 +120,40 @@ public class FormMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panel_sceneryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMousePressed
-        /*this.scenery.getEntity(evt.getX(),evt.getY(),(entity)->{
+        if(this.drivers.selection.driver!=null){
+            try{
+                Driver driver=(Driver)this.drivers.selection.driver.getDeclaredConstructor().newInstance();
+                driver.x=evt.getX();
+                driver.y=evt.getY();
+                this.scenery.addDriver(driver);
+                this.drivers.selection.driver=null;
+                this.panel_scenery.updateUI();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        this.scenery.getDriver(evt.getX(),evt.getY(),(driver)->{
             this.scenery.selection.x=evt.getX();
             this.scenery.selection.y=evt.getY();
-            this.scenery.selection.entity=entity;
+            this.scenery.selection.driver=driver;
             this.scenery.selection.tool=ToolType.MOVE;
-        });*/
+        });
     }//GEN-LAST:event_panel_sceneryMousePressed
 
     private void panel_sceneryMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseDragged
-        /*if(this.scenery.selection.tool!=ToolType.MOVE){
+        if(this.scenery.selection.tool!=ToolType.MOVE){
             return;
         }
-        Entity entity=this.scenery.selection.entity;
-        entity.x=evt.getX();
-        entity.y=evt.getY();
-        this.panel_scenery.updateUI();*/
+        Driver driver=this.scenery.selection.driver;
+        driver.x=evt.getX();
+        driver.y=evt.getY();
+        this.panel_scenery.updateUI();
     }//GEN-LAST:event_panel_sceneryMouseDragged
 
     private void panel_sceneryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseReleased
-        //this.scenery.selection.tool=ToolType.DEFAULT;
+        if(this.scenery.selection.tool==ToolType.MOVE){
+            this.scenery.selection.tool=ToolType.DEFAULT;
+        }
     }//GEN-LAST:event_panel_sceneryMouseReleased
 
     public static void main(String args[]) {

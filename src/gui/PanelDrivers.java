@@ -1,12 +1,13 @@
 package gui;
 
 import enums.DriverType;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import multitaks.Function;
 import objects.driver.Driver;
 import objects.driver.DriverList;
@@ -21,6 +22,7 @@ public class PanelDrivers extends javax.swing.JPanel{
 
     public Map<DriverType,Class<?>> drivers=DriverList.drivers();
     public DriverSelection selection=new DriverSelection();
+    public JLabel btn_selection=null;
     
     public PanelDrivers(){
         initComponents();
@@ -46,25 +48,44 @@ public class PanelDrivers extends javax.swing.JPanel{
                 continue;
             }
             
-            JButton btn=new JButton();
+            JLabel btn=new JLabel();
             btn.setBounds(x,y,width,height);
+            btn.setBackground(Color.WHITE);
             btn.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT)));
-            System.out.println(driver.src_icon);
             btn.addMouseListener(new MouseListener(){
                 @Override
                 public void mouseClicked(MouseEvent me){}
                 @Override
                 public void mousePressed(MouseEvent me){
-                    //selection.driver=driver;
+                    if(btn_selection!=null){
+                        if(btn_selection==btn){
+                            return;
+                        }
+                        btn_selection.setBackground(null);
+                        btn_selection.setOpaque(false);
+                    }
+                    selection.driver=class_type;
+                    btn_selection=btn;
+                    btn_selection.setBackground(Color.decode("#b2cff0"));
+                    btn_selection.setOpaque(true);
                 }
                 @Override
                 public void mouseReleased(MouseEvent me){}
                 @Override
-                public void mouseEntered(MouseEvent me){}
+                public void mouseEntered(MouseEvent me){
+                    if(btn_selection==null){
+                        btn.setBackground(new Color(200,200,200));
+                        btn.setOpaque(true);
+                    }
+                }
                 @Override
-                public void mouseExited(MouseEvent me){}
+                public void mouseExited(MouseEvent me){
+                    if(btn_selection==null){
+                        btn.setBackground(null);
+                        btn.setOpaque(false);
+                    }
+                }
             });
-            
             y+=height;
             height_total=y;
             

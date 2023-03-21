@@ -9,6 +9,6 @@ import objects.driver.Driver;
 
 public class DriverSelection{
     
-    public Driver driver;
+    public Class<?> driver;
     
 }

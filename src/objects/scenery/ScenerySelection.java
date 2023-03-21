@@ -1,6 +1,7 @@
 package objects.scenery;
 
 import enums.ToolType;
+import objects.driver.Driver;
 
 /**
  *
@@ -11,7 +12,7 @@ public class ScenerySelection{
     
     public int x;
     public int y;
-    public Entity entity;
+    public Driver driver;
     public ToolType tool=ToolType.DEFAULT;
     
     public ScenerySelection(){

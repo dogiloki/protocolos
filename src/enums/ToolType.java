@@ -7,6 +7,6 @@ package enums;
 
 public enum ToolType{
     
-    DEFAULT, MOVE
+    DEFAULT, MOVE, ADD
     
 }

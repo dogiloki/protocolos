@@ -14,8 +14,8 @@ public class Entity{
     public String src_icon;
     
     public Entity(){
-        this.x=10;
-        this.y=10;
+        this.width=50;
+        this.height=50;
     }
     
 }
