@@ -89,7 +89,7 @@ public final class PanelDrivers extends javax.swing.JPanel{
                     }
                 }
             });
-            y+=height;
+            y+=height+10;
             height_total=y;
             
             this.panel_drivers.add(btn);
