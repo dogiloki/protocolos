@@ -42,7 +42,8 @@ public final class FormMain extends javax.swing.JFrame{
         panel_drivers = new javax.swing.JPanel();
         panel_tools = new javax.swing.JPanel();
         btn_scenery_start = new javax.swing.JButton();
-        btn_tools_remove = new javax.swing.JButton();
+        btn_remove = new javax.swing.JButton();
+        btn_connect = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,12 +93,14 @@ public final class FormMain extends javax.swing.JFrame{
 
         btn_scenery_start.setText("Simular");
 
-        btn_tools_remove.setText("Eliminar");
-        btn_tools_remove.addActionListener(new java.awt.event.ActionListener() {
+        btn_remove.setText("Eliminar");
+        btn_remove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_tools_removeActionPerformed(evt);
+                btn_removeActionPerformed(evt);
             }
         });
+
+        btn_connect.setText("Conectar");
 
         javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
         panel_tools.setLayout(panel_toolsLayout);
@@ -107,7 +110,9 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(btn_scenery_start)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_tools_remove)
+                .addComponent(btn_remove)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_connect)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_toolsLayout.setVerticalGroup(
@@ -116,7 +121,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_scenery_start)
-                    .addComponent(btn_tools_remove))
+                    .addComponent(btn_remove)
+                    .addComponent(btn_connect))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -193,10 +199,10 @@ public final class FormMain extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_panel_sceneryMouseReleased
 
-    private void btn_tools_removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tools_removeActionPerformed
+    private void btn_removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeActionPerformed
         this.scenery.removeDriver();
         this.panel_scenery.updateUI();
-    }//GEN-LAST:event_btn_tools_removeActionPerformed
+    }//GEN-LAST:event_btn_removeActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -207,8 +213,9 @@ public final class FormMain extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btn_connect;
+    private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_scenery_start;
-    private javax.swing.JButton btn_tools_remove;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;

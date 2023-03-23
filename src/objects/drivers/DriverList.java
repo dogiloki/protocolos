@@ -3,13 +3,6 @@ package objects.drivers;
 import enums.DriverType;
 import java.util.HashMap;
 import java.util.Map;
-import objects.drivers.MobilePhone;
-import objects.drivers.Modem;
-import objects.drivers.PC;
-import objects.drivers.Printer;
-import objects.drivers.Router;
-import objects.drivers.Server;
-import objects.drivers.Switch;
 
 /**
  *

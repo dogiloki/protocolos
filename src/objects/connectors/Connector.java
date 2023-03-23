@@ -2,16 +2,17 @@ package objects.connectors;
 
 import enums.ConnectorType;
 import enums.EntryType;
+import objects.scenery.Entity;
 
 /**
  *
  * @author dogiloki
  */
 
-public class Connector{
+public class Connector extends Entity{
     
-    public EntryType entry;
-    public ConnectorType type;
+    public EntryType type_entry;
+    public ConnectorType type_connector;
     
     public Connector(){
         

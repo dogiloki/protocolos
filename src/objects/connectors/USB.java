@@ -1,6 +1,7 @@
 package objects.connectors;
 
 import enums.ConnectorType;
+import enums.EntryType;
 
 /**
  *
@@ -9,8 +10,9 @@ import enums.ConnectorType;
 
 public class USB extends Connector{
     
-    public USB(){
-        this.type=ConnectorType.USB;
+    public USB(EntryType type_entry){
+        this.type_entry=type_entry;
+        this.type_connector=ConnectorType.USB;
     }
     
 }
