@@ -28,8 +28,8 @@ public final class PanelDrivers extends javax.swing.JPanel{
         initComponents();
     }
     
-    public void resizable(){
-        // Pendiente
+    public void reset(){
+        this.setDrivers();
     }
     
     private void setDrivers(){

@@ -27,10 +27,6 @@ public class PanelScenery extends javax.swing.JPanel{
         initComponents();
     }
     
-    public void resizable(){
-        // Pendiente
-    }
-    
     @Override
     public void paint(Graphics g){
         this.scenery.drivers.forEach((driver)->{

@@ -25,10 +25,6 @@ public final class FormMain extends javax.swing.JFrame {
         this.setPanel(this.panel_scenery,this.scenery);
     }
     
-    public void resizable(){
-        // Pendiente
-    }
-    
     public void setPanel(JPanel panel1, JPanel panel2){
         panel2.setVisible(true);
         panel2.setBounds(0,0,panel1.getWidth(),panel1.getHeight());
@@ -117,7 +113,7 @@ public final class FormMain extends javax.swing.JFrame {
                 .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_scenery_start)
                     .addComponent(btn_tools_remove))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,6 +156,7 @@ public final class FormMain extends javax.swing.JFrame {
                 driver.y=evt.getY();
                 this.scenery.addDriver(driver);
                 this.drivers.selection.driver=null;
+                this.drivers.reset();
                 this.panel_scenery.updateUI();
             }catch(Exception ex){
                 ex.printStackTrace();
@@ -168,6 +165,8 @@ public final class FormMain extends javax.swing.JFrame {
         this.scenery.getDriver(evt.getX(),evt.getY(),(driver)->{
             this.scenery.selection.x=evt.getX();
             this.scenery.selection.y=evt.getY();
+            this.scenery.selection.off_set_x=evt.getX()-driver.x;
+            this.scenery.selection.off_set_y=evt.getY()-driver.y;
             this.scenery.selection.driver=driver;
             this.scenery.selection.tool=ToolType.MOVE;
         });
@@ -178,8 +177,8 @@ public final class FormMain extends javax.swing.JFrame {
             return;
         }
         Driver driver=this.scenery.selection.driver;
-        driver.x=evt.getX();
-        driver.y=evt.getY();
+        driver.x=evt.getX()-this.scenery.selection.off_set_x;
+        driver.y=evt.getY()-this.scenery.selection.off_set_y;
         this.panel_scenery.updateUI();
     }//GEN-LAST:event_panel_sceneryMouseDragged
 
