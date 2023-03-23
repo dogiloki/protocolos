@@ -1,7 +1,6 @@
 package objects.drivers;
 
 import enums.DriverType;
-import objects.driver.Driver;
 
 /**
  *

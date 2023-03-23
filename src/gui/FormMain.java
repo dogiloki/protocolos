@@ -2,16 +2,15 @@ package gui;
 
 import enums.ToolType;
 import javax.swing.JPanel;
-import objects.driver.Driver;
+import objects.drivers.Driver;
 
 /**
  *
  * @author dogi_
  */
 
-public final class FormMain extends javax.swing.JFrame {
+public final class FormMain extends javax.swing.JFrame{
     
-    //public PanelScenery scenery;
     public PanelDrivers drivers;
     public PanelScenery scenery;
     
@@ -94,6 +93,11 @@ public final class FormMain extends javax.swing.JFrame {
         btn_scenery_start.setText("Simular");
 
         btn_tools_remove.setText("Eliminar");
+        btn_tools_remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tools_removeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
         panel_tools.setLayout(panel_toolsLayout);
@@ -170,6 +174,7 @@ public final class FormMain extends javax.swing.JFrame {
             this.scenery.selection.driver=driver;
             this.scenery.selection.tool=ToolType.MOVE;
         });
+        this.panel_scenery.updateUI();
     }//GEN-LAST:event_panel_sceneryMousePressed
 
     private void panel_sceneryMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseDragged
@@ -187,6 +192,11 @@ public final class FormMain extends javax.swing.JFrame {
             this.scenery.selection.tool=ToolType.DEFAULT;
         }
     }//GEN-LAST:event_panel_sceneryMouseReleased
+
+    private void btn_tools_removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tools_removeActionPerformed
+        this.scenery.removeDriver();
+        this.panel_scenery.updateUI();
+    }//GEN-LAST:event_btn_tools_removeActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

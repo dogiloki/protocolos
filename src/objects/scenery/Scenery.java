@@ -2,7 +2,7 @@ package objects.scenery;
 
 import java.util.ArrayList;
 import java.util.List;
-import objects.driver.Driver;
+import objects.drivers.Driver;
 
 /**
  *

@@ -1,7 +1,7 @@
 package objects.scenery;
 
 import enums.ToolType;
-import objects.driver.Driver;
+import objects.drivers.Driver;
 
 /**
  *

@@ -9,9 +9,9 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import multitaks.Function;
-import objects.driver.Driver;
-import objects.driver.DriverList;
-import objects.driver.DriverSelection;
+import objects.drivers.Driver;
+import objects.drivers.DriverList;
+import objects.drivers.DriverSelection;
 
 /**
  *
