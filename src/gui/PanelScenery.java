@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import multitaks.Function;
-import objects.driver.Driver;
+import objects.drivers.Driver;
 import objects.scenery.Scenery;
 import objects.scenery.ScenerySelection;
 
@@ -34,6 +34,9 @@ public class PanelScenery extends javax.swing.JPanel{
     @Override
     public void paint(Graphics g){
         this.scenery.drivers.forEach((driver)->{
+            if(this.selection.driver==driver){
+                g.drawRect(driver.x-5,driver.y-5,driver.width+10,driver.height+10);
+            }
             Icon icon=new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(driver.width,driver.height,Image.SCALE_DEFAULT));
             icon.paintIcon(this,g,driver.x,driver.y);
         });
@@ -50,6 +53,23 @@ public class PanelScenery extends javax.swing.JPanel{
                 return;
             }
         });
+    }
+    
+    public void removeDriver(Callback action){
+        this._removeDriver(action);
+    }
+    public void removeDriver(){
+        this._removeDriver(null);
+    }
+    private void _removeDriver(Callback action){
+        if(this.selection.driver==null){
+            return;
+        }
+        Driver driver=this.selection.driver;
+        if(action!=null){
+            action.execute(driver);
+        }
+        this.scenery.drivers.remove(driver);
     }
     
     @SuppressWarnings("unchecked")

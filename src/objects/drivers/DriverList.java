@@ -1,4 +1,4 @@
-package objects.driver;
+package objects.drivers;
 
 import enums.DriverType;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
-package objects.driver;
+package objects.drivers;
 
-import objects.driver.Driver;
+import objects.drivers.Driver;
 
 /**
  *
