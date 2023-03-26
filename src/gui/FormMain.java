@@ -2,6 +2,7 @@ package gui;
 
 import enums.ToolType;
 import javax.swing.JPanel;
+import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
 
 /**

@@ -19,14 +19,13 @@ import objects.scenery.Entity;
 @Directory(type=DirectoryType.JSON)
 public class Driver extends Entity{
     
-    @Config(label="Nombre",box=BoxType.TEXT)
-    @Key(value="name")
+    @Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
     public String name;
-    @Config(label="IPv4",box=BoxType.TEXT)
-    @Key(value="ipv4")
+    
+    @Config(label="IPv4",box=BoxType.TEXT) @Key(value="ipv4")
     public String ipv4;
-    @Config(label="IPv6",box=BoxType.TEXT)
-    @Key(value="ipv6")
+    
+    @Config(label="IPv6",box=BoxType.TEXT) @Key(value="ipv6")
     public String ipv6;
     
     public DriverType type;
