@@ -44,6 +44,7 @@ public final class FormMain extends javax.swing.JFrame{
         btn_scenery_start = new javax.swing.JButton();
         btn_remove = new javax.swing.JButton();
         btn_connect = new javax.swing.JToggleButton();
+        btn_view = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +103,13 @@ public final class FormMain extends javax.swing.JFrame{
 
         btn_connect.setText("Conectar");
 
+        btn_view.setText("Visualizar");
+        btn_view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_viewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
         panel_tools.setLayout(panel_toolsLayout);
         panel_toolsLayout.setHorizontalGroup(
@@ -113,6 +121,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addComponent(btn_remove)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_connect)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_view)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_toolsLayout.setVerticalGroup(
@@ -122,7 +132,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_scenery_start)
                     .addComponent(btn_remove)
-                    .addComponent(btn_connect))
+                    .addComponent(btn_connect)
+                    .addComponent(btn_view))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -204,6 +215,12 @@ public final class FormMain extends javax.swing.JFrame{
         this.panel_scenery.updateUI();
     }//GEN-LAST:event_btn_removeActionPerformed
 
+    private void btn_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_viewActionPerformed
+        if(this.scenery.selection.driver!=null){
+            new DialogDriver(this,true,this.scenery).setVisible(true);
+        }
+    }//GEN-LAST:event_btn_viewActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -216,6 +233,7 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JToggleButton btn_connect;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_scenery_start;
+    private javax.swing.JButton btn_view;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;
