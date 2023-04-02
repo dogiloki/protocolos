@@ -6,5 +6,7 @@ package enums;
  */
 
 public enum ConnectorType{
+    
     USB, RJ45, RS_232
+    
 }

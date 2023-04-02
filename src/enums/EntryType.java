@@ -6,5 +6,7 @@ package enums;
  */
 
 public enum EntryType{
+    
     MALE, FEMALE
+    
 }
