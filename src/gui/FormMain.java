@@ -1,5 +1,7 @@
 package gui;
 
+import gui.panels.PanelDrivers;
+import gui.panels.PanelScenery;
 import enums.ToolType;
 import java.io.InputStream;
 import javax.swing.JOptionPane;

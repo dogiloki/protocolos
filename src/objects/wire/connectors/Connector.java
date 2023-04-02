@@ -1,4 +1,4 @@
-package objects.connectors;
+package objects.wire.connectors;
 
 import enums.ConnectorType;
 import enums.EntryType;

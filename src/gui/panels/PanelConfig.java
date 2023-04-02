@@ -1,5 +1,6 @@
-package gui;
+package gui.panels;
 
+import gui.panels.PanelScenery;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Field;

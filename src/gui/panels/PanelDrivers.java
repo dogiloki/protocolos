@@ -1,4 +1,4 @@
-package gui;
+package gui.panels;
 
 import enums.DriverType;
 import java.awt.Color;

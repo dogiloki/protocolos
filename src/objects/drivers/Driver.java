@@ -4,7 +4,7 @@ import enums.DriverType;
 import java.util.ArrayList;
 import java.util.List;
 import multitaks.annotations.directory.Key;
-import objects.connectors.Connector;
+import objects.wire.connectors.Connector;
 import objects.drivers.anotations.Config;
 import objects.drivers.enums.BoxType;
 import objects.scenery.Entity;

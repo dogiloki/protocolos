@@ -1,5 +1,6 @@
-package gui;
+package gui.panels;
 
+import gui.panels.PanelScenery;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -9,8 +10,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import multitaks.Function;
-import objects.connectors.Connector;
-import objects.connectors.ConnectorSelection;
+import objects.wire.connectors.Connector;
+import objects.wire.connectors.ConnectorSelection;
 
 /**
  *

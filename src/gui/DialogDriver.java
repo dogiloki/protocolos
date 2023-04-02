@@ -1,5 +1,8 @@
 package gui;
 
+import gui.panels.PanelConnectors;
+import gui.panels.PanelConfig;
+import gui.panels.PanelScenery;
 import javax.swing.JPanel;
 
 /**

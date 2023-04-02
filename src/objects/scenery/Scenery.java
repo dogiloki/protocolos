@@ -7,6 +7,7 @@ import multitaks.annotations.directory.Key;
 import multitaks.enums.DirectoryType;
 import multitaks.enums.FieldType;
 import objects.drivers.Driver;
+import objects.wire.Wire;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Scenery{
     
     @Key(value="drivers",type=FieldType.LIST)
     public List<Driver> drivers=new ArrayList<>();
+    public List<Wire> wrires=new ArrayList<>();
     
     public Scenery(){
         

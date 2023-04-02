@@ -2,9 +2,9 @@ package objects.drivers;
 
 import enums.DriverType;
 import enums.EntryType;
-import objects.connectors.RJ45;
-import objects.connectors.RS_232;
-import objects.connectors.USB;
+import objects.wire.connectors.RJ45;
+import objects.wire.connectors.RS_232;
+import objects.wire.connectors.USB;
 
 /**
  *
