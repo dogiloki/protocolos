@@ -1,8 +1,12 @@
 package gui;
 
 import enums.ToolType;
+import java.io.InputStream;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
+import multitaks.directory.Storage;
+import multitaks.enums.DirectoryType;
 import objects.drivers.Driver;
 
 /**
@@ -14,6 +18,7 @@ public final class FormMain extends javax.swing.JFrame{
     
     public PanelDrivers drivers;
     public PanelScenery scenery;
+    private final ModelDirectory model=new ModelDirectory();
     
     public FormMain() {
         initComponents();
@@ -21,6 +26,7 @@ public final class FormMain extends javax.swing.JFrame{
         this.setLocationRelativeTo(null);
         this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
+        this.model.run(this.scenery.scenery,"temp_escenary.json");
         this.setPanel(this.panel_drivers,this.drivers);
         this.setPanel(this.panel_scenery,this.scenery);
     }
@@ -46,6 +52,7 @@ public final class FormMain extends javax.swing.JFrame{
         btn_remove = new javax.swing.JButton();
         btn_connect = new javax.swing.JToggleButton();
         btn_view = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +118,13 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
+        btn_save.setText("Guardar");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
         panel_tools.setLayout(panel_toolsLayout);
         panel_toolsLayout.setHorizontalGroup(
@@ -124,6 +138,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addComponent(btn_connect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_view)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_save)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_toolsLayout.setVerticalGroup(
@@ -134,7 +150,8 @@ public final class FormMain extends javax.swing.JFrame{
                     .addComponent(btn_scenery_start)
                     .addComponent(btn_remove)
                     .addComponent(btn_connect)
-                    .addComponent(btn_view))
+                    .addComponent(btn_view)
+                    .addComponent(btn_save))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,6 +239,10 @@ public final class FormMain extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_btn_viewActionPerformed
 
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        this.model.save();
+    }//GEN-LAST:event_btn_saveActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -233,6 +254,7 @@ public final class FormMain extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_connect;
     private javax.swing.JButton btn_remove;
+    private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_scenery_start;
     private javax.swing.JButton btn_view;
     private javax.swing.JButton jButton1;

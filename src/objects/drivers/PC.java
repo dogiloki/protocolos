@@ -2,8 +2,6 @@ package objects.drivers;
 
 import enums.DriverType;
 import enums.EntryType;
-import multitaks.annotations.directory.Directory;
-import multitaks.enums.DirectoryType;
 import objects.connectors.RJ45;
 import objects.connectors.RS_232;
 import objects.connectors.USB;
@@ -13,7 +11,6 @@ import objects.connectors.USB;
  * @author dogi_
  */
 
-@Directory(type=DirectoryType.JSON)
 public class PC extends Driver{
     
     public PC(){
