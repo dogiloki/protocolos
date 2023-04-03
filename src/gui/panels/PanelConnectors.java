@@ -18,14 +18,17 @@ import objects.wire.connectors.ConnectorSelection;
  * @author dogiloki
  */
 
-public class PanelConnectors extends javax.swing.JPanel{
+public final class PanelConnectors extends javax.swing.JPanel{
 
     public List<Connector> connectors=new ArrayList<>();
     public ConnectorSelection selection=new ConnectorSelection();
     public JLabel btn_selection=null;
+    public PanelScenery scenery;
     
     public PanelConnectors(PanelScenery scenery){
         initComponents();
+        this.setBounds(0,0,200,200);
+        this.scenery=scenery;
         this.connectors=scenery.selection.driver.connectors;
     }
     
@@ -45,6 +48,7 @@ public class PanelConnectors extends javax.swing.JPanel{
             btn.setBounds(x,y,width,height);
             btn.setBackground(Color.WHITE);
             btn.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource(connector.src_icon)).getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT)));
+            btn.setToolTipText(connector.type_connector.toString());
             btn.addMouseListener(new MouseListener(){
                 @Override
                 public void mouseClicked(MouseEvent me){}

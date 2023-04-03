@@ -3,6 +3,8 @@ package gui;
 import gui.panels.PanelDrivers;
 import gui.panels.PanelScenery;
 import enums.ToolType;
+import gui.panels.PanelConnectors;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,6 +43,21 @@ public final class FormMain extends javax.swing.JFrame{
         panel1.updateUI();
     }
     
+    public void selectDriver(MouseEvent evt){
+        this.scenery.getDriver(evt.getX(),evt.getY(),(driver)->{
+            this.scenery.selection.x=evt.getX();
+            this.scenery.selection.y=evt.getY();
+            this.scenery.selection.off_set_x=evt.getX()-driver.x;
+            this.scenery.selection.off_set_y=evt.getY()-driver.y;
+            this.scenery.selection.driver=driver;
+            this.scenery.selection.tool=ToolType.MOVE;
+            if(evt.getButton()==3){
+                new DialogDriver(this,true,this.scenery).setVisible(true);
+            }
+        });
+        this.panel_scenery.updateUI();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,7 +70,6 @@ public final class FormMain extends javax.swing.JFrame{
         btn_scenery_start = new javax.swing.JButton();
         btn_remove = new javax.swing.JButton();
         btn_connect = new javax.swing.JToggleButton();
-        btn_view = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -113,13 +129,6 @@ public final class FormMain extends javax.swing.JFrame{
 
         btn_connect.setText("Conectar");
 
-        btn_view.setText("Visualizar");
-        btn_view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_viewActionPerformed(evt);
-            }
-        });
-
         btn_save.setText("Guardar");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,8 +148,6 @@ public final class FormMain extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_connect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_view)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -152,7 +159,6 @@ public final class FormMain extends javax.swing.JFrame{
                     .addComponent(btn_scenery_start)
                     .addComponent(btn_remove)
                     .addComponent(btn_connect)
-                    .addComponent(btn_view)
                     .addComponent(btn_save))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -203,15 +209,7 @@ public final class FormMain extends javax.swing.JFrame{
                 ex.printStackTrace();
             }
         }
-        this.scenery.getDriver(evt.getX(),evt.getY(),(driver)->{
-            this.scenery.selection.x=evt.getX();
-            this.scenery.selection.y=evt.getY();
-            this.scenery.selection.off_set_x=evt.getX()-driver.x;
-            this.scenery.selection.off_set_y=evt.getY()-driver.y;
-            this.scenery.selection.driver=driver;
-            this.scenery.selection.tool=ToolType.MOVE;
-        });
-        this.panel_scenery.updateUI();
+        this.selectDriver(evt);
     }//GEN-LAST:event_panel_sceneryMousePressed
 
     private void panel_sceneryMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseDragged
@@ -235,12 +233,6 @@ public final class FormMain extends javax.swing.JFrame{
         this.panel_scenery.updateUI();
     }//GEN-LAST:event_btn_removeActionPerformed
 
-    private void btn_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_viewActionPerformed
-        if(this.scenery.selection.driver!=null){
-            new DialogDriver(this,true,this.scenery).setVisible(true);
-        }
-    }//GEN-LAST:event_btn_viewActionPerformed
-
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         this.model.save();
     }//GEN-LAST:event_btn_saveActionPerformed
@@ -258,7 +250,6 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_scenery_start;
-    private javax.swing.JButton btn_view;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;

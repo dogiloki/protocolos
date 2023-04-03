@@ -2,7 +2,7 @@ package objects.drivers;
 
 import enums.DriverType;
 import enums.EntryType;
-import objects.wire.connectors.RJ45;
+import objects.wire.connectors.Eternet;
 import objects.wire.connectors.RS_232;
 import objects.wire.connectors.USB;
 
@@ -20,7 +20,7 @@ public class PC extends Driver{
     }
     
     private void setConnectors(){
-        this.connectors.add(new RJ45(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
         this.connectors.add(new RS_232(EntryType.FEMALE));
         this.connectors.add(new USB(EntryType.FEMALE));
         this.connectors.add(new USB(EntryType.FEMALE));

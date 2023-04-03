@@ -1,9 +1,12 @@
 package gui.panels;
 
+import enums.ToolType;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import multitaks.Function;
 import objects.drivers.Driver;
 import objects.scenery.Scenery;
@@ -22,6 +25,7 @@ public class PanelScenery extends javax.swing.JPanel{
     
     public Scenery scenery=new Scenery();
     public ScenerySelection selection=new ScenerySelection();
+    public PanelConnectors connectors;
     
     public PanelScenery(){
         initComponents();
@@ -36,6 +40,9 @@ public class PanelScenery extends javax.swing.JPanel{
             Icon icon=new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(driver.width,driver.height,Image.SCALE_DEFAULT));
             icon.paintIcon(this,g,driver.x,driver.y);
         });
+        if(this.connectors!=null){
+            return;
+        }
     }
     
     public void addDriver(Driver driver){
