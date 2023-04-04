@@ -1,6 +1,5 @@
 package gui.panels;
 
-import gui.panels.PanelScenery;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -11,7 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import multitaks.Function;
 import objects.wire.connectors.Connector;
-import objects.wire.connectors.ConnectorSelection;
 
 /**
  *
@@ -21,7 +19,7 @@ import objects.wire.connectors.ConnectorSelection;
 public final class PanelConnectors extends javax.swing.JPanel{
 
     public List<Connector> connectors=new ArrayList<>();
-    public ConnectorSelection selection=new ConnectorSelection();
+    //public ConnectorSelection selection=new ConnectorSelection();
     public JLabel btn_selection=null;
     public PanelScenery scenery;
     
@@ -61,7 +59,7 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         btn_selection.setBackground(null);
                         btn_selection.setOpaque(false);
                     }
-                    selection.connector=connector;
+                    //selection.id_connector=connector.id;
                     btn_selection=btn;
                     btn_selection.setBackground(Color.decode("#b2cff0"));
                     btn_selection.setOpaque(true);

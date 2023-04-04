@@ -1,6 +1,8 @@
 package objects.scenery;
 
 import enums.ToolType;
+import java.util.ArrayList;
+import java.util.List;
 import objects.drivers.Driver;
 
 /**
@@ -14,7 +16,11 @@ public class ScenerySelection{
     public int y;
     public int off_set_x;
     public int off_set_y;
+    public int mouse_x;
+    public int mouse_y;
+    public Driver driver_prev;
     public Driver driver;
+    public List<Driver> drivers=new ArrayList<>();
     public ToolType tool=ToolType.DEFAULT;
     
     public ScenerySelection(){

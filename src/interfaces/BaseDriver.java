@@ -5,10 +5,11 @@ package interfaces;
  * @author dogiloki
  */
 
-public interface Driver{
+public interface BaseDriver{
     
     public void on();
     public void off();
-    public void connect();
+    public void setAtributes();
+    public void setConnectors();
     
 }

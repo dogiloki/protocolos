@@ -19,7 +19,8 @@ public class Scenery{
     
     @Key(value="drivers",type=FieldType.LIST)
     public List<Driver> drivers=new ArrayList<>();
-    public List<Wire> wrires=new ArrayList<>();
+    @Key(value="wires",type=FieldType.LIST)
+    public List<Wire> wires=new ArrayList<>();
     
     public Scenery(){
         

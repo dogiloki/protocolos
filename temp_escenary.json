@@ -1,1 +1,107 @@
-{"drivers":[]}
+{
+  "wires": [],
+  "drivers": [
+    {
+      "connectors": [
+        
+      ],
+      "ipv4": "",
+      "ipv6": "",
+      "name": "",
+      "x": 467,
+      "width": 50,
+      "y": 88,
+      "type": "PC",
+      "src_icon": "/assets/drivers/PC.png",
+      "MAC": "",
+      "height": 50
+    },
+    {
+      "connectors": [],
+      "ipv4": "",
+      "ipv6": "",
+      "name": "",
+      "x": 262,
+      "width": 50,
+      "y": 66,
+      "type": "MOBILE_PHONE",
+      "src_icon": "/assets/drivers/mobile_phone.png",
+      "MAC": "",
+      "height": 50
+    },
+    {
+      "connectors": [
+        {
+          "type_connector": "ETERNET",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "abcf5e0b-c1f4-4679-99f6-13b05e6ad623",
+          "src_icon": "/assets/connectors/eternet_female.png",
+          "height": 50
+        },
+        {
+          "type_connector": "RS_232",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "08a2646a-3b58-491e-8144-f10926115dc3",
+          "src_icon": "/assets/connectors/rs-232_female.png",
+          "height": 50
+        },
+        {
+          "type_connector": "USB",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "5d4fb795-2d2c-49d8-8367-898668033f73",
+          "src_icon": "/assets/connectors/usb_female.png",
+          "height": 50
+        },
+        {
+          "type_connector": "USB",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "4c3792da-c611-45d0-bcdf-2ebeff7205e3",
+          "src_icon": "/assets/connectors/usb_female.png",
+          "height": 50
+        },
+        {
+          "type_connector": "USB",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "483f6753-f444-4b05-a97d-371e0c367b33",
+          "src_icon": "/assets/connectors/usb_female.png",
+          "height": 50
+        },
+        {
+          "type_connector": "USB",
+          "type_entry": "FEMALE",
+          "x": 0,
+          "width": 50,
+          "y": 0,
+          "id": "159cdbb3-13a1-40fb-b24c-3e66deccbd33",
+          "src_icon": "/assets/connectors/usb_female.png",
+          "height": 50
+        }
+      ],
+      "ipv4": "",
+      "ipv6": "",
+      "name": "",
+      "x": 283,
+      "width": 50,
+      "y": 212,
+      "type": "PC",
+      "src_icon": "/assets/drivers/PC.png",
+      "MAC": "",
+      "height": 50
+    }
+  ]
+}

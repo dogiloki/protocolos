@@ -16,10 +16,10 @@ public class PC extends Driver{
     public PC(){
         this.type=DriverType.PC;
         this.src_icon="/assets/drivers/PC.png";
-        this.setConnectors();
     }
     
-    private void setConnectors(){
+    @Override
+    public void setConnectors(){
         this.connectors.add(new Eternet(EntryType.FEMALE));
         this.connectors.add(new RS_232(EntryType.FEMALE));
         this.connectors.add(new USB(EntryType.FEMALE));

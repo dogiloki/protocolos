@@ -97,6 +97,7 @@
       </Properties>
       <Events>
         <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="panel_sceneryMouseDragged"/>
+        <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="panel_sceneryMouseMoved"/>
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panel_sceneryMousePressed"/>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panel_sceneryMouseReleased"/>
       </Events>
@@ -132,7 +133,7 @@
                   <Component id="btn_connect" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_save" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="511" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,8 +144,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_scenery_start" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_remove" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_connect" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_save" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_connect" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -165,17 +166,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_removeActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="btn_connect">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Conectar"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="btn_save">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_saveActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="btn_connect">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modo conectar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="btn_connectItemStateChanged"/>
           </Events>
         </Component>
       </SubComponents>

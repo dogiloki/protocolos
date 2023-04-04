@@ -4,13 +4,10 @@ import gui.panels.PanelDrivers;
 import gui.panels.PanelScenery;
 import enums.ToolType;
 import gui.panels.PanelConnectors;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
-import java.io.InputStream;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
-import multitaks.directory.Storage;
-import multitaks.enums.DirectoryType;
 import objects.drivers.Driver;
 
 /**
@@ -49,10 +46,22 @@ public final class FormMain extends javax.swing.JFrame{
             this.scenery.selection.y=evt.getY();
             this.scenery.selection.off_set_x=evt.getX()-driver.x;
             this.scenery.selection.off_set_y=evt.getY()-driver.y;
+            this.scenery.selection.driver_prev=this.scenery.selection.driver;
             this.scenery.selection.driver=driver;
-            this.scenery.selection.tool=ToolType.MOVE;
+            this.scenery.selection.drivers.clear();
+            this.scenery.selection.drivers.add(driver);
             if(evt.getButton()==3){
-                new DialogDriver(this,true,this.scenery).setVisible(true);
+                switch(this.scenery.selection.tool){
+                    case CONNECT:{
+                        this.scenery.connectors=new PanelConnectors(this.scenery);
+                        this.scenery.connectors.setBounds(driver.x,driver.y,50,150);
+                        this.scenery.add(this.scenery.connectors);
+                        break;
+                    }
+                    default: new DialogDriver(this,true,this.scenery).setVisible(true); break;
+                }
+            }else{
+                this.scenery.selection.tool=ToolType.MOVE;
             }
         });
         this.panel_scenery.updateUI();
@@ -69,8 +78,8 @@ public final class FormMain extends javax.swing.JFrame{
         panel_tools = new javax.swing.JPanel();
         btn_scenery_start = new javax.swing.JButton();
         btn_remove = new javax.swing.JButton();
-        btn_connect = new javax.swing.JToggleButton();
         btn_save = new javax.swing.JButton();
+        btn_connect = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +104,9 @@ public final class FormMain extends javax.swing.JFrame{
         panel_scenery.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 panel_sceneryMouseDragged(evt);
+            }
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                panel_sceneryMouseMoved(evt);
             }
         });
         panel_scenery.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,12 +139,17 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
-        btn_connect.setText("Conectar");
-
         btn_save.setText("Guardar");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_saveActionPerformed(evt);
+            }
+        });
+
+        btn_connect.setText("Modo conectar");
+        btn_connect.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                btn_connectItemStateChanged(evt);
             }
         });
 
@@ -149,7 +166,7 @@ public final class FormMain extends javax.swing.JFrame{
                 .addComponent(btn_connect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(511, Short.MAX_VALUE))
         );
         panel_toolsLayout.setVerticalGroup(
             panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,8 +175,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_scenery_start)
                     .addComponent(btn_remove)
-                    .addComponent(btn_connect)
-                    .addComponent(btn_save))
+                    .addComponent(btn_save)
+                    .addComponent(btn_connect))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -196,6 +213,11 @@ public final class FormMain extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void panel_sceneryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMousePressed
+        if(this.scenery.connectors!=null){
+            this.scenery.remove(this.scenery.connectors);
+            this.scenery.connectors.updateUI();
+            this.scenery.connectors=null;
+        }
         if(this.drivers.selection.driver!=null){
             try{
                 Driver driver=(Driver)this.drivers.selection.driver.getDeclaredConstructor().newInstance();
@@ -236,6 +258,19 @@ public final class FormMain extends javax.swing.JFrame{
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         this.model.save();
     }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void panel_sceneryMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_sceneryMouseMoved
+        this.scenery.selection.mouse_x=evt.getX();
+        this.scenery.selection.mouse_y=evt.getY();
+    }//GEN-LAST:event_panel_sceneryMouseMoved
+
+    private void btn_connectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btn_connectItemStateChanged
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            this.scenery.selection.tool=ToolType.CONNECT;
+        }else{
+            this.scenery.selection.tool=ToolType.DEFAULT;
+        }
+    }//GEN-LAST:event_btn_connectItemStateChanged
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

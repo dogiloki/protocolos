@@ -1,27 +1,24 @@
 package objects.wire;
 
-import objects.wire.connectors.Connector;
+import java.util.UUID;
+import multitaks.annotations.directory.Directory;
+import multitaks.annotations.directory.Key;
+import multitaks.enums.DirectoryType;
 
 /**
  *
  * @author dogi_
  */
 
+@Directory(type=DirectoryType.JSON)
 public class Wire{
     
-    private Connector connector1;
-    private Connector connector2;
+    @Key(value="id_connector1")
+    public String id_connector1=UUID.randomUUID().toString();
+    @Key(value="id_connector2")
+    public String id_connector2=UUID.randomUUID().toString();
     
     public Wire(){
         
     }
-    
-    public void addConection1(Connector connector){
-        this.connector1=connector;
-    }
-    
-    public void addConection2(Connector connector){
-        this.connector2=connector;
-    }
-    
 }

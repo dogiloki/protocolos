@@ -1,20 +1,22 @@
 package objects.drivers;
 
 import enums.DriverType;
-import java.util.ArrayList;
 import java.util.List;
 import multitaks.annotations.directory.Key;
+import multitaks.enums.FieldType;
 import objects.wire.connectors.Connector;
 import objects.drivers.anotations.Config;
 import objects.drivers.enums.BoxType;
 import objects.scenery.Entity;
+import interfaces.BaseDriver;
+import java.util.ArrayList;
 
 /**
  *
  * @author dogiloki
  */
 
-public class Driver extends Entity{
+public class Driver extends Entity implements BaseDriver{
     
     @Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
     public String name;
@@ -28,10 +30,35 @@ public class Driver extends Entity{
     @Config(label="MAC",box=BoxType.TEXT) @Key(value="MAC")
     public String mac;
     
-    public DriverType type;
+    @Key(value="connectors",type=FieldType.LIST)
     public List<Connector> connectors=new ArrayList<>();
     
+    @Key(value="type",type=FieldType.ENUM)
+    public DriverType type;
+    
+    public boolean status=true;
+    
     public Driver(){
+        this.setConnectors();
+    }
+
+    @Override
+    public void on(){
+        this.status=true;
+    }
+
+    @Override
+    public void off(){
+        this.status=false;
+    }
+
+    @Override
+    public void setAtributes(){
+        
+    }
+
+    @Override
+    public void setConnectors(){
         
     }
     
