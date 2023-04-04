@@ -10,8 +10,16 @@ import enums.DriverType;
 public class Modem extends Driver{
     
     public Modem(){
+        Modem.count++;
+        this.setFields();
+    }
+    
+    @Override
+    public void setFields(){
         this.type=DriverType.MODEM;
         this.src_icon="/assets/drivers/modem.png";
+        this.name=this.type.toString();
+        this.host=this.name;
     }
     
 }

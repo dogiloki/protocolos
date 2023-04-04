@@ -1,6 +1,5 @@
 package objects.wire.connectors;
 
-import objects.wire.connectors.Connector;
 import enums.ConnectorType;
 import enums.EntryType;
 

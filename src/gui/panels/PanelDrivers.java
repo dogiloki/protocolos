@@ -55,6 +55,7 @@ public final class PanelDrivers extends javax.swing.JPanel{
             btn.setBounds(x,y,width,height);
             btn.setBackground(Color.WHITE);
             btn.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT)));
+            btn.setToolTipText(type.toString());
             btn.addMouseListener(new MouseListener(){
                 @Override
                 public void mouseClicked(MouseEvent me){}

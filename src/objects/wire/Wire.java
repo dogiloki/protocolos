@@ -1,17 +1,15 @@
 package objects.wire;
 
 import java.util.UUID;
-import multitaks.annotations.directory.Directory;
 import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
+import objects.scenery.Line;
 
 /**
  *
  * @author dogi_
  */
 
-@Directory(type=DirectoryType.JSON)
-public class Wire{
+public class Wire extends Line{
     
     @Key(value="id_connector1")
     public String id_connector1=UUID.randomUUID().toString();

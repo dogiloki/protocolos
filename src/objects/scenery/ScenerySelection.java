@@ -4,6 +4,7 @@ import enums.ToolType;
 import java.util.ArrayList;
 import java.util.List;
 import objects.drivers.Driver;
+import objects.wire.connectors.Connector;
 
 /**
  *
@@ -21,6 +22,8 @@ public class ScenerySelection{
     public Driver driver_prev;
     public Driver driver;
     public List<Driver> drivers=new ArrayList<>();
+    public Connector connetor_prev;
+    public Connector connetor;
     public ToolType tool=ToolType.DEFAULT;
     
     public ScenerySelection(){

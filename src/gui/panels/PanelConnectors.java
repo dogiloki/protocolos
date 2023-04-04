@@ -1,14 +1,19 @@
 package gui.panels;
 
+import enums.ToolType;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import multitaks.Function;
+import objects.drivers.Driver;
+import objects.wire.Wire;
 import objects.wire.connectors.Connector;
 
 /**
@@ -47,11 +52,29 @@ public final class PanelConnectors extends javax.swing.JPanel{
             btn.setBackground(Color.WHITE);
             btn.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource(connector.src_icon)).getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT)));
             btn.setToolTipText(connector.type_connector.toString());
+            if(connector.connected){
+                btn.setEnabled(false);
+            }
             btn.addMouseListener(new MouseListener(){
                 @Override
                 public void mouseClicked(MouseEvent me){}
                 @Override
                 public void mousePressed(MouseEvent me){
+                    if(connector.connected){
+                        int op=JOptionPane.showConfirmDialog(null,"Connector ocupado. ¿Desconectar?","Advertencia",JOptionPane.WARNING_MESSAGE);
+                        if(op==0){
+                            for(Wire wire:scenery.scenery.wires){
+                                if(connector.id.equals(wire.id_connector1) || connector.id.equals(wire.id_connector2)){
+                                    scenery.scenery.connectors.get(wire.id_connector1).connected=false;
+                                    scenery.scenery.connectors.get(wire.id_connector2).connected=false;
+                                    scenery.scenery.wires.remove(wire);
+                                    btn.setEnabled(true);
+                                    break;
+                                }
+                            }
+                        }
+                        return;
+                    }
                     if(btn_selection!=null){
                         if(btn_selection==btn){
                             return;
@@ -59,7 +82,29 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         btn_selection.setBackground(null);
                         btn_selection.setOpaque(false);
                     }
-                    //selection.id_connector=connector.id;
+                    // Selección de conector
+                    scenery.selection.connetor_prev=scenery.selection.connetor;
+                    scenery.selection.connetor=connector;
+                    if(scenery.selection.connetor_prev!=null && scenery.selection.connetor!=null && scenery.selection.tool==ToolType.CONNECT){
+                        // Crear cable para conexión
+                        Wire wire=new Wire();
+                        Connector connect1=scenery.selection.connetor_prev;
+                        Connector connect2=scenery.selection.connetor;
+                        Driver driver1=scenery.scenery.connector_wire.get(connect1.id);
+                        Driver driver2=scenery.scenery.connector_wire.get(connect1.id);
+                        wire.id_connector1=connect1.id;
+                        wire.id_connector2=connect2.id;
+                        if(connect1.type_connector==connect2.type_connector){
+                            connect1.connected=true;
+                            connect2.connected=true;
+                            scenery.scenery.wires.add(wire);
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Conectores no compatibles","Error",JOptionPane.ERROR_MESSAGE);
+                        }
+                        scenery.selection.connetor_prev=null;
+                        scenery.selection.connetor=null;
+                    }
+                    // Selección del panel en la GUI
                     btn_selection=btn;
                     btn_selection.setBackground(Color.decode("#b2cff0"));
                     btn_selection.setOpaque(true);

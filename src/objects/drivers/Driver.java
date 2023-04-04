@@ -18,8 +18,13 @@ import java.util.ArrayList;
 
 public class Driver extends Entity implements BaseDriver{
     
+    public static int count=-1;
+    
     @Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
     public String name;
+    
+    @Config(label="Host",box=BoxType.TEXT) @Key(value="host")
+    public String host;
     
     @Config(label="IPv4",box=BoxType.TEXT) @Key(value="ipv4")
     public String ipv4;
@@ -38,7 +43,15 @@ public class Driver extends Entity implements BaseDriver{
     
     public boolean status=true;
     
+    public Driver(boolean increase){
+        if(increase){
+            Driver.count++;
+        }
+        this.setConnectors();
+    }
+    
     public Driver(){
+        Driver.count++;
         this.setConnectors();
     }
 
@@ -53,7 +66,7 @@ public class Driver extends Entity implements BaseDriver{
     }
 
     @Override
-    public void setAtributes(){
+    public void setFields(){
         
     }
 

@@ -24,6 +24,7 @@ public class DialogDriver extends javax.swing.JDialog{
         this.scenery=scenery;
         this.connectors=new PanelConnectors(this.scenery);
         this.config=new PanelConfig(this.scenery);
+        this.setTitle(this.scenery.selection.driver.type+" - "+this.scenery.selection.driver.name);
         this.setPanel(this.panel_entries,this.connectors);
         this.setPanel(this.panel_config,this.config);
     }

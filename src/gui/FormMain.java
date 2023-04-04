@@ -27,7 +27,9 @@ public final class FormMain extends javax.swing.JFrame{
         this.setLocationRelativeTo(null);
         this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
+        // Obtener datos del escenario
         this.model.run(this.scenery.scenery,"temp_escenary.json");
+        this.scenery.scenery.setConnectors();
         this.setPanel(this.panel_drivers,this.drivers);
         this.setPanel(this.panel_scenery,this.scenery);
     }
@@ -46,8 +48,10 @@ public final class FormMain extends javax.swing.JFrame{
             this.scenery.selection.y=evt.getY();
             this.scenery.selection.off_set_x=evt.getX()-driver.x;
             this.scenery.selection.off_set_y=evt.getY()-driver.y;
+            // Selección de dispositivo
             this.scenery.selection.driver_prev=this.scenery.selection.driver;
             this.scenery.selection.driver=driver;
+            // Selección de varios dispositivos
             this.scenery.selection.drivers.clear();
             this.scenery.selection.drivers.add(driver);
             if(evt.getButton()==3){
@@ -61,7 +65,9 @@ public final class FormMain extends javax.swing.JFrame{
                     default: new DialogDriver(this,true,this.scenery).setVisible(true); break;
                 }
             }else{
-                this.scenery.selection.tool=ToolType.MOVE;
+                if(this.scenery.selection.tool==ToolType.DEFAULT){
+                    this.scenery.selection.tool=ToolType.MOVE;
+                }
             }
         });
         this.panel_scenery.updateUI();
@@ -270,6 +276,8 @@ public final class FormMain extends javax.swing.JFrame{
         }else{
             this.scenery.selection.tool=ToolType.DEFAULT;
         }
+        this.scenery.selection.connetor_prev=null;
+        this.scenery.selection.connetor=null;
     }//GEN-LAST:event_btn_connectItemStateChanged
 
     public static void main(String args[]) {

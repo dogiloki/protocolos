@@ -14,8 +14,16 @@ import objects.wire.connectors.USB;
 public class PC extends Driver{
     
     public PC(){
+        PC.count++;
+        this.setFields();
+    }
+    
+    @Override
+    public void setFields(){
         this.type=DriverType.PC;
         this.src_icon="/assets/drivers/PC.png";
+        this.name=this.type.toString();
+        this.host=this.name;
     }
     
     @Override
