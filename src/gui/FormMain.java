@@ -54,16 +54,13 @@ public final class FormMain extends javax.swing.JFrame{
             // Selección de varios dispositivos
             this.scenery.selection.drivers.clear();
             this.scenery.selection.drivers.add(driver);
+            if(this.scenery.selection.tool==ToolType.CONNECT){
+                this.scenery.connectors=new PanelConnectors(this.scenery);
+                this.scenery.connectors.setBounds(driver.x,driver.y,50,150);
+                this.scenery.add(this.scenery.connectors);
+            }else
             if(evt.getButton()==3){
-                switch(this.scenery.selection.tool){
-                    case CONNECT:{
-                        this.scenery.connectors=new PanelConnectors(this.scenery);
-                        this.scenery.connectors.setBounds(driver.x,driver.y,50,150);
-                        this.scenery.add(this.scenery.connectors);
-                        break;
-                    }
-                    default: new DialogDriver(this,true,this.scenery).setVisible(true); break;
-                }
+                new DialogDriver(this,true,this.scenery).setVisible(true);
             }else{
                 if(this.scenery.selection.tool==ToolType.DEFAULT){
                     this.scenery.selection.tool=ToolType.MOVE;

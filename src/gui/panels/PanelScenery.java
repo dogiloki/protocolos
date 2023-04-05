@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import multitaks.Function;
 import objects.drivers.Driver;
 import objects.scenery.Scenery;
@@ -41,7 +42,7 @@ public class PanelScenery extends javax.swing.JPanel{
             Icon icon=new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(driver.width,driver.height,Image.SCALE_DEFAULT));
             icon.paintIcon(this,g,driver.x,driver.y);
         });
-        // Rederizar conexiones
+        // Renderizar conexiones
         this.scenery.wires.forEach((wire)->{
             Driver driver1=this.scenery.connector_wire.get(wire.id_connector1);
             Driver driver2=this.scenery.connector_wire.get(wire.id_connector2);
@@ -89,6 +90,10 @@ public class PanelScenery extends javax.swing.JPanel{
             return;
         }
         Driver driver=this.selection.driver;
+        if(!this.scenery.listDrivers(driver).isEmpty()){
+           JOptionPane.showMessageDialog(null,"El dispositivo esta conectado","Error",JOptionPane.ERROR_MESSAGE);
+           return; 
+        }
         if(action!=null){
             action.execute(driver);
         }

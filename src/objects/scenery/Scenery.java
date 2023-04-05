@@ -35,6 +35,27 @@ public class Scenery{
         
     }
     
+    public List<Driver> listDrivers(Driver root_driver){
+        List<Driver> drivers=new ArrayList<>();
+        root_driver.connectors.forEach((connector)->{
+            if(connector.connected){
+                this.wires.forEach((wire)->{
+                    if(wire.id_connector1.equals(connector.id) || wire.id_connector2.equals(connector.id)){
+                        Driver driver1=this.connector_wire.get(wire.id_connector1);
+                        Driver driver2=this.connector_wire.get(wire.id_connector2);
+                        if(driver1!=root_driver){
+                            drivers.add(driver1);
+                        }
+                        if(driver2!=root_driver){
+                            drivers.add(driver2);
+                        }
+                    }
+                });
+            }
+        });
+        return drivers;
+    }
+    
     public void setConnectors(){
         this.drivers.forEach((driver)->{
             driver.connectors.forEach((connector)->{
