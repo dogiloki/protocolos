@@ -1,6 +1,8 @@
 package objects.drivers;
 
 import enums.DriverType;
+import enums.EntryType;
+import objects.wire.connectors.Eternet;
 
 /**
  *
@@ -19,6 +21,16 @@ public class Switch extends Driver{
         this.src_icon="/assets/drivers/switch.png";
         this.name=this.type.toString();
         this.host=this.name;
+    }
+    
+    @Override
+    public void setConnectors(){
+        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new Eternet(EntryType.FEMALE));
     }
     
 }

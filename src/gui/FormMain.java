@@ -23,7 +23,7 @@ public final class FormMain extends javax.swing.JFrame{
     
     public FormMain() {
         initComponents();
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
@@ -39,6 +39,11 @@ public final class FormMain extends javax.swing.JFrame{
         panel2.setBounds(0,0,panel1.getWidth(),panel1.getHeight());
         panel1.removeAll();
         panel1.add(panel2);
+        panel1.updateUI();
+    }
+    
+    public void resizablePanel(JPanel panel1, JPanel panel2){
+        panel2.setBounds(0,0,panel1.getWidth(),panel1.getHeight());
         panel1.updateUI();
     }
     
@@ -75,7 +80,7 @@ public final class FormMain extends javax.swing.JFrame{
     private void initComponents() {
 
         panel_protocols = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btn_package = new javax.swing.JButton();
         panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
         panel_tools = new javax.swing.JPanel();
@@ -85,19 +90,24 @@ public final class FormMain extends javax.swing.JFrame{
         btn_connect = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
-        jButton1.setText("Eternet");
+        btn_package.setText("Paquete");
 
         javax.swing.GroupLayout panel_protocolsLayout = new javax.swing.GroupLayout(panel_protocols);
         panel_protocols.setLayout(panel_protocolsLayout);
         panel_protocolsLayout.setHorizontalGroup(
             panel_protocolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(btn_package, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
         );
         panel_protocolsLayout.setVerticalGroup(
             panel_protocolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_protocolsLayout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addComponent(btn_package)
                 .addGap(0, 360, Short.MAX_VALUE))
         );
 
@@ -203,9 +213,9 @@ public final class FormMain extends javax.swing.JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel_tools, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_tools, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_drivers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_protocols, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_scenery, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -277,6 +287,10 @@ public final class FormMain extends javax.swing.JFrame{
         this.scenery.selection.connetor=null;
     }//GEN-LAST:event_btn_connectItemStateChanged
 
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        this.resizablePanel(this.panel_drivers,this.drivers);
+    }//GEN-LAST:event_formComponentResized
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -287,10 +301,10 @@ public final class FormMain extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_connect;
+    private javax.swing.JButton btn_package;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_scenery_start;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_protocols;
     private javax.swing.JPanel panel_scenery;
