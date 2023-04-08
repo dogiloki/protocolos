@@ -10,6 +10,7 @@ import enums.DriverType;
 public class Printer extends Driver{
     
     public Printer(){
+        super.setFields();
         Printer.count++;
     }
     

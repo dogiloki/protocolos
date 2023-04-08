@@ -1,6 +1,7 @@
 package protocols;
 
 import java.util.List;
+import multitaks.Function;
 import objects.drivers.Driver;
 
 /**
@@ -20,22 +21,28 @@ public class DHCP{
         return new DHCP(server_driver);
     }
     
-    public void all(List<Driver> child_drivers){
-        this.IPv4(child_drivers);
+    public void ip(){
+        this.IPv4();
+        this.IPv6();
+        this.server_driver.subnet_mask="255.255.255.0";
     }
     
-    // IPv4
-    public void IPv4(List<Driver> child_drivers){
+    public void IPv4(){
+        if(this.server_driver.dhcp==null){
+            return;
+        }
+        List<Driver> child_drivers=this.server_driver.drivers;
         String ip=this.server_driver.ipv4;
         String[] bits=ip.replaceAll(" ","").split("\\.");
         int index=0;
         while(index<child_drivers.size()){
             Driver driver=child_drivers.get(index);
+            driver.subnet_mask="255.255.255.0";
             for(int a=2; a<255; a++){
                 String new_ip=bits[0]+"."+bits[1]+"."+bits[2]+"."+a;
                 boolean exists=false;
                 for(Driver check_driver:child_drivers){
-                    if(check_driver.ipv4==null || check_driver.dhcp || new_ip==ip){
+                    if(check_driver.ipv4==null || check_driver.dhcp!=null || new_ip.equals(ip)){
                         break;
                     }
                     if(new_ip.equals(check_driver.ipv4.replaceAll(" ",""))){
@@ -52,7 +59,45 @@ public class DHCP{
         }
     }
     
-    // IPv6 - 2001:0db8:85a3:0000:0000:8a2e:0370:7334 (si hay todos 0 se puede abreviar con: 2001:db8:85a3::8a2e:370:7334)
-    
+    public void IPv6(){
+        if(this.server_driver.dhcp==null){
+            return;
+        }
+        List<Driver> child_drivers=this.server_driver.drivers;
+        this.server_driver.ipv6=Function.assign(this.server_driver.ipv6,this.generateIPv6());
+        String ip=this.server_driver.ipv6;
+        int index=0;
+        while(index<child_drivers.size()){
+            Driver driver=child_drivers.get(index);
+            driver.subnet_mask="255.255.255.0";
+            String new_ip=generateIPv6();
+            boolean exists=false;
+            for(Driver check_driver:child_drivers){
+                if(check_driver.ipv6==null || check_driver.dhcp!=null || new_ip.equals(ip)){
+                    break;
+                }
+                if(new_ip.equals(check_driver.ipv6.replaceAll(" ",""))){
+                    exists=true;
+                    break;
+                }
+            }
+            if(!exists){
+                driver.ipv6=new_ip;
+                index++;
+            }
+        }
+    }
+    private String generateIPv6(){
+        String ip="";
+        for(int a=0; a<8; a++){
+            for(int b=0; b<4; b++){
+                int num=(int)(Math.random()*(15-1)+1);
+                String str=(num<10)?String.valueOf(num):Integer.toHexString(num);
+                ip+=str;
+            }
+            ip+=":";
+        }
+        return ip.substring(0,ip.length()-1);
+    }
     
 }

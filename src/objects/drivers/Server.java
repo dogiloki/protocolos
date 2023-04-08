@@ -1,7 +1,6 @@
 package objects.drivers;
 
 import enums.DriverType;
-import multitaks.annotations.directory.Key;
 
 /**
  *
@@ -11,6 +10,7 @@ import multitaks.annotations.directory.Key;
 public class Server extends Driver{
     
     public Server(){
+        super.setFields();
         Server.count++;
     }
     

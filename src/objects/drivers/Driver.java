@@ -10,6 +10,7 @@ import objects.drivers.enums.BoxType;
 import objects.scenery.Entity;
 import interfaces.BaseDriver;
 import java.util.ArrayList;
+import multitaks.Function;
 import multitaks.annotations.directory.Execute;
 import protocols.DHCP;
 
@@ -46,9 +47,11 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="type",type=FieldType.ENUM)
     public DriverType type;
     
+    public List<Driver> drivers=new ArrayList<>();
+    
     // Protocolos
-    @Key(value="dhcp")
-    public boolean dhcp=false;
+    
+    public DHCP dhcp;
     
     public boolean status=true;
     
@@ -65,6 +68,19 @@ public class Driver extends Entity implements BaseDriver{
         this.setConnectors();
         this.setFields();
     }
+    
+    public String generateMac(){
+        String mac="";
+        for(int a=0; a<6; a++){
+            for(int b=0; b<2; b++){
+                int num=(int)(Math.random()*(15-1)+1);
+                String str=(num<10)?String.valueOf(num):Integer.toHexString(num);
+                mac+=str;
+            }
+            mac+=":";
+        }
+        return mac.substring(0,mac.length()-1).toUpperCase();
+    }
 
     @Override
     public void on(){
@@ -78,6 +94,8 @@ public class Driver extends Entity implements BaseDriver{
 
     @Override @Execute
     public void setFields(){
+        this.mac=Function.assign(this.mac,this.generateMac());
+        System.out.println(this.mac);
         if(this.type==null){
             return;
         }
@@ -86,7 +104,7 @@ public class Driver extends Entity implements BaseDriver{
                 if(this.ipv4==null){
                     this.ipv4="192.168."+Router.count+".1";
                 }
-                this.dhcp=true;
+                this.dhcp=DHCP.aim(this);
                 break;
             }
         }

@@ -14,6 +14,7 @@ import objects.wire.connectors.USB;
 public class PC extends Driver{
     
     public PC(){
+        super.setFields();
         PC.count++;
     }
     

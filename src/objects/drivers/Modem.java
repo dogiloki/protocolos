@@ -10,6 +10,7 @@ import enums.DriverType;
 public class Modem extends Driver{
     
     public Modem(){
+        super.setFields();
         Modem.count++;
     }
     

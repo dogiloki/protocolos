@@ -66,6 +66,10 @@ public final class PanelConnectors extends javax.swing.JPanel{
                                 if(connector.id.equals(wire.id_connector1) || connector.id.equals(wire.id_connector2)){
                                     scenery.scenery.connectors.get(wire.id_connector1).connected=false;
                                     scenery.scenery.connectors.get(wire.id_connector2).connected=false;
+                                    Driver driver1=scenery.scenery.connector_wire.get(wire.id_connector1);
+                                    Driver driver2=scenery.scenery.connector_wire.get(wire.id_connector2);
+                                    driver1.drivers.remove(driver2);
+                                    driver2.drivers.remove(driver1);
                                     scenery.scenery.wires.remove(wire);
                                     btn.setEnabled(true);
                                     break;
@@ -90,12 +94,14 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         Connector connect1=scenery.selection.connetor_prev;
                         Connector connect2=scenery.selection.connetor;
                         Driver driver1=scenery.scenery.connector_wire.get(connect1.id);
-                        Driver driver2=scenery.scenery.connector_wire.get(connect1.id);
+                        Driver driver2=scenery.scenery.connector_wire.get(connect2.id);
                         wire.id_connector1=connect1.id;
                         wire.id_connector2=connect2.id;
                         if(connect1.type_connector==connect2.type_connector){
                             connect1.connected=true;
                             connect2.connected=true;
+                            driver1.drivers.add(driver2);
+                            driver2.drivers.add(driver1);
                             scenery.scenery.wires.add(wire);
                         }else{
                             JOptionPane.showMessageDialog(null,"Conectores no compatibles","Error",JOptionPane.ERROR_MESSAGE);

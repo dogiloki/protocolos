@@ -10,6 +10,7 @@ import enums.DriverType;
 public class MobilePhone extends Driver{
     
     public MobilePhone(){
+        super.setFields();
         MobilePhone.count++;
     }
     

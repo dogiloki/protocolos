@@ -4,7 +4,6 @@ import enums.DriverType;
 import enums.EntryType;
 import objects.wire.connectors.Eternet;
 import objects.wire.connectors.USB;
-import protocols.DHCP;
 
 /**
  *
