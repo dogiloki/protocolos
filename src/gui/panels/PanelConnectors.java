@@ -11,9 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import multitaks.Function;
-import objects.drivers.Driver;
-import objects.wire.Wire;
+import objects.wires.Wire;
 import objects.wire.connectors.Connector;
+import objects.wires.Eternet;
 
 /**
  *
@@ -62,19 +62,7 @@ public final class PanelConnectors extends javax.swing.JPanel{
                     if(connector.connected){
                         int op=JOptionPane.showConfirmDialog(null,"Connector ocupado. ¿Desconectar?","Advertencia",JOptionPane.WARNING_MESSAGE);
                         if(op==0){
-                            for(Wire wire:scenery.scenery.wires){
-                                if(connector.id.equals(wire.id_connector1) || connector.id.equals(wire.id_connector2)){
-                                    scenery.scenery.connectors.get(wire.id_connector1).connected=false;
-                                    scenery.scenery.connectors.get(wire.id_connector2).connected=false;
-                                    Driver driver1=scenery.scenery.connector_wire.get(wire.id_connector1);
-                                    Driver driver2=scenery.scenery.connector_wire.get(wire.id_connector2);
-                                    driver1.drivers.remove(driver2);
-                                    driver2.drivers.remove(driver1);
-                                    scenery.scenery.wires.remove(wire);
-                                    btn.setEnabled(true);
-                                    break;
-                                }
-                            }
+                            // Eliminaci conexión (cable)
                         }
                         return;
                     }
@@ -89,23 +77,24 @@ public final class PanelConnectors extends javax.swing.JPanel{
                     scenery.selection.connetor_prev=scenery.selection.connetor;
                     scenery.selection.connetor=connector;
                     if(scenery.selection.connetor_prev!=null && scenery.selection.connetor!=null && scenery.selection.tool==ToolType.CONNECT){
-                        // Crear cable para conexión
-                        Wire wire=new Wire();
                         Connector connect1=scenery.selection.connetor_prev;
                         Connector connect2=scenery.selection.connetor;
-                        Driver driver1=scenery.scenery.connector_wire.get(connect1.id);
-                        Driver driver2=scenery.scenery.connector_wire.get(connect2.id);
-                        wire.id_connector1=connect1.id;
-                        wire.id_connector2=connect2.id;
-                        if(connect1.type_connector==connect2.type_connector){
-                            connect1.connected=true;
-                            connect2.connected=true;
-                            driver1.drivers.add(driver2);
-                            driver2.drivers.add(driver1);
-                            scenery.scenery.wires.add(wire);
+                        // Crear cable para conexión
+                        Wire wire=new Wire();
+                        switch(connect1.type_connector){
+                            case RJ45:{
+                                wire=new Eternet();
+                            }
+                        }
+                        boolean done_connection1=wire.setConnection1(connect1);
+                        boolean done_connection2=wire.setConnection2(connect2);
+                        if(done_connection1 && done_connection2){
+                            
                         }else{
                             JOptionPane.showMessageDialog(null,"Conectores no compatibles","Error",JOptionPane.ERROR_MESSAGE);
                         }
+                        scenery.scenery.wires.add(wire);
+                        System.out.println(wire);
                         scenery.selection.connetor_prev=null;
                         scenery.selection.connetor=null;
                     }

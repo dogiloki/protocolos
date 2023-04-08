@@ -18,7 +18,7 @@ public class ConnectorList{
     public Map<ConnectorType,Class<?>> connectors=new HashMap<>();
     
     public ConnectorList(){
-        this.connectors.put(ConnectorType.ETERNET,Eternet.class);
+        this.connectors.put(ConnectorType.RJ45,RJ45.class);
         this.connectors.put(ConnectorType.RS_232,RS_232.class);
         this.connectors.put(ConnectorType.USB,USB.class);
     }

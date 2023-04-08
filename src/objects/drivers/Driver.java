@@ -95,7 +95,6 @@ public class Driver extends Entity implements BaseDriver{
     @Override @Execute
     public void setFields(){
         this.mac=Function.assign(this.mac,this.generateMac());
-        System.out.println(this.mac);
         if(this.type==null){
             return;
         }

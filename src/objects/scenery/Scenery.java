@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Execute;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.DirectoryType;
 import multitaks.enums.FieldType;
 import objects.drivers.Driver;
-import objects.wire.Wire;
+import objects.wires.Wire;
 import objects.wire.connectors.Connector;
 
 /**
@@ -40,6 +39,7 @@ public class Scenery{
         
     }
     
+    /*
     @Execute
     public void setConnections(){
         this.drivers.forEach((driver)->{
@@ -87,5 +87,6 @@ public class Scenery{
         });
         return drivers;
     }
+    */
     
 }

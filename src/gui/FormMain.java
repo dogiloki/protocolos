@@ -56,13 +56,20 @@ public final class FormMain extends javax.swing.JFrame{
             // Selección de dispositivo
             this.scenery.selection.driver_prev=this.scenery.selection.driver;
             this.scenery.selection.driver=driver;
+            Driver driver1=this.scenery.selection.driver_prev;
+            Driver driver2=this.scenery.selection.driver;
             // Selección de varios dispositivos
             this.scenery.selection.drivers.clear();
             this.scenery.selection.drivers.add(driver);
+            // Conectar
             if(this.scenery.selection.tool==ToolType.CONNECT){
                 this.scenery.connectors=new PanelConnectors(this.scenery);
                 this.scenery.connectors.setBounds(driver.x,driver.y,50,150);
                 this.scenery.add(this.scenery.connectors);
+            }else
+            if(this.scenery.selection.tool==ToolType.SEND && driver1!=null){
+                this.scenery.selection.driver_prev=null;
+                this.scenery.selection.tool=ToolType.DEFAULT;
             }else
             if(evt.getButton()==3){
                 new DialogDriver(this,true,this.scenery).setVisible(true);
@@ -88,6 +95,7 @@ public final class FormMain extends javax.swing.JFrame{
         btn_connect = new javax.swing.JToggleButton();
         panel_protocols = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        btn_package = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -191,15 +199,24 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btn_package.setText("Paquete");
+        btn_package.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_packageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 155, Short.MAX_VALUE)
+            .addComponent(btn_package, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btn_package)
+                .addGap(0, 311, Short.MAX_VALUE))
         );
 
         panel_protocols.addTab("Red física", jPanel1);
@@ -439,10 +456,17 @@ public final class FormMain extends javax.swing.JFrame{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Driver driver=this.scenery.selection.driver;
-        if(driver!=null && driver.dhcp!=null){
-            driver.dhcp.ip();
+        if(driver==null || driver.dhcp==null){
+            return;
         }
+        driver.dhcp.ip();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_packageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_packageActionPerformed
+        this.scenery.selection.driver_prev=null;
+        this.scenery.selection.driver=null;
+        this.scenery.selection.tool=ToolType.SEND;
+    }//GEN-LAST:event_btn_packageActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -454,6 +478,7 @@ public final class FormMain extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_connect;
+    private javax.swing.JButton btn_package;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_scenery_start;

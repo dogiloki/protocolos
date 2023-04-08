@@ -2,10 +2,9 @@ package objects.wire.connectors;
 
 import enums.ConnectorType;
 import enums.EntryType;
-import java.awt.Color;
-import java.util.UUID;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.FieldType;
+import objects.drivers.Driver;
 import objects.scenery.Entity;
 
 /**
@@ -14,9 +13,6 @@ import objects.scenery.Entity;
  */
 
 public class Connector extends Entity{
-    
-    @Key(value="id")
-    public String id=UUID.randomUUID().toString();
     
     @Key(value="type_entry",type=FieldType.ENUM)
     public EntryType type_entry;
@@ -27,11 +23,14 @@ public class Connector extends Entity{
     @Key(value="connected")
     public boolean connected=false;
     
-    @Key(value="Color")
-    public int color;
+    public Driver driver;
     
     public Connector(){
         
+    }
+    
+    public Connector(Driver driver){
+        this.driver=driver;
     }
     
 }

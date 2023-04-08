@@ -7,6 +7,6 @@ package enums;
 
 public enum ConnectorType{
     
-    USB, ETERNET, RS_232
+    USB, RJ45, RS_232
     
 }

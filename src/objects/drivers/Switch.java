@@ -2,7 +2,7 @@ package objects.drivers;
 
 import enums.DriverType;
 import enums.EntryType;
-import objects.wire.connectors.Eternet;
+import objects.wire.connectors.RJ45;
 
 /**
  *
@@ -25,12 +25,12 @@ public class Switch extends Driver{
     
     @Override
     public void setConnectors(){
-        this.connectors.add(new Eternet(EntryType.FEMALE));
-        this.connectors.add(new Eternet(EntryType.FEMALE));
-        this.connectors.add(new Eternet(EntryType.FEMALE));
-        this.connectors.add(new Eternet(EntryType.FEMALE));
-        this.connectors.add(new Eternet(EntryType.FEMALE));
-        this.connectors.add(new Eternet(EntryType.FEMALE));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
+        this.connectors.add(new RJ45(EntryType.FEMALE,this));
     }
     
 }

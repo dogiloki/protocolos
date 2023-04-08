@@ -44,13 +44,13 @@ public class PanelScenery extends javax.swing.JPanel{
         });
         // Renderizar conexiones
         this.scenery.wires.forEach((wire)->{
-            Driver driver1=this.scenery.connector_wire.get(wire.id_connector1);
-            Driver driver2=this.scenery.connector_wire.get(wire.id_connector2);
+            Driver driver1=wire.getConnection1().connector_female.driver;
+            Driver driver2=wire.getConnection2().connector_female.driver;
             wire.index_x=driver1.x+driver1.width/2;
             wire.index_y=driver1.y+driver1.height/2;
             wire.end_x=driver2.x+driver2.width/2;
             wire.end_y=driver2.y+driver2.height/2;
-            Color color=new Color(this.scenery.connectors.get(wire.id_connector1).color);
+            Color color=new Color(wire.color);
             g.setColor(color);
             Graphics2D g2d=(Graphics2D) g;
             g2d.setStroke(new BasicStroke(3));
@@ -64,8 +64,8 @@ public class PanelScenery extends javax.swing.JPanel{
     
     public void addDriver(Driver driver){
         driver.connectors.forEach((connector)->{
-            this.scenery.connector_wire.put(connector.id,driver);
-            this.scenery.connectors.put(connector.id,connector);
+            //this.scenery.connector_wire.put(connector.id,driver);
+            //this.scenery.connectors.put(connector.id,connector);
         });
         this.scenery.drivers.add(driver);
     }
@@ -90,7 +90,7 @@ public class PanelScenery extends javax.swing.JPanel{
             return;
         }
         Driver driver=this.selection.driver;
-        if(!this.scenery.listDrivers(driver).isEmpty()){
+        if(!this.scenery.drivers.isEmpty()){
            JOptionPane.showMessageDialog(null,"El dispositivo esta conectado","Error",JOptionPane.ERROR_MESSAGE);
            return; 
         }
