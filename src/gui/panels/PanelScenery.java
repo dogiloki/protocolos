@@ -44,8 +44,8 @@ public class PanelScenery extends javax.swing.JPanel{
         });
         // Renderizar conexiones
         this.scenery.wires.forEach((wire)->{
-            Driver driver1=wire.getConnection1().connector_female.driver;
-            Driver driver2=wire.getConnection2().connector_female.driver;
+            Driver driver1=wire.getDriver1();
+            Driver driver2=wire.getDriver2();
             wire.index_x=driver1.x+driver1.width/2;
             wire.index_y=driver1.y+driver1.height/2;
             wire.end_x=driver2.x+driver2.width/2;

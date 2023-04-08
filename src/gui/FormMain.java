@@ -48,6 +48,7 @@ public final class FormMain extends javax.swing.JFrame{
     }
     
     public void selectDriver(MouseEvent evt){
+        this.scenery.selection.drivers.clear();
         this.scenery.getDriver(evt.getX(),evt.getY(),(driver)->{
             this.scenery.selection.x=evt.getX();
             this.scenery.selection.y=evt.getY();
@@ -59,15 +60,16 @@ public final class FormMain extends javax.swing.JFrame{
             Driver driver1=this.scenery.selection.driver_prev;
             Driver driver2=this.scenery.selection.driver;
             // Selección de varios dispositivos
-            this.scenery.selection.drivers.clear();
             this.scenery.selection.drivers.add(driver);
-            // Conectar
             if(this.scenery.selection.tool==ToolType.CONNECT){
+                // Conectar
                 this.scenery.connectors=new PanelConnectors(this.scenery);
                 this.scenery.connectors.setBounds(driver.x,driver.y,50,150);
                 this.scenery.add(this.scenery.connectors);
             }else
             if(this.scenery.selection.tool==ToolType.SEND && driver1!=null){
+                // Enviar un paquete
+                
                 this.scenery.selection.driver_prev=null;
                 this.scenery.selection.tool=ToolType.DEFAULT;
             }else

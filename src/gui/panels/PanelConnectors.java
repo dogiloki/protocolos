@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import multitaks.Function;
+import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;
 import objects.wires.Eternet;
@@ -62,7 +63,7 @@ public final class PanelConnectors extends javax.swing.JPanel{
                     if(connector.connected){
                         int op=JOptionPane.showConfirmDialog(null,"Connector ocupado. ¿Desconectar?","Advertencia",JOptionPane.WARNING_MESSAGE);
                         if(op==0){
-                            // Eliminaci conexión (cable)
+                            // Eliminación conexión (cable)
                         }
                         return;
                     }
@@ -89,12 +90,16 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         boolean done_connection1=wire.setConnection1(connect1);
                         boolean done_connection2=wire.setConnection2(connect2);
                         if(done_connection1 && done_connection2){
-                            
+                            Driver driver1=wire.getDriver1();
+                            Driver driver2=wire.getDriver2();
+                            connect1.connected=true;
+                            connect2.connected=true;
+                            driver1.drivers.add(driver2);
+                            driver2.drivers.add(driver1);
+                            scenery.scenery.wires.add(wire);
                         }else{
                             JOptionPane.showMessageDialog(null,"Conectores no compatibles","Error",JOptionPane.ERROR_MESSAGE);
                         }
-                        scenery.scenery.wires.add(wire);
-                        System.out.println(wire);
                         scenery.selection.connetor_prev=null;
                         scenery.selection.connetor=null;
                     }

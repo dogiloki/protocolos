@@ -30,6 +30,20 @@ public class Wire extends Line implements BaseWire{
         
     }
     
+    public Driver getDriver1(){
+        if(this.connection1==null || this.connection1.connector_female==null){
+            return null;
+        }
+        return this.connection1.connector_female.driver;
+    }
+    
+    public Driver getDriver2(){
+        if(this.connection2==null || this.connection2.connector_female==null){
+            return null;
+        }
+        return this.connection2.connector_female.driver;
+    }
+    
     @Override
     public boolean setConnection1(Connector connector_female){
         if(this.connector1==null){
@@ -74,6 +88,11 @@ public class Wire extends Line implements BaseWire{
     @Override
     public Connection getConnection2(){
         return this.connection2;
+    }
+
+    @Override
+    public boolean send(Driver driver1, Driver driver2){
+        return false;
     }
     
     
