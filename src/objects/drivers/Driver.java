@@ -10,6 +10,8 @@ import objects.drivers.enums.BoxType;
 import objects.scenery.Entity;
 import interfaces.BaseDriver;
 import java.util.ArrayList;
+import multitaks.annotations.directory.Execute;
+import protocols.DHCP;
 
 /**
  *
@@ -32,6 +34,9 @@ public class Driver extends Entity implements BaseDriver{
     @Config(label="IPv6",box=BoxType.TEXT) @Key(value="ipv6")
     public String ipv6;
     
+    @Config(label="Máscara de subred",box=BoxType.TEXT) @Key(value="subnet_mask")
+    public String subnet_mask;
+    
     @Config(label="MAC",box=BoxType.TEXT) @Key(value="MAC")
     public String mac;
     
@@ -41,6 +46,10 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="type",type=FieldType.ENUM)
     public DriverType type;
     
+    // Protocolos
+    @Key(value="dhcp")
+    public boolean dhcp=false;
+    
     public boolean status=true;
     
     public Driver(boolean increase){
@@ -48,11 +57,13 @@ public class Driver extends Entity implements BaseDriver{
             Driver.count++;
         }
         this.setConnectors();
+        this.setFields();
     }
     
     public Driver(){
         Driver.count++;
         this.setConnectors();
+        this.setFields();
     }
 
     @Override
@@ -65,9 +76,20 @@ public class Driver extends Entity implements BaseDriver{
         this.status=false;
     }
 
-    @Override
+    @Override @Execute
     public void setFields(){
-        
+        if(this.type==null){
+            return;
+        }
+        switch(this.type){
+            case ROUTER:{
+                if(this.ipv4==null){
+                    this.ipv4="192.168."+Router.count+".1";
+                }
+                this.dhcp=true;
+                break;
+            }
+        }
     }
 
     @Override

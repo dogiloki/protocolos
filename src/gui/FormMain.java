@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
+import protocols.DHCP;
 
 /**
  *
@@ -80,7 +81,7 @@ public final class FormMain extends javax.swing.JFrame{
     private void initComponents() {
 
         panel_protocols = new javax.swing.JPanel();
-        btn_package = new javax.swing.JButton();
+        btn_dhcp = new javax.swing.JButton();
         panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
         panel_tools = new javax.swing.JPanel();
@@ -96,18 +97,23 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
-        btn_package.setText("Paquete");
+        btn_dhcp.setText("DHCP");
+        btn_dhcp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_dhcpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_protocolsLayout = new javax.swing.GroupLayout(panel_protocols);
         panel_protocols.setLayout(panel_protocolsLayout);
         panel_protocolsLayout.setHorizontalGroup(
             panel_protocolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn_package, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(btn_dhcp, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
         );
         panel_protocolsLayout.setVerticalGroup(
             panel_protocolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_protocolsLayout.createSequentialGroup()
-                .addComponent(btn_package)
+                .addComponent(btn_dhcp)
                 .addGap(0, 360, Short.MAX_VALUE))
         );
 
@@ -291,6 +297,14 @@ public final class FormMain extends javax.swing.JFrame{
         this.resizablePanel(this.panel_drivers,this.drivers);
     }//GEN-LAST:event_formComponentResized
 
+    private void btn_dhcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dhcpActionPerformed
+        Driver driver=this.scenery.selection.driver;
+        if(!driver.dhcp){
+            return;
+        }
+        DHCP.aim(driver).all(this.scenery.scenery.listDrivers(driver));
+    }//GEN-LAST:event_btn_dhcpActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -301,7 +315,7 @@ public final class FormMain extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_connect;
-    private javax.swing.JButton btn_package;
+    private javax.swing.JButton btn_dhcp;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_scenery_start;

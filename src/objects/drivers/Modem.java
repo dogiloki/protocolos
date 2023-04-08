@@ -11,7 +11,6 @@ public class Modem extends Driver{
     
     public Modem(){
         Modem.count++;
-        this.setFields();
     }
     
     @Override

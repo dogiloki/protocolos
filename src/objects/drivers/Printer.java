@@ -11,7 +11,6 @@ public class Printer extends Driver{
     
     public Printer(){
         Printer.count++;
-        this.setFields();
     }
     
     @Override

@@ -12,7 +12,6 @@ import objects.wire.connectors.Eternet;
 public class Switch extends Driver{
     public Switch(){
         Switch.count++;
-        this.setFields();
     }
     
     @Override

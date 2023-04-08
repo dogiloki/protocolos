@@ -11,7 +11,6 @@ public class MobilePhone extends Driver{
     
     public MobilePhone(){
         MobilePhone.count++;
-        this.setFields();
     }
     
     @Override

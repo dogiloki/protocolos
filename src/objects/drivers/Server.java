@@ -12,7 +12,6 @@ public class Server extends Driver{
     
     public Server(){
         Server.count++;
-        this.setFields();
     }
     
     @Override

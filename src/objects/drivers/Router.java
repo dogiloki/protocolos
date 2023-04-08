@@ -4,6 +4,7 @@ import enums.DriverType;
 import enums.EntryType;
 import objects.wire.connectors.Eternet;
 import objects.wire.connectors.USB;
+import protocols.DHCP;
 
 /**
  *
@@ -12,9 +13,11 @@ import objects.wire.connectors.USB;
 
 public class Router extends Driver{
     
+    public static int count=-1;
+    
     public Router(){
+        super.setFields();
         Router.count++;
-        this.setFields();
     }
     
     @Override

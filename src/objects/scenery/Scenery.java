@@ -20,6 +20,10 @@ import objects.wire.connectors.Connector;
 @Directory(type=DirectoryType.JSON)
 public class Scenery{
     
+    public interface Callback{
+        public void execute(Driver driver);
+    }
+    
     @Key(value="drivers",type=FieldType.LIST)
     public List<Driver> drivers=new ArrayList<>();
     @Key(value="wires",type=FieldType.LIST)
@@ -36,6 +40,12 @@ public class Scenery{
     }
     
     public List<Driver> listDrivers(Driver root_driver){
+        return this._listDrivers(root_driver,null);
+    }
+    public List<Driver> listDrivers(Driver root_driver, Callback action){
+        return this._listDrivers(root_driver,action);
+    }
+    private List<Driver> _listDrivers(Driver root_driver, Callback action){
         List<Driver> drivers=new ArrayList<>();
         root_driver.connectors.forEach((connector)->{
             if(connector.connected){
@@ -45,9 +55,15 @@ public class Scenery{
                         Driver driver2=this.connector_wire.get(wire.id_connector2);
                         if(driver1!=root_driver){
                             drivers.add(driver1);
+                            if(action!=null){
+                                action.execute(driver1);
+                            }
                         }
                         if(driver2!=root_driver){
                             drivers.add(driver2);
+                            if(action!=null){
+                                action.execute(driver2);
+                            }
                         }
                     }
                 });

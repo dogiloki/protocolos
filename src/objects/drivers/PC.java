@@ -15,7 +15,6 @@ public class PC extends Driver{
     
     public PC(){
         PC.count++;
-        this.setFields();
     }
     
     @Override
