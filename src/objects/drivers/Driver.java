@@ -1,5 +1,6 @@
 package objects.drivers;
 
+import enums.ConnectorType;
 import enums.DriverType;
 import java.util.List;
 import multitaks.annotations.directory.Key;
@@ -10,6 +11,8 @@ import objects.drivers.enums.BoxType;
 import objects.scenery.Entity;
 import interfaces.BaseDriver;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import multitaks.Function;
 import multitaks.annotations.directory.Execute;
 import protocols.DHCP;
@@ -38,6 +41,9 @@ public class Driver extends Entity implements BaseDriver{
     @Config(label="Máscara de subred",box=BoxType.TEXT) @Key(value="subnet_mask")
     public String subnet_mask;
     
+    @Config(label="Servidor DHCP",box=BoxType.TEXT) @Key(value="server_dhcp")
+    public String server_dhcp;
+    
     @Config(label="MAC",box=BoxType.TEXT) @Key(value="MAC")
     public String mac;
     
@@ -47,7 +53,13 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="type",type=FieldType.ENUM)
     public DriverType type;
     
+    // Dispositivos a los que esta conectado
     public List<Driver> drivers=new ArrayList<>();
+    
+    // Identificar si el dispositivo esta envíando un paquete
+    public Map<Connector,protocols.Package> sending_packages=new HashMap<>();
+    // Identificar si el dispositivo esta reciviendo un paquete
+    public Map<Connector,protocols.Package> receiving_packages=new HashMap<>();
     
     // Protocolos
     
@@ -80,6 +92,24 @@ public class Driver extends Entity implements BaseDriver{
             mac+=":";
         }
         return mac.substring(0,mac.length()-1).toUpperCase();
+    }
+    
+    public Driver getDriverDHCP(){
+        for(Driver driver:this.drivers){
+            if(driver.ipv4.equals(this.server_dhcp)){
+                return driver;
+            }
+        }
+        return null;
+    }
+    
+    public Connector getConnector(ConnectorType type_connector){
+        for(Connector connector:this.connectors){
+            if(connector.connected && connector.type_connector==type_connector){
+                return connector;
+            }
+        }
+        return null;
     }
 
     @Override

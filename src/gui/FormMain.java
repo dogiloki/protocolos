@@ -1,15 +1,19 @@
 package gui;
 
+import enums.ConnectorType;
+import enums.EtherType;
 import gui.panels.PanelDrivers;
 import gui.panels.PanelScenery;
 import enums.ToolType;
 import gui.panels.PanelConnectors;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
-import protocols.DHCP;
 
 /**
  *
@@ -68,10 +72,18 @@ public final class FormMain extends javax.swing.JFrame{
                 this.scenery.add(this.scenery.connectors);
             }else
             if(this.scenery.selection.tool==ToolType.SEND && driver1!=null){
-                // Enviar un paquete
-                
-                this.scenery.selection.driver_prev=null;
+                // Asignar envio de paquete
+                if(driver1.getDriverDHCP()==null){
+                    JOptionPane.showMessageDialog(null,"El dispositivo no esta en una red","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    protocols.Package pack=new protocols.Package(EtherType.IPv4,driver1,driver2,"Hola mundo");
+                    pack.x=driver1.x+(driver1.width/2);
+                    pack.y=driver1.y+(driver1.height/2);
+                    driver1.sending_packages.put(driver1.getConnector(ConnectorType.RJ45),pack);
+                }
                 this.scenery.selection.tool=ToolType.DEFAULT;
+                this.scenery.selection.driver_prev=null;
+                this.scenery.start(this.panel_scenery);
             }else
             if(evt.getButton()==3){
                 new DialogDriver(this,true,this.scenery).setVisible(true);
@@ -152,6 +164,11 @@ public final class FormMain extends javax.swing.JFrame{
         );
 
         btn_scenery_start.setText("Simular");
+        btn_scenery_start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_scenery_startActionPerformed(evt);
+            }
+        });
 
         btn_remove.setText("Eliminar");
         btn_remove.addActionListener(new java.awt.event.ActionListener() {
@@ -469,6 +486,10 @@ public final class FormMain extends javax.swing.JFrame{
         this.scenery.selection.driver=null;
         this.scenery.selection.tool=ToolType.SEND;
     }//GEN-LAST:event_btn_packageActionPerformed
+
+    private void btn_scenery_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_scenery_startActionPerformed
+        this.scenery.start(this.panel_scenery);
+    }//GEN-LAST:event_btn_scenery_startActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

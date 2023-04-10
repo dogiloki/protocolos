@@ -27,12 +27,17 @@ public class DHCP{
         this.server_driver.subnet_mask="255.255.255.0";
     }
     
+    private void setServerDHC(Driver driver){
+        driver.server_dhcp=this.server_driver.ipv4;
+    }
+    
     public void IPv4(){
         if(this.server_driver.dhcp==null){
             return;
         }
         List<Driver> child_drivers=this.server_driver.drivers;
         String ip=this.server_driver.ipv4;
+        this.server_driver.server_dhcp=this.server_driver.ipv4;
         String[] bits=ip.replaceAll(" ","").split("\\.");
         int index=0;
         while(index<child_drivers.size()){
@@ -52,6 +57,7 @@ public class DHCP{
                 }
                 if(!exists){
                     driver.ipv4=new_ip;
+                    this.setServerDHC(driver);
                     index++;
                     break;
                 }
@@ -66,6 +72,7 @@ public class DHCP{
         List<Driver> child_drivers=this.server_driver.drivers;
         this.server_driver.ipv6=Function.assign(this.server_driver.ipv6,this.generateIPv6());
         String ip=this.server_driver.ipv6;
+        this.server_driver.server_dhcp=this.server_driver.ipv4;
         int index=0;
         while(index<child_drivers.size()){
             Driver driver=child_drivers.get(index);
@@ -83,6 +90,7 @@ public class DHCP{
             }
             if(!exists){
                 driver.ipv6=new_ip;
+                this.setServerDHC(driver);
                 index++;
             }
         }
