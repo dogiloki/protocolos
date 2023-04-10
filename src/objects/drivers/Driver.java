@@ -57,9 +57,9 @@ public class Driver extends Entity implements BaseDriver{
     public List<Driver> drivers=new ArrayList<>();
     
     // Identificar si el dispositivo esta envíando un paquete
-    public Map<Connector,protocols.Package> sending_packages=new HashMap<>();
+    public Map<Connector,List<protocols.Package>> sending_packages=new HashMap<>();
     // Identificar si el dispositivo esta reciviendo un paquete
-    public Map<Connector,protocols.Package> receiving_packages=new HashMap<>();
+    public Map<Connector,List<protocols.Package>> receiving_packages=new HashMap<>();
     
     // Protocolos
     
@@ -110,6 +110,24 @@ public class Driver extends Entity implements BaseDriver{
             }
         }
         return null;
+    }
+    
+    public void addSendingPackage(Connector connector, protocols.Package pack){
+        List<protocols.Package> packs=this.sending_packages.get(connector);
+        if(packs==null){
+            packs=new ArrayList<>();
+        }
+        packs.add(pack);
+        this.sending_packages.put(connector,packs);
+    }
+    
+    public void addReceivingPackage(Connector connector, protocols.Package pack){
+        List<protocols.Package> packs=this.receiving_packages.get(connector);
+        if(packs==null){
+            packs=new ArrayList<>();
+        }
+        packs.add(pack);
+        this.receiving_packages.put(connector,packs);
     }
 
     @Override

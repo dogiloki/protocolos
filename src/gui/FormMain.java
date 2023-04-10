@@ -77,13 +77,10 @@ public final class FormMain extends javax.swing.JFrame{
                     JOptionPane.showMessageDialog(null,"El dispositivo no esta en una red","Error",JOptionPane.ERROR_MESSAGE);
                 }else{
                     protocols.Package pack=new protocols.Package(EtherType.IPv4,driver1,driver2,"Hola mundo");
-                    pack.x=driver1.x+(driver1.width/2);
-                    pack.y=driver1.y+(driver1.height/2);
-                    driver1.sending_packages.put(driver1.getConnector(ConnectorType.RJ45),pack);
+                    driver1.addSendingPackage(driver1.getConnector(ConnectorType.RJ45),pack);
                 }
                 this.scenery.selection.tool=ToolType.DEFAULT;
                 this.scenery.selection.driver_prev=null;
-                this.scenery.start(this.panel_scenery);
             }else
             if(evt.getButton()==3){
                 new DialogDriver(this,true,this.scenery).setVisible(true);
@@ -103,10 +100,11 @@ public final class FormMain extends javax.swing.JFrame{
         panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
         panel_tools = new javax.swing.JPanel();
-        btn_scenery_start = new javax.swing.JButton();
         btn_remove = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_connect = new javax.swing.JToggleButton();
+        btn_sumulator = new javax.swing.JToggleButton();
+        jButton2 = new javax.swing.JButton();
         panel_protocols = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         btn_package = new javax.swing.JButton();
@@ -163,13 +161,6 @@ public final class FormMain extends javax.swing.JFrame{
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        btn_scenery_start.setText("Simular");
-        btn_scenery_start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_scenery_startActionPerformed(evt);
-            }
-        });
-
         btn_remove.setText("Eliminar");
         btn_remove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,30 +182,47 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
+        btn_sumulator.setText("Simulación");
+        btn_sumulator.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                btn_sumulatorItemStateChanged(evt);
+            }
+        });
+
+        jButton2.setText("Temp");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_toolsLayout = new javax.swing.GroupLayout(panel_tools);
         panel_tools.setLayout(panel_toolsLayout);
         panel_toolsLayout.setHorizontalGroup(
             panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_toolsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_scenery_start)
+                .addComponent(btn_sumulator)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_remove)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_connect)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
-                .addContainerGap(511, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panel_toolsLayout.setVerticalGroup(
             panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_toolsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_toolsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_scenery_start)
                     .addComponent(btn_remove)
                     .addComponent(btn_save)
-                    .addComponent(btn_connect))
+                    .addComponent(btn_connect)
+                    .addComponent(btn_sumulator)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -487,9 +495,24 @@ public final class FormMain extends javax.swing.JFrame{
         this.scenery.selection.tool=ToolType.SEND;
     }//GEN-LAST:event_btn_packageActionPerformed
 
-    private void btn_scenery_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_scenery_startActionPerformed
-        this.scenery.start(this.panel_scenery);
-    }//GEN-LAST:event_btn_scenery_startActionPerformed
+    private void btn_sumulatorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btn_sumulatorItemStateChanged
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            this.scenery.start(this.panel_scenery);
+        }else{
+            this.scenery.stop();
+        }
+    }//GEN-LAST:event_btn_sumulatorItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Driver driver=this.scenery.selection.driver;
+        if(driver==null){
+            return;
+        }
+        System.out.println("Driver: "+driver);
+        System.out.println("Envios: "+driver.sending_packages);
+        System.out.println("Recibidos: "+driver.receiving_packages);
+        System.out.println("\n");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -504,8 +527,9 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JButton btn_package;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_save;
-    private javax.swing.JButton btn_scenery_start;
+    private javax.swing.JToggleButton btn_sumulator;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

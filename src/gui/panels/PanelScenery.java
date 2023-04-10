@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.List;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -49,9 +50,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
             Icon icon=new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(driver.width,driver.height,Image.SCALE_DEFAULT));
             icon.paintIcon(this,g,driver.x,driver.y);
             // Renderizar paquetes
-            driver.sending_packages.forEach((connetor,send_package)->{
+            driver.sending_packages.forEach((connetor,list_send_package)->{
                 g.setColor(Color.BLACK);
-                g.fillRect(send_package.x,send_package.y,send_package.width,send_package.height);
+                list_send_package.forEach((send_package)->{
+                    g.fillRect(send_package.x,send_package.y,send_package.width,send_package.height);
+                });
             });
         });
         // Renderizar conexiones
@@ -76,56 +79,84 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     
     public int time=0;
     public int time_speed=10;
-    public int time_total=2500;
+    public int time_total=2000;
     public JPanel panel;
+    private boolean stop=true;
     
     public void start(JPanel panel){
         this.panel=panel;
+        this.stop=false;
+        this.time=0;
         new Thread(this).start();
+    }
+    
+    public void stop(){
+        this.stop=true;
     }
     
     @Override
     public void run(){
-        for(this.time=this.time_speed; this.time<this.time_total; this.time+=this.time_speed){
-            this.scenery.drivers.forEach((driver)->{
-                try{
-                    // Cambiar valores del paquete para GUI
-                    for(Map.Entry<Connector,protocols.Package> entry:driver.sending_packages.entrySet()){
-                        Connector connetor=entry.getKey();
-                        protocols.Package send_package=entry.getValue();
-                        Driver driver1=send_package.header.source_driver;
-                        Driver driver2=send_package.header.destination_driver;
-                        Driver server_driver=driver1.getDriverDHCP();
-                        if(driver.dhcp==null){
-                            driver2=driver1.getDriverDHCP();
-                        }else{
-                            driver1=driver1.getDriverDHCP();
-                        }
-                        if(driver1==null || driver2==null){
-                            continue;
-                        }
-                        //Driver server_driver=driver1.getDriverDHCP();
-                        int index_x=driver1.x+(driver1.width/2);
-                        int index_y=driver1.y+(driver1.height/2);
-                        int end_x=driver2.x+(driver2.width/2);
-                        int end_y=driver2.y+(driver2.height/2);
-                        int distance_x=end_x-index_x;
-                        int distance_y=end_y-index_y;
-                        int x=(int)((distance_x/(double)this.time_total)*this.time);
-                        int y=(int)((distance_y/(double)this.time_total)*this.time);
-                        send_package.x=index_x+x;
-                        send_package.y=index_y+y;
-                        if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
-                            driver.sending_packages.remove(connetor);
-                            server_driver.receiving_packages.put(connetor,send_package);
-                        }
-                    }
-                    Thread.sleep((int)this.time_speed);
-                    this.panel.updateUI();
-                }catch(Exception ex){
-                    ex.printStackTrace();
+        out:while(!this.stop){
+            for(this.time=0; this.time<this.time_total; this.time+=this.time_speed){
+                if(this.stop){
+                    break out;
                 }
-            });
+                for(Driver driver:this.scenery.drivers){
+                    if(this.stop){
+                        break out;
+                    }
+                    try{
+                        // Cambiar valores del paquete para GUI
+                        for(Map.Entry<Connector,List<protocols.Package>> entry:driver.sending_packages.entrySet()){
+                            if(this.stop){
+                                break out;
+                            }
+                            Connector connector=entry.getKey();
+                            List<protocols.Package> send_packages=entry.getValue();
+                            if(send_packages==null || send_packages.isEmpty()){
+                                continue;
+                            }
+                            protocols.Package send_package=send_packages.get(0);
+                            Driver driver1=send_package.header.source_driver;
+                            Driver driver2=send_package.header.destination_driver;
+                            Driver server_driver=driver1.getDriverDHCP();
+                            if(driver.dhcp==null){
+                                driver2=driver1.getDriverDHCP();
+                            }else{
+                                driver1=driver1.getDriverDHCP();
+                            }
+                            if(driver1==null || driver2==null){
+                                continue;
+                            }
+                            //Driver server_driver=driver1.getDriverDHCP();
+                            int index_x=driver1.x+(driver1.width/2);
+                            int index_y=driver1.y+(driver1.height/2);
+                            int end_x=driver2.x+(driver2.width/2);
+                            int end_y=driver2.y+(driver2.height/2);
+                            int distance_x=end_x-index_x;
+                            int distance_y=end_y-index_y;
+                            int x=(int)((distance_x/(double)this.time_total)*send_package.count);
+                            int y=(int)((distance_y/(double)this.time_total)*send_package.count);
+                            send_package.x=index_x+x;
+                            send_package.y=index_y+y;
+                            send_package.count+=this.time_speed;
+                            if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
+                                if(driver2.dhcp==null){
+                                    driver2.addReceivingPackage(server_driver.getConnector(connector.type_connector),send_package);
+                                }else{
+                                    driver2.addSendingPackage(server_driver.getConnector(connector.type_connector),send_package);
+                                }
+                                send_package.count=0;
+                                driver.sending_packages.get(connector).remove(send_package);
+                            }
+                        }
+                        Thread.sleep((int)this.time_speed);
+                        this.panel.updateUI();
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
         }
     }
     

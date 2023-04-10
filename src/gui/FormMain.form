@@ -178,14 +178,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_scenery_start" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_sumulator" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="btn_remove" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_connect" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_save" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="511" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -194,10 +196,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btn_scenery_start" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_remove" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_save" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_connect" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_sumulator" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -205,14 +208,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btn_scenery_start">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Simular"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_scenery_startActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btn_remove">
           <Properties>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
@@ -235,6 +230,22 @@
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="btn_connectItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="btn_sumulator">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Simulaci&#xf3;n"/>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="btn_sumulatorItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Temp"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
