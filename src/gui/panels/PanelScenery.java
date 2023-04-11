@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.Function;
 import objects.drivers.Driver;
+import objects.scenery.Count;
 import objects.scenery.Scenery;
 import objects.scenery.ScenerySelection;
 import objects.wire.connectors.Connector;
@@ -161,6 +162,32 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     }
     
     public void addDriver(Driver driver){
+        int count=0;
+        int index=0;
+        boolean meeting=false;
+        for(Count obj_count:this.scenery.counts){
+            if(obj_count.type==driver.type){
+                count=obj_count.value;
+                meeting=true;
+                break;
+            }else{
+                index++;
+            }
+        }
+        count++;
+        if(meeting){
+            this.scenery.counts.set(index,new Count(driver.type,count));
+        }else{
+            this.scenery.counts.add(new Count(driver.type,count));
+        }
+        switch(driver.type){
+            case ROUTER:{
+                driver.ipv4="192.168."+count+".1";
+                break;
+            }
+        }
+        driver.name=driver.type.toString()+count;
+        driver.host=driver.name;
         this.scenery.drivers.add(driver);
     }
     
@@ -184,7 +211,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
             return;
         }
         Driver driver=this.selection.driver;
-        if(!this.scenery.drivers.isEmpty()){
+        if(!driver.drivers.isEmpty()){
            JOptionPane.showMessageDialog(null,"El dispositivo esta conectado","Error",JOptionPane.ERROR_MESSAGE);
            return; 
         }

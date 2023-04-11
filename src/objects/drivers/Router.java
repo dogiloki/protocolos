@@ -12,19 +12,14 @@ import objects.wire.connectors.USB;
 
 public class Router extends Driver{
     
-    public static int count=-1;
-    
     public Router(){
         super.setFields();
-        Router.count++;
     }
     
     @Override
     public void setFields(){
         this.type=DriverType.ROUTER;
         this.src_icon="/assets/drivers/router.png";
-        this.name=this.type.toString();
-        this.host=this.name;
     }
     
     @Override

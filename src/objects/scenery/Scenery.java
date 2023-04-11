@@ -1,5 +1,6 @@
 package objects.scenery;
 
+import enums.DriverType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,8 @@ public class Scenery{
     public List<Driver> drivers=new ArrayList<>();
     @Key(value="wires",type=FieldType.LIST)
     public List<Wire> wires=new ArrayList<>();
+    @Key(value="counts",type=FieldType.LIST)
+    public List<Count> counts=new ArrayList<>();
     
     // Almacenar conector con ID
     //public Map<String,Connector> connectors=new HashMap<>();

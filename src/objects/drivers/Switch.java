@@ -10,17 +10,15 @@ import objects.wire.connectors.RJ45;
  */
 
 public class Switch extends Driver{
+    
     public Switch(){
         super.setFields();
-        Switch.count++;
     }
     
     @Override
     public void setFields(){
         this.type=DriverType.SWITCH;
         this.src_icon="/assets/drivers/switch.png";
-        this.name=this.type.toString();
-        this.host=this.name;
     }
     
     @Override

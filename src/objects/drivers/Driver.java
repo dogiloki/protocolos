@@ -24,7 +24,8 @@ import protocols.DHCP;
 
 public class Driver extends Entity implements BaseDriver{
     
-    public static int count=-1;
+    @Key(value="count")
+    public static int count=0;
     
     @Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
     public String name;
@@ -68,15 +69,11 @@ public class Driver extends Entity implements BaseDriver{
     public boolean status=true;
     
     public Driver(boolean increase){
-        if(increase){
-            Driver.count++;
-        }
         this.setConnectors();
         this.setFields();
     }
     
     public Driver(){
-        Driver.count++;
         this.setConnectors();
         this.setFields();
     }
@@ -148,9 +145,6 @@ public class Driver extends Entity implements BaseDriver{
         }
         switch(this.type){
             case ROUTER:{
-                if(this.ipv4==null){
-                    this.ipv4="192.168."+Router.count+".1";
-                }
                 this.dhcp=DHCP.aim(this);
                 break;
             }
