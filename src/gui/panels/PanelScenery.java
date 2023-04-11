@@ -17,6 +17,7 @@ import objects.scenery.Count;
 import objects.scenery.Scenery;
 import objects.scenery.ScenerySelection;
 import objects.wire.connectors.Connector;
+import services.DNS;
 
 /**
  *
@@ -189,6 +190,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
         driver.name=driver.type.toString()+count;
         driver.host=driver.name;
         this.scenery.drivers.add(driver);
+        DNS.put(driver.ipv4_public,driver);
     }
     
     public void getDriver(int x, int y, gettingDriver action){

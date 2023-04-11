@@ -7,6 +7,6 @@ package enums;
 
 public enum EtherType{
     
-    IPv4
+    IPv4, TCP
     
 }

@@ -39,6 +39,9 @@ public class Driver extends Entity implements BaseDriver{
     @Config(label="IPv6",box=BoxType.TEXT) @Key(value="ipv6")
     public String ipv6;
     
+    @Config(label="IPv4 pública",box=BoxType.TEXT) @Key(value="ipv4_public")
+    public String ipv4_public;
+    
     @Config(label="Máscara de subred",box=BoxType.TEXT) @Key(value="subnet_mask")
     public String subnet_mask;
     
@@ -87,6 +90,18 @@ public class Driver extends Entity implements BaseDriver{
                 mac+=str;
             }
             mac+=":";
+        }
+        return mac.substring(0,mac.length()-1).toUpperCase();
+    }
+    
+    public String generateIPv4Public(){
+        String ip="";
+        for(int a=0; a<4; a++){
+            for(int b=0; b<2; b++){
+                int num=(int)(Math.random()*9);
+                mac+=String.valueOf(num);
+            }
+            mac+=".";
         }
         return mac.substring(0,mac.length()-1).toUpperCase();
     }
@@ -140,6 +155,7 @@ public class Driver extends Entity implements BaseDriver{
     @Override @Execute
     public void setFields(){
         this.mac=Function.assign(this.mac,this.generateMac());
+        this.ipv4_public=Function.assign(this.ipv4_public,this.generateIPv4Public());
         if(this.type==null){
             return;
         }
