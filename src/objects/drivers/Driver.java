@@ -148,6 +148,10 @@ public class Driver extends Entity implements BaseDriver{
                 this.dhcp=DHCP.aim(this);
                 break;
             }
+            case SERVER:{
+                
+                break;
+            }
         }
     }
 
