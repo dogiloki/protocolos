@@ -24,7 +24,6 @@ public class DHCP{
     public void ip(){
         this.IPv4();
         this.IPv6();
-        this.server_driver.subnet_mask="255.255.255.0";
     }
     
     private void setServerDHC(Driver driver){
@@ -38,6 +37,7 @@ public class DHCP{
         List<Driver> child_drivers=this.server_driver.drivers;
         String ip=this.server_driver.ipv4;
         this.server_driver.server_dhcp=this.server_driver.ipv4;
+        this.server_driver.subnet_mask="255.255.255.0";
         String[] bits=ip.replaceAll(" ","").split("\\.");
         int index=0;
         while(index<child_drivers.size()){
@@ -73,6 +73,7 @@ public class DHCP{
         this.server_driver.ipv6=Function.assign(this.server_driver.ipv6,this.generateIPv6());
         String ip=this.server_driver.ipv6;
         this.server_driver.server_dhcp=this.server_driver.ipv4;
+        this.server_driver.subnet_mask="255.255.255.0";
         int index=0;
         while(index<child_drivers.size()){
             Driver driver=child_drivers.get(index);

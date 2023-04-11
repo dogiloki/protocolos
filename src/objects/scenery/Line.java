@@ -1,5 +1,6 @@
 package objects.scenery;
 
+import java.util.UUID;
 import multitaks.annotations.directory.Directory;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.DirectoryType;
@@ -12,6 +13,8 @@ import multitaks.enums.DirectoryType;
 @Directory(type=DirectoryType.JSON)
 public class Line{
     
+    @Key(value="id")
+    public String id=UUID.randomUUID().toString();
     @Key(value="index_x")
     public int index_x;
     @Key(value="index_y")

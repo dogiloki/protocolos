@@ -161,10 +161,6 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     }
     
     public void addDriver(Driver driver){
-        driver.connectors.forEach((connector)->{
-            //this.scenery.connector_wire.put(connector.id,driver);
-            //this.scenery.connectors.put(connector.id,connector);
-        });
         this.scenery.drivers.add(driver);
     }
     

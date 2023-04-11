@@ -1,5 +1,6 @@
 package objects.scenery;
 
+import java.util.UUID;
 import multitaks.annotations.directory.Directory;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.DirectoryType;
@@ -11,7 +12,9 @@ import multitaks.enums.DirectoryType;
 
 @Directory(type=DirectoryType.JSON)
 public class Entity{
-
+    
+    @Key(value="id")
+    public String id=UUID.randomUUID().toString();
     @Key(value="x")
     public int x;
     @Key(value="y")
@@ -23,9 +26,12 @@ public class Entity{
     @Key(value="src_icon")
     public String src_icon;
     
+    public int count;
+    
     public Entity(){
         this.width=50;
         this.height=50;
+        this.count=0;
     }
     
 }

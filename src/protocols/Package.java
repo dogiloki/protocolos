@@ -20,8 +20,6 @@ public class Package extends Entity{
     public List<Trama> data=new ArrayList<>();
     public byte[] trailer;
     
-    public int count=0;
-    
     public Package(EtherType type, Driver source_driver, Driver destination_driver, String data){
         
         Header header=new Header();

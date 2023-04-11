@@ -4,6 +4,7 @@ import enums.EntryType;
 import enums.WireType;
 import interfaces.BaseWire;
 import multitaks.annotations.directory.Key;
+import multitaks.enums.FieldType;
 import objects.drivers.Driver;
 import objects.scenery.Line;
 import objects.wire.connectors.Connector;
@@ -15,15 +16,17 @@ import objects.wire.connectors.Connector;
 
 public class Wire extends Line implements BaseWire{
     
-    @Key(value="type_wire")
+    @Key(value="type_wire",type=FieldType.ENUM)
     public WireType type_wire;
-    @Key(value="connector1")
-    protected Connector connector1;
-    @Key(value="connector2")
-    protected Connector connector2;
-    protected Connection connection1;
-    protected Connection connection2;
-    @Key(value="Color")
+    @Key(value="connector1",type=FieldType.CLASS)
+    public Connector connector1;
+    @Key(value="connector2",type=FieldType.CLASS)
+    public Connector connector2;
+    @Key(value="connection1",type=FieldType.CLASS)
+    public Connection connection1;
+    @Key(value="connection2",type=FieldType.CLASS)
+    public Connection connection2;
+    @Key(value="color")
     public int color;
     
     public Wire(){

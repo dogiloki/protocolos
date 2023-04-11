@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import multitaks.annotations.directory.Directory;
+import multitaks.annotations.directory.Execute;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.DirectoryType;
 import multitaks.enums.FieldType;
 import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;
+import objects.wires.Connection;
 
 /**
  *
@@ -29,29 +31,27 @@ public class Scenery{
     @Key(value="wires",type=FieldType.LIST)
     public List<Wire> wires=new ArrayList<>();
     
-    // Almacenar dispositivo al que pertence un conector
-    public Map<String,Driver> connector_wire=new HashMap<>();
-    
     // Almacenar conector con ID
-    public Map<String,Connector> connectors=new HashMap<>();
+    //public Map<String,Connector> connectors=new HashMap<>();
     
     public Scenery(){
         
     }
     
-    /*
+    // Almacenar dispositivo al que pertence un conector
+    public Map<String,Driver> connector_driver=new HashMap<>();
+    public Map<String,Connector> connectors=new HashMap<>();
+    
     @Execute
     public void setConnections(){
         this.drivers.forEach((driver)->{
             driver.connectors.forEach((connector)->{
-                this.connector_wire.put(connector.id,driver);
+                this.connector_driver.put(connector.id,driver);
                 this.connectors.put(connector.id,connector);
             });
         });
         this.drivers.forEach((driver)->{
-            this.listDrivers(driver,(child_driver)->{
-                driver.drivers.add(child_driver);
-            });
+            driver.drivers=this.listDrivers(driver);
         });
     }
     
@@ -64,11 +64,16 @@ public class Scenery{
     private List<Driver> _listDrivers(Driver root_driver, Callback action){
         List<Driver> drivers=new ArrayList<>();
         root_driver.connectors.forEach((connector)->{
+            connector.driver=root_driver;
             if(connector.connected){
                 this.wires.forEach((wire)->{
-                    if(wire.id_connector1.equals(connector.id) || wire.id_connector2.equals(connector.id)){
-                        Driver driver1=this.connector_wire.get(wire.id_connector1);
-                        Driver driver2=this.connector_wire.get(wire.id_connector2);
+                    Connection connection1=wire.connection1;
+                    Connection connection2=wire.connection2;
+                    Connector connector1=connection1.connector_female;
+                    Connector connector2=connection2.connector_female;
+                    if(connector.id.equals(connector1.id) || connector.id.equals(connector2.id)){
+                        Driver driver1=this.connector_driver.get(connector1.id);
+                        Driver driver2=this.connector_driver.get(connector2.id);
                         if(driver1!=root_driver){
                             drivers.add(driver1);
                             if(action!=null){
@@ -82,11 +87,12 @@ public class Scenery{
                             }
                         }
                     }
+                    wire.connection1.connector_female=this.connectors.get(connector1.id);
+                    wire.connection2.connector_female=this.connectors.get(connector2.id);
                 });
             }
         });
         return drivers;
     }
-    */
     
 }
