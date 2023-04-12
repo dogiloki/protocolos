@@ -109,6 +109,9 @@ public class Driver extends Entity implements BaseDriver{
     }
     
     public Driver getDriverDHCP(){
+        if(this.server_dhcp.equals(this.ipv4)){
+            return this;
+        }
         for(Driver driver:this.drivers){
             if(driver.ipv4.equals(this.server_dhcp)){
                 return driver;

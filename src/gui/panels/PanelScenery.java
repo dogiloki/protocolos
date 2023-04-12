@@ -138,7 +138,12 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             if(driver.dhcp==null){
                                 driver2=driver1.getDriverDHCP();
                             }else{
-                                driver1=driver2.getDriverDHCP();
+                                if(driver.getDriverDHCP()==driver2.getDriverDHCP()){
+                                    driver1=driver2.getDriverDHCP();
+                                }else{
+                                    driver1=driver;
+                                    driver2=driver2.getDriverDHCP();
+                                }
                             }
                             if(driver1==null || driver2==null){
                                 driver.sending_packages.get(connector).remove(send_package);
