@@ -14,8 +14,6 @@ import objects.drivers.Driver;
 public class DHCP{
     
     public Driver server_driver;
-    // Almacenar dirección MAC del dispositivo
-    public Map<String,Driver> drives=new HashMap<>();
     
     public DHCP(Driver server_driver){
         this.server_driver=server_driver;
@@ -32,7 +30,6 @@ public class DHCP{
     
     private void setServerDHC(Driver driver){
         driver.server_dhcp=this.server_driver.ipv4;
-        this.drives.put(driver.mac,driver);
     }
     
     public void IPv4(){

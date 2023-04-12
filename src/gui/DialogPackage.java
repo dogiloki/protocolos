@@ -17,6 +17,8 @@ public class DialogPackage extends javax.swing.JDialog{
     public DialogPackage(java.awt.Frame parent, boolean modal, PanelScenery scenery) {
         super(parent, modal);
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.scenery=scenery;
         this.driver=this.scenery.selection.driver;
         for(EtherType value:EtherType.values()){

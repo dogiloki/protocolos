@@ -1,18 +1,14 @@
 package gui;
 
-import enums.ConnectorType;
-import enums.EtherType;
 import gui.panels.PanelDrivers;
 import gui.panels.PanelScenery;
 import enums.ToolType;
 import gui.panels.PanelConnectors;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
-import protocols.PackageEther;
 
 /**
  *

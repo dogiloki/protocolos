@@ -1,6 +1,5 @@
 package objects.scenery;
 
-import enums.DriverType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;
 import objects.wires.Connection;
+import services.DNS;
 
 /**
  *
@@ -48,6 +48,7 @@ public class Scenery{
     @Execute
     public void setConnections(){
         this.drivers.forEach((driver)->{
+            DNS.put(driver.ipv4_public,driver);
             driver.connectors.forEach((connector)->{
                 this.connector_driver.put(connector.id,driver);
                 this.connectors.put(connector.id,connector);

@@ -15,6 +15,7 @@ import objects.drivers.enums.BoxType;
 @Target(ElementType.FIELD)
 public @interface Config{
 
+    String id() default("");
     String label();
     BoxType box();
     String[] options() default("");

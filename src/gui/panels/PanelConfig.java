@@ -1,6 +1,5 @@
 package gui.panels;
 
-import gui.panels.PanelScenery;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Field;
@@ -13,6 +12,7 @@ import multitaks.Function;
 import multitaks.annotations.directory.Key;
 import objects.drivers.Driver;
 import objects.drivers.anotations.Config;
+import services.DNS;
 
 /**
  *
@@ -93,6 +93,10 @@ public class PanelConfig extends javax.swing.JPanel{
             JTextField text=entry.getValue();
             try{
                 field.set(this.driver,text.getText());
+                Config annot_config=field.getAnnotation(Config.class);
+                if(annot_config.id().equals("ipv4_public")){
+                    DNS.put(text.getText(),this.driver);
+                }
             }catch(Exception ex){
                 ex.printStackTrace();
             }

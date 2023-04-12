@@ -41,14 +41,14 @@ public class Driver extends Entity implements BaseDriver{
     @Config(label="IPv6",box=BoxType.TEXT) @Key(value="ipv6")
     public String ipv6;
     
-    @Config(label="IPv4 pública",box=BoxType.TEXT) @Key(value="ipv4_public")
-    public String ipv4_public;
-    
     @Config(label="Máscara de subred",box=BoxType.TEXT) @Key(value="subnet_mask")
     public String subnet_mask;
     
     @Config(label="Servidor DHCP",box=BoxType.TEXT) @Key(value="server_dhcp")
     public String server_dhcp;
+    
+    @Config(id="ipv4_public",label="IPv4 pública",box=BoxType.TEXT) @Key(value="ipv4_public")
+    public String ipv4_public;
     
     @Config(label="MAC",box=BoxType.TEXT) @Key(value="MAC")
     public String mac;
@@ -111,6 +111,15 @@ public class Driver extends Entity implements BaseDriver{
     public Driver getDriverDHCP(){
         for(Driver driver:this.drivers){
             if(driver.ipv4.equals(this.server_dhcp)){
+                return driver;
+            }
+        }
+        return null;
+    }
+    
+    public Driver getDriverMac(String mac){
+        for(Driver driver:this.drivers){
+            if(driver.mac.equals(mac)){
                 return driver;
             }
         }

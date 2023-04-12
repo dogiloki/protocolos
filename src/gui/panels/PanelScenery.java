@@ -122,24 +122,23 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             protocols.PackageEther send_package=send_packages.get(0);
                             Driver driver1=null;
                             Driver driver2=null;
-                            Driver server_driver=null;
+                            Driver server_driver=Function.assign(driver.getDriverDHCP(),driver);
                             if(send_package.header.type==EtherType.IPv4){
-                                driver1=driver.getDriverDHCP().dhcp.drives.get(send_package.header.source_driver);
-                                driver2=driver.getDriverDHCP().dhcp.drives.get(send_package.header.destination_driver);
-                                server_driver=driver1.getDriverDHCP();
-                                if(driver.dhcp==null){
-                                    driver2=driver1.getDriverDHCP();
-                                }else{
-                                    driver1=driver1.getDriverDHCP();
-                                }
+                                driver1=server_driver.getDriverMac(send_package.header.source_driver);
+                                driver2=server_driver.getDriverMac(send_package.header.destination_driver);    
                             }else
-                            if(send_package.header.type==EtherType.TCP){
+                            if(send_package.header.type==EtherType.TCP){    
                                 driver1=DNS.get(send_package.header.source_driver);
                                 driver2=DNS.get(send_package.header.destination_driver);
                             }
                             if(driver1==null || driver2==null){
-                                System.out.println("Error al enviar paquete "+send_package);
+                                driver.sending_packages.get(connector).remove(send_package);
                                 continue;
+                            }
+                            if(driver.dhcp==null){
+                                driver2=driver1.getDriverDHCP();
+                            }else{
+                                driver1=driver1.getDriverDHCP();
                             }
                             //Driver server_driver=driver1.getDriverDHCP();
                             int index_x=driver1.x+(driver1.width/2);
