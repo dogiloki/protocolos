@@ -1,13 +1,11 @@
 package protocols.mail;
 
-import objects.scenery.Entity;
-
 /**
  *
  * @author dogi_
  */
 
-public class MailPackaging extends Entity{
+public class MailPackaging{
     
     public String mail_address;
     public String password;

@@ -2,6 +2,7 @@ package objects.drivers;
 
 import enums.ConnectorType;
 import enums.DriverType;
+import enums.EtherType;
 import java.util.List;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.FieldType;
@@ -16,6 +17,7 @@ import java.util.Map;
 import multitaks.Function;
 import multitaks.annotations.directory.Execute;
 import protocols.DHCP;
+import protocols.PackageEther;
 
 /**
  *
@@ -61,11 +63,11 @@ public class Driver extends Entity implements BaseDriver{
     public List<Driver> drivers=new ArrayList<>();
     
     // Identificar si el dispositivo esta envíando un paquete
-    public Map<Connector,List<protocols.Package>> sending_packages=new HashMap<>();
+    public Map<Connector,List<PackageEther>> sending_packages=new HashMap<>();
     // Identificar si el dispositivo esta reciviendo un paquete
-    public Map<Connector,List<protocols.Package>> receiving_packages=new HashMap<>();
+    public Map<Connector,List<PackageEther>> receiving_packages=new HashMap<>();
     
-    // Protocolos
+    // Servicios
     
     public DHCP dhcp;
     
@@ -97,13 +99,13 @@ public class Driver extends Entity implements BaseDriver{
     public String generateIPv4Public(){
         String ip="";
         for(int a=0; a<4; a++){
-            for(int b=0; b<2; b++){
+            for(int b=0; b<3; b++){
                 int num=(int)(Math.random()*9);
-                mac+=String.valueOf(num);
+                ip+=String.valueOf(num);
             }
-            mac+=".";
+            ip+=".";
         }
-        return mac.substring(0,mac.length()-1).toUpperCase();
+        return ip.substring(0,ip.length()-1).toUpperCase();
     }
     
     public Driver getDriverDHCP(){
@@ -124,8 +126,8 @@ public class Driver extends Entity implements BaseDriver{
         return null;
     }
     
-    public void addSendingPackage(Connector connector, protocols.Package pack){
-        List<protocols.Package> packs=this.sending_packages.get(connector);
+    public void addSendingPackage(Connector connector, protocols.PackageEther pack){
+        List<PackageEther> packs=this.sending_packages.get(connector);
         if(packs==null){
             packs=new ArrayList<>();
         }
@@ -133,13 +135,25 @@ public class Driver extends Entity implements BaseDriver{
         this.sending_packages.put(connector,packs);
     }
     
-    public void addReceivingPackage(Connector connector, protocols.Package pack){
-        List<protocols.Package> packs=this.receiving_packages.get(connector);
+    public void addReceivingPackage(Connector connector, protocols.PackageEther pack){
+        List<PackageEther> packs=this.receiving_packages.get(connector);
         if(packs==null){
             packs=new ArrayList<>();
         }
         packs.add(pack);
         this.receiving_packages.put(connector,packs);
+    }
+    
+    public PackageEther createPackage(EtherType type_ether, String driver_destination, String message){
+        String driver_source;
+        switch(type_ether){
+            case IPv4: driver_source=this.mac; break;
+            case TCP: driver_source=this.ipv4_public; break;
+            default: driver_source=null; break;
+        }
+        PackageEther pack=new PackageEther(type_ether,driver_source,driver_destination,message);
+        this.addSendingPackage(this.getConnector(ConnectorType.RJ45),pack);
+        return pack;
     }
 
     @Override

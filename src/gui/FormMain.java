@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
+import protocols.PackageEther;
 
 /**
  *
@@ -70,13 +71,7 @@ public final class FormMain extends javax.swing.JFrame{
                 this.scenery.add(this.scenery.connectors);
             }else
             if(this.scenery.selection.tool==ToolType.SEND && driver1!=null){
-                // Asignar envio de paquete
-                if(driver1.getDriverDHCP()==null){
-                    JOptionPane.showMessageDialog(null,"El dispositivo no esta en una red","Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    protocols.Package pack=new protocols.Package(EtherType.IPv4,driver1,driver2,"Hola mundo");
-                    driver1.addSendingPackage(driver1.getConnector(ConnectorType.RJ45),pack);
-                }
+                // Asignar envio de paquete (obsoleto)
                 this.scenery.selection.tool=ToolType.DEFAULT;
                 this.scenery.selection.driver_prev=null;
             }else
@@ -224,7 +219,7 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_package.setText("Paquete");
+        btn_package.setText("Paquetes");
         btn_package.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_packageActionPerformed(evt);
@@ -490,9 +485,11 @@ public final class FormMain extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_packageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_packageActionPerformed
-        this.scenery.selection.driver_prev=null;
-        this.scenery.selection.driver=null;
-        this.scenery.selection.tool=ToolType.SEND;
+        Driver driver=this.scenery.selection.driver;
+        if(driver==null){
+            return;
+        }
+        new DialogPackage(this,true,this.scenery).setVisible(true);
     }//GEN-LAST:event_btn_packageActionPerformed
 
     private void btn_sumulatorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btn_sumulatorItemStateChanged

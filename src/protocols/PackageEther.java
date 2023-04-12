@@ -13,14 +13,14 @@ import objects.scenery.Entity;
  * @author dogi_
  */
 
-public class Package extends Entity{
+public class PackageEther extends Entity{
     
     public Header header;
     @Relation(type=RelationType.OneToMany)
     public List<Trama> data=new ArrayList<>();
     public byte[] trailer;
     
-    public Package(EtherType type, Driver source_driver, Driver destination_driver, String data){
+    public PackageEther(EtherType type, String source_driver, String destination_driver, String data){
         
         Header header=new Header();
         header.type=type;
@@ -36,6 +36,7 @@ public class Package extends Entity{
         this.y=-100;
         this.width=10;
         this.height=10;
+        
     }
     
 }

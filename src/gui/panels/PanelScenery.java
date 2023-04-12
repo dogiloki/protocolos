@@ -1,5 +1,6 @@
 package gui.panels;
 
+import enums.EtherType;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -80,8 +81,8 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     }
     
     public int time=0;
-    public int time_speed=10;
-    public int time_total=2000;
+    public int time_speed=1;
+    public int time_total=20;
     public JPanel panel;
     private boolean stop=true;
     
@@ -109,25 +110,35 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                     }
                     try{
                         // Cambiar valores del paquete para GUI
-                        for(Map.Entry<Connector,List<protocols.Package>> entry:driver.sending_packages.entrySet()){
+                        for(Map.Entry<Connector,List<protocols.PackageEther>> entry:driver.sending_packages.entrySet()){
                             if(this.stop){
                                 break out;
                             }
                             Connector connector=entry.getKey();
-                            List<protocols.Package> send_packages=entry.getValue();
+                            List<protocols.PackageEther> send_packages=entry.getValue();
                             if(send_packages==null || send_packages.isEmpty()){
                                 continue;
                             }
-                            protocols.Package send_package=send_packages.get(0);
-                            Driver driver1=send_package.header.source_driver;
-                            Driver driver2=send_package.header.destination_driver;
-                            Driver server_driver=driver1.getDriverDHCP();
-                            if(driver.dhcp==null){
-                                driver2=driver1.getDriverDHCP();
-                            }else{
-                                driver1=driver1.getDriverDHCP();
+                            protocols.PackageEther send_package=send_packages.get(0);
+                            Driver driver1=null;
+                            Driver driver2=null;
+                            Driver server_driver=null;
+                            if(send_package.header.type==EtherType.IPv4){
+                                driver1=driver.getDriverDHCP().dhcp.drives.get(send_package.header.source_driver);
+                                driver2=driver.getDriverDHCP().dhcp.drives.get(send_package.header.destination_driver);
+                                server_driver=driver1.getDriverDHCP();
+                                if(driver.dhcp==null){
+                                    driver2=driver1.getDriverDHCP();
+                                }else{
+                                    driver1=driver1.getDriverDHCP();
+                                }
+                            }else
+                            if(send_package.header.type==EtherType.TCP){
+                                driver1=DNS.get(send_package.header.source_driver);
+                                driver2=DNS.get(send_package.header.destination_driver);
                             }
                             if(driver1==null || driver2==null){
+                                System.out.println("Error al enviar paquete "+send_package);
                                 continue;
                             }
                             //Driver server_driver=driver1.getDriverDHCP();
