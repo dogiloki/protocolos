@@ -18,13 +18,13 @@ public class DriverList{
     public Map<DriverType,Class<?>> drivers=new HashMap<>();
     
     public DriverList(){
-        this.drivers.put(DriverType.MOBILE_PHONE,MobilePhone.class);
+        //this.drivers.put(DriverType.MOBILE_PHONE,MobilePhone.class);
         //this.drivers.put(DriverType.MODEM,Modem.class);
         this.drivers.put(DriverType.PC,PC.class);
-        this.drivers.put(DriverType.PRINTER,Printer.class);
+        //this.drivers.put(DriverType.PRINTER,Printer.class);
         this.drivers.put(DriverType.ROUTER,Router.class);
         this.drivers.put(DriverType.SERVER,Server.class);
-        this.drivers.put(DriverType.SWITCH,Switch.class);
+        //this.drivers.put(DriverType.SWITCH,Switch.class);
     }
     
     public Class<?> get(DriverType type){
