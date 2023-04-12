@@ -138,7 +138,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             if(driver.dhcp==null){
                                 driver2=driver1.getDriverDHCP();
                             }else{
-                                driver1=driver1.getDriverDHCP();
+                                driver1=driver2.getDriverDHCP();
+                            }
+                            if(driver1==null || driver2==null){
+                                driver.sending_packages.get(connector).remove(send_package);
+                                continue;
                             }
                             //Driver server_driver=driver1.getDriverDHCP();
                             int index_x=driver1.x+(driver1.width/2);
@@ -154,9 +158,9 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             send_package.count+=this.time_speed;
                             if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
                                 if(driver2.dhcp==null){
-                                    driver2.addReceivingPackage(server_driver.getConnector(connector.type_connector),send_package);
+                                    driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
                                 }else{
-                                    driver2.addSendingPackage(server_driver.getConnector(connector.type_connector),send_package);
+                                    driver2.addSendingPackage(driver2.getConnector(connector.type_connector),send_package);
                                 }
                                 send_package.count=0;
                                 driver.sending_packages.get(connector).remove(send_package);
