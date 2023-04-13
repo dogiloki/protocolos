@@ -151,11 +151,11 @@ public final class PanelConnectors extends javax.swing.JPanel{
         panel_connectors.setLayout(panel_connectorsLayout);
         panel_connectorsLayout.setHorizontalGroup(
             panel_connectorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
+            .addGap(0, 494, Short.MAX_VALUE)
         );
         panel_connectorsLayout.setVerticalGroup(
             panel_connectorsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 342, Short.MAX_VALUE)
         );
 
         panel_connectors_scroll.setViewportView(panel_connectors);
@@ -164,11 +164,11 @@ public final class PanelConnectors extends javax.swing.JPanel{
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_connectors_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(panel_connectors_scroll)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_connectors_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(panel_connectors_scroll)
         );
     }// </editor-fold>//GEN-END:initComponents
 

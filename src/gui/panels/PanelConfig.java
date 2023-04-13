@@ -120,11 +120,11 @@ public class PanelConfig extends javax.swing.JPanel{
         panel_config.setLayout(panel_configLayout);
         panel_configLayout.setHorizontalGroup(
             panel_configLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGap(0, 502, Short.MAX_VALUE)
         );
         panel_configLayout.setVerticalGroup(
             panel_configLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 297, Short.MAX_VALUE)
+            .addGap(0, 317, Short.MAX_VALUE)
         );
 
         panel_config_scroll.setViewportView(panel_config);
@@ -133,11 +133,11 @@ public class PanelConfig extends javax.swing.JPanel{
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_config_scroll)
+            .addComponent(panel_config_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_config_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addComponent(panel_config_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
