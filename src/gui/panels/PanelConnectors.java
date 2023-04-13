@@ -102,6 +102,7 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         }
                         scenery.selection.connetor_prev=null;
                         scenery.selection.connetor=null;
+                        scenery.selection.tool=ToolType.DEFAULT;
                     }
                     // Selección del panel en la GUI
                     btn_selection=btn;
