@@ -80,16 +80,15 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
         }
     }
     
-    public int time=0;
-    public int time_speed=1;
-    public int time_total=20;
+    public int time_sleep=10;
+    public int px_speed=1;
+    public int px_total=20;
     public JPanel panel;
     private boolean stop=true;
     
     public void start(JPanel panel){
         this.panel=panel;
         this.stop=false;
-        this.time=0;
         new Thread(this).start();
     }
     
@@ -100,7 +99,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     @Override
     public void run(){
         out:while(!this.stop){
-            for(this.time=0; this.time<this.time_total; this.time+=this.time_speed){
+            for(int count=0; count<this.px_total; count+=this.px_speed){
                 if(this.stop){
                     break out;
                 }
@@ -156,11 +155,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             int end_y=driver2.y+(driver2.height/2);
                             int distance_x=end_x-index_x;
                             int distance_y=end_y-index_y;
-                            int x=(int)((distance_x/(double)this.time_total)*send_package.count);
-                            int y=(int)((distance_y/(double)this.time_total)*send_package.count);
+                            int x=(int)((distance_x/(double)this.px_total)*send_package.count);
+                            int y=(int)((distance_y/(double)this.px_total)*send_package.count);
                             send_package.x=index_x+x;
                             send_package.y=index_y+y;
-                            send_package.count+=this.time_speed;
+                            send_package.count+=this.px_speed;
                             if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
                                 if(driver2.dhcp==null){
                                     driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
@@ -171,7 +170,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                 driver.sending_packages.get(connector).remove(send_package);
                             }
                         }
-                        Thread.sleep((int)this.time_speed);
+                        Thread.sleep(this.time_sleep);
                         this.panel.updateUI();
                     }catch(Exception ex){
                         ex.printStackTrace();
