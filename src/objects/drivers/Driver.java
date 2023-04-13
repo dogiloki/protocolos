@@ -18,6 +18,7 @@ import multitaks.Function;
 import multitaks.annotations.directory.Execute;
 import protocols.DHCP;
 import protocols.PackageEther;
+import protocols.SequenceNumber;
 
 /**
  *
@@ -29,8 +30,8 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="count")
     public static int count=0;
     
-    @Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
-    public String name;
+    //@Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
+    //public String name;
     
     @Config(label="Host",box=BoxType.TEXT) @Key(value="host")
     public String host;
@@ -59,9 +60,13 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="type",type=FieldType.ENUM)
     public DriverType type;
     
+    @Key(value="log")
+    public String log="";
+    
     // Dispositivos a los que esta conectado
     public List<Driver> drivers=new ArrayList<>();
     
+    public SequenceNumber sequence_number=new SequenceNumber();
     // Identificar si el dispositivo esta envíando un paquete
     public Map<Connector,List<PackageEther>> sending_packages=new HashMap<>();
     // Identificar si el dispositivo esta reciviendo un paquete
@@ -81,6 +86,18 @@ public class Driver extends Entity implements BaseDriver{
     public Driver(){
         this.setConnectors();
         this.setFields();
+    }
+    
+    public void setLog(String log){
+        this.log=log+"\n\n";
+    }
+    
+    public void addLog(String log){
+        this.log+=log+"\n\n";
+    }
+    
+    public String getLog(){
+        return this.log;
     }
     
     public String generateMac(){
@@ -145,6 +162,7 @@ public class Driver extends Entity implements BaseDriver{
         }
         packs.add(pack);
         this.sending_packages.put(connector,packs);
+        this.addLog("Un paquete enviandose...");
     }
     
     public void addReceivingPackage(Connector connector, protocols.PackageEther pack){
@@ -154,6 +172,7 @@ public class Driver extends Entity implements BaseDriver{
         }
         packs.add(pack);
         this.receiving_packages.put(connector,packs);
+        this.addLog("Un paquete recibido");
     }
     
     public PackageEther createPackage(EtherType type_ether, String driver_destination, String message){
@@ -163,7 +182,7 @@ public class Driver extends Entity implements BaseDriver{
             case TCP: driver_source=this.ipv4_public; break;
             default: driver_source=null; break;
         }
-        PackageEther pack=new PackageEther(type_ether,driver_source,driver_destination,message);
+        PackageEther pack=new PackageEther(this.sequence_number.getNextSequenceNumber(),type_ether,driver_source,driver_destination,message);
         this.addSendingPackage(this.getConnector(ConnectorType.RJ45),pack);
         return pack;
     }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ArrayList;
 import multitaks.annotations.relation.Relation;
 import multitaks.enums.RelationType;
-import objects.drivers.Driver;
 import objects.scenery.Entity;
 
 /**
@@ -20,9 +19,10 @@ public class PackageEther extends Entity{
     public List<Trama> data=new ArrayList<>();
     public byte[] trailer;
     
-    public PackageEther(EtherType type, String source_driver, String destination_driver, String data){
+    public PackageEther(int sequence_number, EtherType type, String source_driver, String destination_driver, String data){
         
         Header header=new Header();
+        header.sequence_number=sequence_number;
         header.type=type;
         header.source_driver=source_driver;
         header.destination_driver=destination_driver;
@@ -31,6 +31,7 @@ public class PackageEther extends Entity{
         Trama trama=new Trama();
         trama.data=data.getBytes();
         trama.lenght=trama.data.length;
+        this.data.add(trama);
         
         this.x=-100;
         this.y=-100;

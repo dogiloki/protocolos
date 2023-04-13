@@ -9,6 +9,7 @@ import enums.EtherType;
 
 public class Header{
     
+    public int sequence_number;
     public String preamble;
     public String source_driver;
     public String destination_driver;

@@ -205,8 +205,8 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                 break;
             }
         }
-        driver.name=driver.type.toString()+count;
-        driver.host=driver.name;
+        //driver.name=driver.type.toString()+count;
+        driver.host=driver.type.toString()+count;
         this.scenery.drivers.add(driver);
         DNS.put(driver.ipv4_public,driver);
     }

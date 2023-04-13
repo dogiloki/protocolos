@@ -1,8 +1,6 @@
 package protocols;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import multitaks.Function;
 import objects.drivers.Driver;
 
@@ -59,6 +57,8 @@ public class DHCP{
                 }
                 if(!exists){
                     driver.ipv4=new_ip;
+                    driver.addLog("Recibió IPv4: "+new_ip);
+                    this.server_driver.addLog("Asigno IPv4: "+new_ip+" a MAC: "+driver.mac);
                     this.setServerDHC(driver);
                     index++;
                     break;
@@ -93,6 +93,8 @@ public class DHCP{
             }
             if(!exists){
                 driver.ipv6=new_ip;
+                driver.addLog("Recibió IPv6: "+new_ip);
+                this.server_driver.addLog("Asigno IPv6: "+new_ip+" a MAC: "+driver.mac);
                 this.setServerDHC(driver);
                 index++;
             }
