@@ -7,6 +7,7 @@ import gui.panels.PanelConfig;
 import gui.panels.PanelConnectors;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
@@ -591,13 +592,13 @@ public final class FormMain extends javax.swing.JFrame{
     private void table_packages_receivingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_packages_receivingMousePressed
         int row=this.table_packages_receiving.getSelectedRow();
         PackageEther pack=this.number_package_receiving.get(this.table_packages_receiving.getValueAt(row,0));
-        this.box_package_log.setText(pack.log);
+        this.box_package_log.setText(new String(pack.data.get(0).data,StandardCharsets.UTF_8));
     }//GEN-LAST:event_table_packages_receivingMousePressed
 
     private void table_packages_sendingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_packages_sendingMousePressed
         int row=this.table_packages_sending.getSelectedRow();
         PackageEther pack=this.number_package_sending.get(this.table_packages_sending.getValueAt(row,0));
-        this.box_package_log.setText(pack.log);
+        this.box_package_log.setText(new String(pack.data.get(0).data,StandardCharsets.UTF_8));
     }//GEN-LAST:event_table_packages_sendingMousePressed
 
     public static void main(String args[]) {
