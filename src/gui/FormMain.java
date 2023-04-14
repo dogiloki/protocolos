@@ -146,9 +146,6 @@ public final class FormMain extends javax.swing.JFrame{
         panel_scenery = new javax.swing.JPanel();
         panel_drivers = new javax.swing.JPanel();
         panel_protocols = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btn_package = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -162,6 +159,9 @@ public final class FormMain extends javax.swing.JFrame{
         table_packages_receiving = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         box_package_message = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
+        btn_dhcp = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         panel_connectors = new javax.swing.JPanel();
         panel_entries = new javax.swing.JPanel();
         panel_config = new javax.swing.JPanel();
@@ -213,45 +213,6 @@ public final class FormMain extends javax.swing.JFrame{
             panel_driversLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 295, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
-        );
-
-        panel_protocols.addTab("Vínculo de datos", jPanel2);
-
-        jButton1.setText("Asignar IP's");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(329, Short.MAX_VALUE))
-        );
-
-        panel_protocols.addTab("Red", jPanel3);
 
         btn_package.setText("Crear paquete");
         btn_package.addActionListener(new java.awt.event.ActionListener() {
@@ -369,6 +330,45 @@ public final class FormMain extends javax.swing.JFrame{
         );
 
         panel_protocols.addTab("Transporte", jPanel4);
+
+        btn_dhcp.setText("DCHP");
+        btn_dhcp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_dhcpActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_dhcp, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_dhcp)
+                .addContainerGap(329, Short.MAX_VALUE))
+        );
+
+        panel_protocols.addTab("Red", jPanel3);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 295, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 365, Short.MAX_VALUE)
+        );
+
+        panel_protocols.addTab("Vínculo de datos", jPanel2);
 
         javax.swing.GroupLayout panel_entriesLayout = new javax.swing.GroupLayout(panel_entries);
         panel_entries.setLayout(panel_entriesLayout);
@@ -566,14 +566,14 @@ public final class FormMain extends javax.swing.JFrame{
         this.getSendingPackages(driver);
     }//GEN-LAST:event_btn_packageActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_dhcpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dhcpActionPerformed
         Driver driver=this.scenery.selection.driver;
         if(driver==null || driver.dhcp==null){
             return;
         }
         driver.dhcp.ip();
         this.getLog(driver);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_dhcpActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         this.model.save();
@@ -613,11 +613,11 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JTextArea box_package_message;
     private javax.swing.JButton btn_clean_packages;
     private javax.swing.JMenuItem btn_delete;
+    private javax.swing.JButton btn_dhcp;
     private javax.swing.JButton btn_log_remove;
     private javax.swing.JButton btn_package;
     private javax.swing.JButton btn_remove_package;
     private javax.swing.JToggleButton btn_sumulator;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
