@@ -13,7 +13,7 @@ import objects.scenery.Entity;
  * @author dogi_
  */
 
-public class PackageEther extends Entity{
+public class PackageEther extends Entity implements Cloneable{
     
     public Header header;
     @Relation(type=RelationType.OneToMany)
@@ -44,6 +44,11 @@ public class PackageEther extends Entity{
         this.width=10;
         this.height=10;
         
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
     
 }

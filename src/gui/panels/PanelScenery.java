@@ -138,6 +138,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                 driver2=DNS.get(send_package.header.destination_driver);
                             }
                             if(driver1==null || driver2==null){
+                                driver.addSentPackage(connector,send_package);
                                 driver.sending_packages.get(connector).remove(send_package);
                                 driver_source.addLog("[package "+send_package.header.sequence_number+"] El destino es inaccesible");
                                 continue;
@@ -153,6 +154,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                 }
                             }
                             if(driver1==null || driver2==null){
+                                driver.addSentPackage(connector,send_package);
                                 driver.sending_packages.get(connector).remove(send_package);
                                 driver_source.addLog("[package "+send_package.header.sequence_number+"] El destino es inaccesible");
                                 continue;
@@ -189,7 +191,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                                 }else{
                                                     message="No se pudo auteticar el correo";
                                                 }
-                                                driver2.createPackage(PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
+                                                driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
                                             }
                                             break;
                                         }
@@ -208,6 +210,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                     }
                                 }
                                 send_package.count=0;
+                                driver.addSentPackage(connector,send_package);
                                 driver.sending_packages.get(connector).remove(send_package);
                             }
                         }

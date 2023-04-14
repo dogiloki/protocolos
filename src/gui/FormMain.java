@@ -18,7 +18,6 @@ import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
 import protocols.PackageEther;
 import protocols.mail.Mail;
-import protocols.mail.MailPackaging;
 
 /**
  *
@@ -32,6 +31,7 @@ public final class FormMain extends javax.swing.JFrame{
     private final ModelDirectory model=new ModelDirectory();
     private Map<String,PackageEther> number_package_sending=new HashMap<>();
     private Map<String,PackageEther> number_package_receiving=new HashMap<>();
+    private Map<String,PackageEther> number_package_sent=new HashMap<>();
     
     public FormMain() {
         initComponents();
@@ -88,6 +88,7 @@ public final class FormMain extends javax.swing.JFrame{
             this.setPanel(this.panel_config,new PanelConfig(this.scenery));
             this.getTransporte(driver);
             this.getLog(driver);
+            this.box_package_log.setText("");
             if(driver.client_smtp==null){
                 this.panel_protocols.setEnabled(rootPaneCheckingEnabled);
             }else{
@@ -105,6 +106,7 @@ public final class FormMain extends javax.swing.JFrame{
     public void getTransporte(Driver driver){
         this.getSendingPackages(driver);
         this.getReceivingPackages(driver);
+        this.getSentPackages(driver);
     }
     
     public void getSendingPackages(Driver driver){
@@ -149,6 +151,27 @@ public final class FormMain extends javax.swing.JFrame{
         this.table_packages_receiving.setModel(model_receiving);
     }
     
+    public void getSentPackages(Driver driver){
+        DefaultTableModel model_receiving=new DefaultTableModel();
+        model_receiving.addColumn("Número");
+        model_receiving.addColumn("Origen");
+        model_receiving.addColumn("Destino");
+        model_receiving.addColumn("Tipo");
+        driver.sent_packages.forEach((connecot,list_packages)->{
+            list_packages.forEach((pack)->{
+                String[] data={
+                    String.valueOf(pack.header.sequence_number),
+                    pack.header.source_driver,
+                    pack.header.destination_driver,
+                    pack.header.type.toString()
+                };
+                model_receiving.addRow(data);
+                this.number_package_sent.put(data[0],pack);
+            });
+        });
+        this.table_packages_sent.setModel(model_receiving);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -162,6 +185,9 @@ public final class FormMain extends javax.swing.JFrame{
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_packages_sending = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        table_packages_sent = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_packages_receiving = new javax.swing.JTable();
@@ -284,10 +310,43 @@ public final class FormMain extends javax.swing.JFrame{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Paquetes enviandose", jPanel1);
+
+        table_packages_sent.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        table_packages_sent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                table_packages_sentMousePressed(evt);
+            }
+        });
+        jScrollPane7.setViewportView(table_packages_sent);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Paquetes enviados", jPanel8);
 
         table_packages_receiving.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -317,7 +376,7 @@ public final class FormMain extends javax.swing.JFrame{
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Paquetes recibidos", jPanel5);
@@ -460,12 +519,6 @@ public final class FormMain extends javax.swing.JFrame{
         jScrollPane6.setViewportView(box_pop_emails);
 
         jLabel7.setText("Servidor de correo (IPv4 pública)");
-
-        box_pop_host.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                box_pop_hostFocusLost(evt);
-            }
-        });
 
         jLabel8.setText("Correo eléctronico");
 
@@ -784,10 +837,6 @@ public final class FormMain extends javax.swing.JFrame{
         new DialogMail(this,true,this.scenery).setVisible(true);
     }//GEN-LAST:event_btn_create_mailActionPerformed
 
-    private void box_pop_hostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_box_pop_hostFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_box_pop_hostFocusLost
-
     private void btn_smtpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_smtpActionPerformed
         Driver driver=this.scenery.selection.driver;
         if(driver==null || driver.client_smtp==null){
@@ -802,6 +851,12 @@ public final class FormMain extends javax.swing.JFrame{
         driver.client_smtp.addMail(this.box_smtp_password.getText(),mail);
         driver.createPackage(PackageType.SMTP,EtherType.TCP,driver.client_smtp.server_smtp,driver.client_smtp.getMail());
     }//GEN-LAST:event_btn_smtpActionPerformed
+
+    private void table_packages_sentMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_packages_sentMousePressed
+        int row=this.table_packages_sent.getSelectedRow();
+        PackageEther pack=this.number_package_sent.get(this.table_packages_sent.getValueAt(row,0));
+        this.box_package_log.setText(new String(pack.data.get(0).data,StandardCharsets.UTF_8));
+    }//GEN-LAST:event_table_packages_sentMousePressed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -852,12 +907,14 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel panel_config;
@@ -868,5 +925,6 @@ public final class FormMain extends javax.swing.JFrame{
     public javax.swing.JPanel panel_scenery;
     private javax.swing.JTable table_packages_receiving;
     private javax.swing.JTable table_packages_sending;
+    private javax.swing.JTable table_packages_sent;
     // End of variables declaration//GEN-END:variables
 }

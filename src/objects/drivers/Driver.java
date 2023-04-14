@@ -70,7 +70,9 @@ public class Driver extends Entity implements BaseDriver{
     public SequenceNumber sequence_number=new SequenceNumber();
     // Identificar si el dispositivo esta envíando un paquete
     public Map<Connector,List<PackageEther>> sending_packages=new HashMap<>();
-    // Identificar si el dispositivo esta reciviendo un paquete
+    // Identificar paquetes enviados por el dipositivo
+    public Map<Connector,List<PackageEther>> sent_packages=new HashMap<>();
+    // Identificar paquetes recibidos por el dipositivo
     public Map<Connector,List<PackageEther>> receiving_packages=new HashMap<>();
     
     // Servicios
@@ -147,7 +149,7 @@ public class Driver extends Entity implements BaseDriver{
         return null;
     }
     
-    public void addSendingPackage(Connector connector, protocols.PackageEther pack){
+    public void addSendingPackage(Connector connector, PackageEther pack){
         List<PackageEther> packs=this.sending_packages.get(connector);
         if(packs==null){
             packs=new ArrayList<>();
@@ -157,7 +159,7 @@ public class Driver extends Entity implements BaseDriver{
         this.addLog("Un paquete enviandose...");
     }
     
-    public void addReceivingPackage(Connector connector, protocols.PackageEther pack){
+    public void addReceivingPackage(Connector connector, PackageEther pack){
         List<PackageEther> packs=this.receiving_packages.get(connector);
         if(packs==null){
             packs=new ArrayList<>();
@@ -167,14 +169,33 @@ public class Driver extends Entity implements BaseDriver{
         this.addLog("Un paquete recibido");
     }
     
+    public void addSentPackage(Connector connector, PackageEther pack){
+        List<PackageEther> packs=this.sent_packages.get(connector);
+        if(packs==null){
+            packs=new ArrayList<>();
+        }
+        packs.add(pack);
+        this.sent_packages.put(connector,packs);
+        this.addLog("Un paquete enviado");
+    }
+    
+    public PackageEther createPackage(int sequence_number, PackageType package_type, EtherType type_ether, String driver_destination, Object message){
+        return this._createPackage(sequence_number,package_type,type_ether,driver_destination,message);
+    }
     public PackageEther createPackage(PackageType package_type, EtherType type_ether, String driver_destination, Object message){
+        return this._createPackage(null,package_type,type_ether,driver_destination,message);
+    }
+    private PackageEther _createPackage(Integer sequence_number, PackageType package_type, EtherType type_ether, String driver_destination, Object message){
         String driver_source;
+        if(sequence_number==null){
+            sequence_number=this.sequence_number.getNextSequenceNumber();
+        }
         switch(type_ether){
             case IPv4: driver_source=this.mac; break;
             case TCP: driver_source=this.ipv4_public; break;
             default: driver_source=null; break;
         }
-        PackageEther pack=new PackageEther(this.sequence_number.getNextSequenceNumber(),package_type,type_ether,driver_source,driver_destination,message);
+        PackageEther pack=new PackageEther(sequence_number,package_type,type_ether,driver_source,driver_destination,message);
         this.addSendingPackage(this.getConnector(ConnectorType.RJ45),pack);
         return pack;
     }

@@ -15,7 +15,6 @@ public class MailPackaging{
         this.mail_address=mail.mail_sender;
         this.password=password;
         this.mail=mail;
-        
     }
     
 }
