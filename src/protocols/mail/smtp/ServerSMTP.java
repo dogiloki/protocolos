@@ -29,7 +29,7 @@ public class ServerSMTP extends SMTP{
     }
     
     public void addMail(Mail mail){
-        this.server_mail.mails.add(mail);
+        this.server_mail.addMail(mail);
     }
     
 }
