@@ -1,8 +1,6 @@
 
 package protocols.mail.smtp;
 
-import java.util.ArrayList;
-import java.util.List;
 import protocols.mail.Mail;
 import protocols.mail.MailPackaging;
 
@@ -13,20 +11,23 @@ import protocols.mail.MailPackaging;
 
 public class ClientSMTP extends SMTP{
     
-    public ServerSMTP server_smtp;
-    public List<MailPackaging> sending_mail_packages=new ArrayList<>();
+    public String server_smtp;
+    public MailPackaging sending_mail_package=null;
     
     public ClientSMTP(){
         
     }
     
-    public void connect(ServerSMTP server_smtp){
+    public void connect(String server_smtp){
         this.server_smtp=server_smtp;
     }
     
-    public boolean addMail(String mail_address, String password, Mail mail){
-        this.sending_mail_packages.add(new MailPackaging(mail_address,password,mail));
-        return true;
+    public void addMail(String password, Mail mail){
+        this.sending_mail_package=new MailPackaging(password,mail);
+    }
+    
+    public MailPackaging getMail(){
+        return this.sending_mail_package;
     }
     
 }

@@ -1,5 +1,7 @@
 package gui;
 
+import enums.EtherType;
+import enums.PackageType;
 import gui.panels.PanelDrivers;
 import gui.panels.PanelScenery;
 import enums.ToolType;
@@ -15,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
 import protocols.PackageEther;
+import protocols.mail.Mail;
+import protocols.mail.MailPackaging;
 
 /**
  *
@@ -84,6 +88,11 @@ public final class FormMain extends javax.swing.JFrame{
             this.setPanel(this.panel_config,new PanelConfig(this.scenery));
             this.getTransporte(driver);
             this.getLog(driver);
+            if(driver.client_smtp==null){
+                this.panel_protocols.setEnabled(rootPaneCheckingEnabled);
+            }else{
+                this.box_smtp_host.setText(driver.client_smtp.server_smtp);
+            }
         });
         this.panel_scenery.updateUI();
     }
@@ -151,11 +160,9 @@ public final class FormMain extends javax.swing.JFrame{
         btn_package = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        btn_remove_package = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_packages_sending = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        btn_clean_packages = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_packages_receiving = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -163,6 +170,33 @@ public final class FormMain extends javax.swing.JFrame{
         jPanel3 = new javax.swing.JPanel();
         btn_dhcp = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        btn_create_mail = new javax.swing.JButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        box_smtp_host = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        box_smtp_email = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        box_smtp_password = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        box_smtp_email_destination = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        box_smtp_subject = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        box_smtp_body = new javax.swing.JTextArea();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        box_pop_emails = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        box_pop_host = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        box_pop_email = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        box_pop_password = new javax.swing.JTextField();
+        btn_smtp = new javax.swing.JButton();
+        btn_pop = new javax.swing.JButton();
         panel_connectors = new javax.swing.JPanel();
         panel_entries = new javax.swing.JPanel();
         panel_config = new javax.swing.JPanel();
@@ -222,8 +256,6 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
-        btn_remove_package.setText("Descartar");
-
         table_packages_sending.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -246,24 +278,16 @@ public final class FormMain extends javax.swing.JFrame{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addComponent(btn_remove_package)
-                .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_remove_package)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Paquetes enviandose", jPanel1);
-
-        btn_clean_packages.setText("Limpiar");
 
         table_packages_receiving.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -287,18 +311,12 @@ public final class FormMain extends javax.swing.JFrame{
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
-                .addComponent(btn_clean_packages)
-                .addContainerGap())
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_clean_packages)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
         );
 
@@ -358,15 +376,176 @@ public final class FormMain extends javax.swing.JFrame{
 
         panel_protocols.addTab("Red", jPanel3);
 
+        btn_create_mail.setText("Tabla de emails");
+        btn_create_mail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_create_mailActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Servidor de correo (IPv4 pública)");
+
+        jLabel2.setText("Correo eléctronico");
+
+        jLabel3.setText("Contraseña");
+
+        jLabel4.setText("Correo electrónico de destino");
+
+        jLabel5.setText("Asunto");
+
+        jLabel6.setText("Cuerpo");
+
+        box_smtp_body.setColumns(20);
+        box_smtp_body.setRows(5);
+        jScrollPane5.setViewportView(box_smtp_body);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(box_smtp_host)
+                    .addComponent(box_smtp_email)
+                    .addComponent(box_smtp_password)
+                    .addComponent(box_smtp_email_destination)
+                    .addComponent(box_smtp_subject)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_smtp_host, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_smtp_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_smtp_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_smtp_email_destination, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_smtp_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("SMTP (enviar correos)", jPanel6);
+
+        box_pop_emails.setColumns(20);
+        box_pop_emails.setRows(5);
+        jScrollPane6.setViewportView(box_pop_emails);
+
+        jLabel7.setText("Servidor de correo (IPv4 pública)");
+
+        box_pop_host.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                box_pop_hostFocusLost(evt);
+            }
+        });
+
+        jLabel8.setText("Correo eléctronico");
+
+        jLabel9.setText("Contraseña");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(box_pop_host)
+                    .addComponent(box_pop_email)
+                    .addComponent(box_pop_password)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_pop_host, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_pop_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_pop_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+        );
+
+        jTabbedPane2.addTab("POP (recibir correos)", jPanel7);
+
+        btn_smtp.setText("SMTP");
+        btn_smtp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_smtpActionPerformed(evt);
+            }
+        });
+
+        btn_pop.setText("POP");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 295, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_create_mail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_smtp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_pop)
+                .addContainerGap())
+            .addComponent(jTabbedPane2)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_create_mail)
+                    .addComponent(btn_smtp)
+                    .addComponent(btn_pop))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         panel_protocols.addTab("Vínculo de datos", jPanel2);
@@ -547,7 +726,7 @@ public final class FormMain extends javax.swing.JFrame{
 
     private void btn_sumulatorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_btn_sumulatorItemStateChanged
         if(evt.getStateChange()==ItemEvent.SELECTED){
-            this.scenery.start(this.panel_scenery);
+            this.scenery.start(this);
         }else{
             this.scenery.stop();
         }
@@ -601,6 +780,29 @@ public final class FormMain extends javax.swing.JFrame{
         this.box_package_log.setText(new String(pack.data.get(0).data,StandardCharsets.UTF_8));
     }//GEN-LAST:event_table_packages_sendingMousePressed
 
+    private void btn_create_mailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_mailActionPerformed
+        new DialogMail(this,true,this.scenery).setVisible(true);
+    }//GEN-LAST:event_btn_create_mailActionPerformed
+
+    private void box_pop_hostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_box_pop_hostFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_box_pop_hostFocusLost
+
+    private void btn_smtpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_smtpActionPerformed
+        Driver driver=this.scenery.selection.driver;
+        if(driver==null || driver.client_smtp==null){
+            return;
+        }
+        Mail mail=new Mail();
+        mail.mail_sender=this.box_smtp_email.getText();
+        mail.mail_recipient=this.box_smtp_email_destination.getText();
+        mail.subject=this.box_smtp_subject.getText();
+        mail.body=this.box_smtp_body.getText();
+        driver.client_smtp.connect(this.box_smtp_host.getText());
+        driver.client_smtp.addMail(this.box_smtp_password.getText(),mail);
+        driver.createPackage(PackageType.SMTP,EtherType.TCP,driver.client_smtp.server_smtp,driver.client_smtp.getMail());
+    }//GEN-LAST:event_btn_smtpActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -612,13 +814,33 @@ public final class FormMain extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea box_log;
     private javax.swing.JTextArea box_package_log;
-    private javax.swing.JButton btn_clean_packages;
+    private javax.swing.JTextField box_pop_email;
+    private javax.swing.JTextArea box_pop_emails;
+    private javax.swing.JTextField box_pop_host;
+    private javax.swing.JTextField box_pop_password;
+    private javax.swing.JTextArea box_smtp_body;
+    private javax.swing.JTextField box_smtp_email;
+    private javax.swing.JTextField box_smtp_email_destination;
+    private javax.swing.JTextField box_smtp_host;
+    private javax.swing.JTextField box_smtp_password;
+    private javax.swing.JTextField box_smtp_subject;
+    private javax.swing.JButton btn_create_mail;
     private javax.swing.JMenuItem btn_delete;
     private javax.swing.JButton btn_dhcp;
     private javax.swing.JButton btn_log_remove;
     private javax.swing.JButton btn_package;
-    private javax.swing.JButton btn_remove_package;
+    private javax.swing.JButton btn_pop;
+    private javax.swing.JButton btn_smtp;
     private javax.swing.JToggleButton btn_sumulator;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
@@ -628,17 +850,22 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel panel_config;
     private javax.swing.JPanel panel_connectors;
     private javax.swing.JPanel panel_drivers;
     private javax.swing.JPanel panel_entries;
     private javax.swing.JTabbedPane panel_protocols;
-    private javax.swing.JPanel panel_scenery;
+    public javax.swing.JPanel panel_scenery;
     private javax.swing.JTable table_packages_receiving;
     private javax.swing.JTable table_packages_sending;
     // End of variables declaration//GEN-END:variables

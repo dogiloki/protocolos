@@ -1,6 +1,7 @@
 package gui;
 
 import enums.EtherType;
+import enums.PackageType;
 import gui.panels.PanelScenery;
 import objects.drivers.Driver;
 
@@ -117,7 +118,7 @@ public class DialogPackage extends javax.swing.JDialog{
 
     private void btn_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_acceptActionPerformed
         EtherType type=EtherType.valueOf(this.box_type_ether.getSelectedItem().toString());
-        this.driver.createPackage(this.driver.sequence_number.getNextSequenceNumber(),type,this.box_destination.getText(),this.box_message.getText());
+        this.driver.createPackage(PackageType.NORMAL,type,this.box_destination.getText(),this.box_message.getText());
         dispose();
     }//GEN-LAST:event_btn_acceptActionPerformed
 

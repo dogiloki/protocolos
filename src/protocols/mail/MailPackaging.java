@@ -11,8 +11,8 @@ public class MailPackaging{
     public String password;
     public Mail mail;
     
-    public MailPackaging(String mail_address, String password, Mail mail){
-        this.mail_address=mail_address;
+    public MailPackaging(String password, Mail mail){
+        this.mail_address=mail.mail_sender;
         this.password=password;
         this.mail=mail;
         

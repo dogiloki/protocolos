@@ -3,6 +3,7 @@ package objects.drivers;
 import enums.ConnectorType;
 import enums.DriverType;
 import enums.EtherType;
+import enums.PackageType;
 import java.util.List;
 import multitaks.annotations.directory.Key;
 import multitaks.enums.FieldType;
@@ -19,6 +20,9 @@ import multitaks.annotations.directory.Execute;
 import protocols.DHCP;
 import protocols.PackageEther;
 import protocols.SequenceNumber;
+import protocols.mail.MailServer;
+import protocols.mail.smtp.ClientSMTP;
+import protocols.mail.smtp.ServerSMTP;
 
 /**
  *
@@ -72,6 +76,9 @@ public class Driver extends Entity implements BaseDriver{
     // Servicios
     
     public DHCP dhcp;
+    public ClientSMTP client_smtp;
+    public ServerSMTP server_smtp;
+    public MailServer mail_server;
     
     public boolean status=true;
     
@@ -160,14 +167,14 @@ public class Driver extends Entity implements BaseDriver{
         this.addLog("Un paquete recibido");
     }
     
-    public PackageEther createPackage(int sequence_number, EtherType type_ether, String driver_destination, String message){
+    public PackageEther createPackage(PackageType package_type, EtherType type_ether, String driver_destination, Object message){
         String driver_source;
         switch(type_ether){
             case IPv4: driver_source=this.mac; break;
             case TCP: driver_source=this.ipv4_public; break;
             default: driver_source=null; break;
         }
-        PackageEther pack=new PackageEther(sequence_number,type_ether,driver_source,driver_destination,message);
+        PackageEther pack=new PackageEther(this.sequence_number.getNextSequenceNumber(),package_type,type_ether,driver_source,driver_destination,message);
         this.addSendingPackage(this.getConnector(ConnectorType.RJ45),pack);
         return pack;
     }
@@ -195,7 +202,13 @@ public class Driver extends Entity implements BaseDriver{
                 break;
             }
             case SERVER:{
-                
+                this.server_smtp=new ServerSMTP();
+                this.mail_server=new MailServer();
+                this.server_smtp.connect(this.mail_server);
+                break;
+            }
+            default:{
+                this.client_smtp=new ClientSMTP();
                 break;
             }
         }

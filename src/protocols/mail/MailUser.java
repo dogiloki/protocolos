@@ -12,4 +12,11 @@ public class MailUser{
     public String address;
     public String password;
     
+    public MailUser(String name, String surname, String address, String password){
+        this.name=name;
+        this.surname=surname;
+        this.address=address;
+        this.password=password;
+    }
+    
 }

@@ -1,6 +1,8 @@
 package gui.panels;
 
 import enums.EtherType;
+import enums.PackageType;
+import gui.FormMain;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,7 +13,6 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import multitaks.Function;
 import objects.drivers.Driver;
 import objects.scenery.Count;
@@ -19,6 +20,7 @@ import objects.scenery.Scenery;
 import objects.scenery.ScenerySelection;
 import objects.wire.connectors.Connector;
 import protocols.PackageEther;
+import protocols.mail.MailPackaging;
 import services.DNS;
 
 /**
@@ -85,11 +87,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     public int time_sleep=10;
     public int px_speed=1;
     public int px_total=20;
-    public JPanel panel;
+    public FormMain frame;
     private boolean stop=true;
     
-    public void start(JPanel panel){
-        this.panel=panel;
+    public void start(FormMain frame){
+        this.frame=frame;
         this.stop=false;
         new Thread(this).start();
     }
@@ -170,6 +172,28 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
                                 if(driver2.dhcp==null){
                                     driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
+                                    switch(send_package.package_type){
+                                        case SMTP:{
+                                            if(driver2.server_smtp==null){
+                                                driver_source.addLog("No se encontró el servidor SMTP");
+                                            }else{
+                                                MailPackaging mail_pack=(MailPackaging)send_package.object;
+                                                String message;
+                                                if(driver2.server_smtp.auth(mail_pack.mail_address,mail_pack.password)){
+                                                    if(driver2.server_smtp.exists(mail_pack.mail.mail_recipient)){
+                                                        message="Correo enviado con éxito";
+                                                        driver2.server_smtp.addMail(mail_pack.mail);
+                                                    }else{
+                                                        message="El correo de destino no existe (no entregado)";
+                                                    }
+                                                }else{
+                                                    message="No se pudo auteticar el correo";
+                                                }
+                                                driver2.createPackage(PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
+                                            }
+                                            break;
+                                        }
+                                    }
                                     if(send_package.header.type==EtherType.IPv4){
                                         driver_source.addLog("[package "+send_package.header.sequence_number+"] Llegó a su destino "+driver2.mac);
                                     }else{
@@ -188,7 +212,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             }
                         }
                         Thread.sleep(this.time_sleep);
-                        this.panel.updateUI();
+                        this.frame.panel_scenery.updateUI();
                     }catch(Exception ex){
                         ex.printStackTrace();
                     }

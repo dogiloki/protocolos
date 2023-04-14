@@ -24,6 +24,10 @@ public class ServerSMTP extends SMTP{
         return this.server_mail.auth(mail_address,password);
     }
     
+    public boolean exists(String mail){
+        return this.server_mail.exists(mail);
+    }
+    
     public void addMail(Mail mail){
         this.server_mail.mails.add(mail);
     }

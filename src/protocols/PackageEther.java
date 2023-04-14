@@ -1,6 +1,7 @@
 package protocols;
 
 import enums.EtherType;
+import enums.PackageType;
 import java.util.List;
 import java.util.ArrayList;
 import multitaks.annotations.relation.Relation;
@@ -18,8 +19,12 @@ public class PackageEther extends Entity{
     @Relation(type=RelationType.OneToMany)
     public List<Trama> data=new ArrayList<>();
     public byte[] trailer;
+    public Object object;
+    public PackageType package_type;
     
-    public PackageEther(int sequence_number, EtherType type, String source_driver, String destination_driver, String data){
+    public PackageEther(int sequence_number,PackageType package_type, EtherType type, String source_driver, String destination_driver, Object data){
+        
+        this.package_type=package_type;
         
         Header header=new Header();
         header.sequence_number=sequence_number;
@@ -29,9 +34,10 @@ public class PackageEther extends Entity{
         this.header=header;
         
         Trama trama=new Trama();
-        trama.data=data.getBytes();
+        trama.data=data.toString().getBytes();
         trama.lenght=trama.data.length;
         this.data.add(trama);
+        this.object=data;
         
         this.x=-100;
         this.y=-100;

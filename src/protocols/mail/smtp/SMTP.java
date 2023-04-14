@@ -7,7 +7,6 @@ package protocols.mail.smtp;
 
 public class SMTP{
     
-    public String host;
     public int port;
     
     public SMTP(){
