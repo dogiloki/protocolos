@@ -25,6 +25,8 @@ public class Entity{
     public int height;
     @Key(value="src_icon")
     public String src_icon;
+    @Key(value="log")
+    public String log="";
     
     public int count;
     
@@ -32,6 +34,18 @@ public class Entity{
         this.width=50;
         this.height=50;
         this.count=0;
+    }
+    
+    public void setLog(String log){
+        this.log=log+"\n\n";
+    }
+    
+    public void addLog(String log){
+        this.log+=log+"\n\n";
+    }
+    
+    public String getLog(){
+        return this.log;
     }
     
 }

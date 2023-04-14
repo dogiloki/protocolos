@@ -60,9 +60,6 @@ public class Driver extends Entity implements BaseDriver{
     @Key(value="type",type=FieldType.ENUM)
     public DriverType type;
     
-    @Key(value="log")
-    public String log="";
-    
     // Dispositivos a los que esta conectado
     public List<Driver> drivers=new ArrayList<>();
     
@@ -86,18 +83,6 @@ public class Driver extends Entity implements BaseDriver{
     public Driver(){
         this.setConnectors();
         this.setFields();
-    }
-    
-    public void setLog(String log){
-        this.log=log+"\n\n";
-    }
-    
-    public void addLog(String log){
-        this.log+=log+"\n\n";
-    }
-    
-    public String getLog(){
-        return this.log;
     }
     
     public String generateMac(){
@@ -175,14 +160,14 @@ public class Driver extends Entity implements BaseDriver{
         this.addLog("Un paquete recibido");
     }
     
-    public PackageEther createPackage(EtherType type_ether, String driver_destination, String message){
+    public PackageEther createPackage(int sequence_number, EtherType type_ether, String driver_destination, String message){
         String driver_source;
         switch(type_ether){
             case IPv4: driver_source=this.mac; break;
             case TCP: driver_source=this.ipv4_public; break;
             default: driver_source=null; break;
         }
-        PackageEther pack=new PackageEther(this.sequence_number.getNextSequenceNumber(),type_ether,driver_source,driver_destination,message);
+        PackageEther pack=new PackageEther(sequence_number,type_ether,driver_source,driver_destination,message);
         this.addSendingPackage(this.getConnector(ConnectorType.RJ45),pack);
         return pack;
     }

@@ -18,6 +18,7 @@ import objects.scenery.Count;
 import objects.scenery.Scenery;
 import objects.scenery.ScenerySelection;
 import objects.wire.connectors.Connector;
+import protocols.PackageEther;
 import services.DNS;
 
 /**
@@ -48,13 +49,14 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
         // Renderizar dispositivos
         this.scenery.drivers.forEach((driver)->{
             if(this.selection.driver==driver){
+                g.setColor(Color.BLACK);
                 g.drawRect(driver.x-5,driver.y-5,driver.width+10,driver.height+10);
             }
             Icon icon=new ImageIcon(new ImageIcon(this.getClass().getResource(driver.src_icon)).getImage().getScaledInstance(driver.width,driver.height,Image.SCALE_DEFAULT));
             icon.paintIcon(this,g,driver.x,driver.y);
             // Renderizar paquetes
             driver.sending_packages.forEach((connetor,list_send_package)->{
-                g.setColor(Color.BLACK);
+                g.setColor(Color.ORANGE);
                 list_send_package.forEach((send_package)->{
                     g.fillRect(send_package.x,send_package.y,send_package.width,send_package.height);
                 });
@@ -114,24 +116,28 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                 break out;
                             }
                             Connector connector=entry.getKey();
-                            List<protocols.PackageEther> send_packages=entry.getValue();
+                            List<PackageEther> send_packages=entry.getValue();
                             if(send_packages==null || send_packages.isEmpty()){
                                 continue;
                             }
-                            protocols.PackageEther send_package=send_packages.get(0);
+                            PackageEther send_package=send_packages.get(0);
+                            Driver driver_source=null;
                             Driver driver1=null;
                             Driver driver2=null;
                             Driver server_driver=Function.assign(driver.getDriverDHCP(),driver);
                             if(send_package.header.type==EtherType.IPv4){
-                                driver1=server_driver.getDriverMac(send_package.header.source_driver);
+                                driver_source=server_driver.getDriverMac(send_package.header.source_driver);
+                                driver1=driver_source;
                                 driver2=server_driver.getDriverMac(send_package.header.destination_driver);    
                             }else
                             if(send_package.header.type==EtherType.TCP){    
-                                driver1=DNS.get(send_package.header.source_driver);
+                                driver_source=DNS.get(send_package.header.source_driver);
+                                driver1=driver_source;
                                 driver2=DNS.get(send_package.header.destination_driver);
                             }
                             if(driver1==null || driver2==null){
                                 driver.sending_packages.get(connector).remove(send_package);
+                                driver_source.addLog("[package "+send_package.header.sequence_number+"] El destino es inaccesible");
                                 continue;
                             }
                             if(driver.dhcp==null){
@@ -146,6 +152,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             }
                             if(driver1==null || driver2==null){
                                 driver.sending_packages.get(connector).remove(send_package);
+                                driver_source.addLog("[package "+send_package.header.sequence_number+"] El destino es inaccesible");
                                 continue;
                             }
                             //Driver server_driver=driver1.getDriverDHCP();
@@ -163,8 +170,18 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
                                 if(driver2.dhcp==null){
                                     driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
+                                    if(send_package.header.type==EtherType.IPv4){
+                                        driver_source.addLog("[package "+send_package.header.sequence_number+"] Llegó a su destino "+driver2.mac);
+                                    }else{
+                                        driver_source.addLog("[package "+send_package.header.sequence_number+"] Llegó a su destino "+driver2.ipv4_public);
+                                    }
                                 }else{
                                     driver2.addSendingPackage(driver2.getConnector(connector.type_connector),send_package);
+                                    if(send_package.header.type==EtherType.IPv4){
+                                        driver_source.addLog("[package "+send_package.header.sequence_number+"] Paso por "+driver2.mac);
+                                    }else{
+                                        driver_source.addLog("[package "+send_package.header.sequence_number+"] Paso por "+driver2.ipv4_public);
+                                    }
                                 }
                                 send_package.count=0;
                                 driver.sending_packages.get(connector).remove(send_package);

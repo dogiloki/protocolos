@@ -16,7 +16,7 @@ public class Eternet extends Wire{
         this.type_wire=WireType.ETERNET;
         this.connector1=new RJ45(EntryType.MALE,null);
         this.connector2=new RJ45(EntryType.MALE,null);
-        this.color=Color.ORANGE.getRGB();
+        this.color=Color.BLACK.getRGB();
     }
     
 }

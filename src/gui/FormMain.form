@@ -184,9 +184,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btn_package" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" min="-2" pref="250" max="-2" attributes="0"/>
+                      <Component id="jTabbedPane1" min="-2" pref="238" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" pref="68" max="32767" attributes="0"/>
+                      <Component id="jScrollPane4" pref="80" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -230,7 +230,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_remove_package" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" pref="182" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" pref="170" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -294,7 +294,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_clean_packages" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="182" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="170" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -341,7 +341,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="box_package_message">
+                <Component class="javax.swing.JTextArea" name="box_package_log">
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>

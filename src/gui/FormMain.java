@@ -158,7 +158,7 @@ public final class FormMain extends javax.swing.JFrame{
         jScrollPane2 = new javax.swing.JScrollPane();
         table_packages_receiving = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        box_package_message = new javax.swing.JTextArea();
+        box_package_log = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         btn_dhcp = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -257,7 +257,7 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(btn_remove_package)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Paquetes enviandose", jPanel1);
@@ -298,14 +298,14 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(btn_clean_packages)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Paquetes recibidos", jPanel5);
 
-        box_package_message.setColumns(20);
-        box_package_message.setRows(5);
-        jScrollPane4.setViewportView(box_package_message);
+        box_package_log.setColumns(20);
+        box_package_log.setRows(5);
+        jScrollPane4.setViewportView(box_package_log);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -324,9 +324,9 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(btn_package)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
         );
 
         panel_protocols.addTab("Transporte", jPanel4);
@@ -591,13 +591,13 @@ public final class FormMain extends javax.swing.JFrame{
     private void table_packages_receivingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_packages_receivingMousePressed
         int row=this.table_packages_receiving.getSelectedRow();
         PackageEther pack=this.number_package_receiving.get(this.table_packages_receiving.getValueAt(row,0));
-        this.box_package_message.setText(pack.data.get(0).data.toString());
+        this.box_package_log.setText(pack.log);
     }//GEN-LAST:event_table_packages_receivingMousePressed
 
     private void table_packages_sendingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_packages_sendingMousePressed
         int row=this.table_packages_sending.getSelectedRow();
         PackageEther pack=this.number_package_sending.get(this.table_packages_sending.getValueAt(row,0));
-        this.box_package_message.setText(pack.data.get(0).data.toString());
+        this.box_package_log.setText(pack.log);
     }//GEN-LAST:event_table_packages_sendingMousePressed
 
     public static void main(String args[]) {
@@ -610,7 +610,7 @@ public final class FormMain extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea box_log;
-    private javax.swing.JTextArea box_package_message;
+    private javax.swing.JTextArea box_package_log;
     private javax.swing.JButton btn_clean_packages;
     private javax.swing.JMenuItem btn_delete;
     private javax.swing.JButton btn_dhcp;

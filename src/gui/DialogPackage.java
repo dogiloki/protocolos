@@ -117,7 +117,7 @@ public class DialogPackage extends javax.swing.JDialog{
 
     private void btn_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_acceptActionPerformed
         EtherType type=EtherType.valueOf(this.box_type_ether.getSelectedItem().toString());
-        this.driver.createPackage(type,this.box_destination.getText(),this.box_message.getText());
+        this.driver.createPackage(this.driver.sequence_number.getNextSequenceNumber(),type,this.box_destination.getText(),this.box_message.getText());
         dispose();
     }//GEN-LAST:event_btn_acceptActionPerformed
 
