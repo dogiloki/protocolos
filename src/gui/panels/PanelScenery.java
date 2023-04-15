@@ -173,52 +173,66 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             send_package.y=index_y+y;
                             send_package.count+=this.px_speed;
                             if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
+                                driver2.addLog("Comprobando dispositivo de destino...");
                                 if(driver2.dhcp==null){
                                     driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
                                     switch(send_package.package_type){
                                         case SMTP:{
+                                            driver2.addLog("Comprobando servidor SMTP...");
                                             if(driver2.server_smtp==null){
                                                 driver_source.addLog("No se encontró el servidor SMTP");
                                             }else{
                                                 MailPackaging mail_pack=(MailPackaging)send_package.object;
                                                 String message;
+                                                driver2.addLog("Comprobando credenciales...");
                                                 if(driver2.server_smtp.auth(mail_pack.mail_address,mail_pack.password)){
                                                     if(driver2.server_smtp.exists(mail_pack.mail.mail_recipient)){
                                                         message="Correo enviado con éxito";
+                                                        driver2.addLog("Correo enviado con éxito");
                                                         driver2.server_smtp.addMail(mail_pack.mail);
                                                     }else{
                                                         message="El correo de destino no existe (no entregado)";
+                                                        driver2.addLog("El correo de destino no existe (no entregado)");
                                                     }
                                                 }else{
                                                     message="No se pudo auteticar el correo";
+                                                    driver2.addLog("No se pudo auteticar el correo");
                                                 }
+                                                driver2.addLog("Enviado paquete de repuesta");
                                                 driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
                                             }
                                             break;
                                         }
                                         case POP:{
+                                            driver2.addLog("Comprobando servidor POP...");
                                             if(driver2.server_pop==null){
                                                 driver_source.addLog("No se encontró el servidor POP");
                                             }else{
                                                 UserPackaging user_pack=(UserPackaging)send_package.object;
                                                 Object message;
+                                                driver2.addLog("Comprobando credenciales...");
                                                 if(driver2.server_pop.auth(user_pack.address,user_pack.password)){
                                                     message=driver2.server_pop.getMailsRecipient(user_pack.address);
                                                 }else{
                                                     message="No se pudo auteticar el correo";
+                                                    driver2.addLog("No se pudo auteticar el correo");
                                                 }
+                                                driver2.addLog("Enviado paquete de repuesta");
                                                 driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
                                             }
                                             break;
                                         }
                                     }
+                                    driver_source.addLog("Comprobando protocolo del paquete...");
                                     if(send_package.header.type==EtherType.IPv4){
                                         driver_source.addLog("[package "+send_package.header.sequence_number+"] Llegó a su destino "+driver2.mac);
                                     }else{
                                         driver_source.addLog("[package "+send_package.header.sequence_number+"] Llegó a su destino "+driver2.ipv4_public);
                                     }
                                 }else{
+                                    driver_source.addLog("Direcionado paquete");
                                     driver2.addSendingPackage(driver2.getConnector(connector.type_connector),send_package);
+                                    driver_source.addLog("Comprobando protocolo del paquete...");
                                     if(send_package.header.type==EtherType.IPv4){
                                         driver_source.addLog("[package "+send_package.header.sequence_number+"] Paso por "+driver2.mac);
                                     }else{
