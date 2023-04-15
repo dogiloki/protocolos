@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import multitaks.Function;
 import multitaks.annotations.directory.Execute;
-import protocols.DHCP;
+import services.DHCP;
 import protocols.PackageEther;
 import protocols.SequenceNumber;
 import protocols.mail.MailServer;
@@ -114,10 +114,8 @@ public class Driver extends Entity implements BaseDriver{
     public String generateIPv4Public(){
         String ip="";
         for(int a=0; a<4; a++){
-            for(int b=0; b<3; b++){
-                int num=(int)(Math.random()*9);
-                ip+=String.valueOf(num);
-            }
+            int num=(int)(Math.random()*255);
+            ip+=String.valueOf(num);
             ip+=".";
         }
         return ip.substring(0,ip.length()-1).toUpperCase();
