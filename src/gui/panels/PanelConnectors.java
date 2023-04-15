@@ -14,6 +14,7 @@ import multitaks.Function;
 import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;
+import objects.wires.Connection;
 import objects.wires.Eternet;
 
 /**
@@ -64,6 +65,22 @@ public final class PanelConnectors extends javax.swing.JPanel{
                         int op=JOptionPane.showConfirmDialog(null,"Connector ocupado. ¿Desconectar?","Advertencia",JOptionPane.WARNING_MESSAGE);
                         if(op==0){
                             // Eliminación conexión (cable)
+                            connector.connected=false;
+                            for(Wire wire:scenery.scenery.wires){
+                                Connection connection1=wire.getConnection1();
+                                Connection connection2=wire.getConnection1();
+                                if(connection1.connector_female==connector || connection2.connector_female==connector){
+                                    Driver driver1=wire.getDriver1();
+                                    Driver driver2=wire.getDriver2();
+                                    driver1.drivers.remove(driver2);
+                                    driver2.drivers.remove(driver1);
+                                    scenery.scenery.wires.remove(wire);
+                                    break;
+                                }
+                            }
+                            scenery.selection.connetor_prev=null;
+                            scenery.selection.connetor=null;
+                            scenery.selection.tool=ToolType.DEFAULT;
                         }
                         return;
                     }

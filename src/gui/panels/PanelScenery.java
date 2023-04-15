@@ -312,6 +312,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
         if(action!=null){
             action.execute(driver);
         }
+        DNS.put(driver.ipv4_public,null);
         this.scenery.drivers.remove(driver);
     }
     
