@@ -9,15 +9,15 @@ import protocols.mail.UserPackaging;
 
 public class ClientPOP{
     
-    public String server_smtp;
+    public String server_pop;
     public UserPackaging sending_user_package=null;
     
     public ClientPOP(){
         
     }
     
-    public void connect(String server_smtp){
-        this.server_smtp=server_smtp;
+    public void connect(String server_pop){
+        this.server_pop=server_pop;
     }
     
     public void addUser(String address, String password){

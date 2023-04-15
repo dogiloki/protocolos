@@ -228,9 +228,10 @@ public class Driver extends Entity implements BaseDriver{
             }
             case SERVER:{
                 this.server_smtp=new ServerSMTP();
+                this.server_pop=new ServerPOP();
                 this.mail_server=new MailServer();
                 this.server_smtp.connect(this.mail_server);
-                this.server_pop.connect(this.mail_server);
+                this.server_pop.connect(mail_server);
                 break;
             }
             default:{
