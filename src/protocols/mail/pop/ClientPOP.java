@@ -7,12 +7,12 @@ import protocols.mail.UserPackaging;
  * @author dogi_
  */
 
-public class ClientPop{
+public class ClientPOP{
     
     public String server_smtp;
     public UserPackaging sending_user_package=null;
     
-    public ClientPop(){
+    public ClientPOP(){
         
     }
     

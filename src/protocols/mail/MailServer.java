@@ -14,8 +14,6 @@ public class MailServer{
     
     private Map<String,MailUser> users=new HashMap<>();
     private List<Mail> mails=new ArrayList<>();
-    private Map<String,Mail> user_sender_mails=new HashMap<>();
-    private Map<String,Mail> user_recipient_mails=new HashMap<>();
     
     public MailServer(){
         this.setMailUser();
@@ -37,17 +35,27 @@ public class MailServer{
     }
     
     public void addMail(Mail mail){
-        this.user_sender_mails.put(mail.mail_sender,mail);
-        this.user_recipient_mails.put(mail.mail_recipient,mail);
         this.mails.add(mail);
     }
     
-    public void getMailsSender(String mail){
-        this.user_sender_mails.get(mail);
+    public List<Mail> getMailsSender(String address){
+        List<Mail> mails=new ArrayList<>();
+        for(Mail mail:this.mails){
+            if(mail.mail_sender.equals(address)){
+                mails.add(mail);
+            }
+        }
+        return mails;
     }
     
-    public void getMailsRecipient(String mail){
-        this.user_recipient_mails.get(mail);
+    public List<Mail> getMailsRecipient(String address){
+        List<Mail> mails=new ArrayList<>();
+        for(Mail mail:this.mails){
+            if(mail.mail_recipient.equals(address)){
+                mails.add(mail);
+            }
+        }
+        return mails;
     }
     
     public void setMailUser(){

@@ -21,6 +21,8 @@ import protocols.DHCP;
 import protocols.PackageEther;
 import protocols.SequenceNumber;
 import protocols.mail.MailServer;
+import protocols.mail.pop.ClientPOP;
+import protocols.mail.pop.ServerPOP;
 import protocols.mail.smtp.ClientSMTP;
 import protocols.mail.smtp.ServerSMTP;
 
@@ -81,6 +83,8 @@ public class Driver extends Entity implements BaseDriver{
     public ClientSMTP client_smtp;
     public ServerSMTP server_smtp;
     public MailServer mail_server;
+    public ClientPOP client_pop;
+    public ServerPOP server_pop;
     
     public boolean status=true;
     
@@ -226,10 +230,12 @@ public class Driver extends Entity implements BaseDriver{
                 this.server_smtp=new ServerSMTP();
                 this.mail_server=new MailServer();
                 this.server_smtp.connect(this.mail_server);
+                this.server_pop.connect(this.mail_server);
                 break;
             }
             default:{
                 this.client_smtp=new ClientSMTP();
+                this.client_pop=new ClientPOP();
                 break;
             }
         }

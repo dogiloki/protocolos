@@ -1,5 +1,6 @@
 package protocols.mail.pop;
 
+import java.util.List;
 import protocols.mail.Mail;
 import protocols.mail.MailServer;
 
@@ -8,11 +9,11 @@ import protocols.mail.MailServer;
  * @author dogi_
  */
 
-public class ServerPop{
+public class ServerPOP{
  
     public MailServer server_mail;
     
-    public ServerPop(){
+    public ServerPOP(){
         
     }
     
@@ -24,12 +25,12 @@ public class ServerPop{
         return this.server_mail.auth(mail_address,password);
     }
     
-    public void getMailsSender(String mail){
-        this.server_mail.getMailsSender(mail);
+    public List<Mail> getMailsSender(String address){
+        return this.server_mail.getMailsSender(address);
     }
     
-    public void getMailsRecipient(String mail){
-        this.server_mail.getMailsRecipient(mail);
+    public List<Mail> getMailsRecipient(String address){
+        return this.server_mail.getMailsRecipient(address);
     }
     
 }

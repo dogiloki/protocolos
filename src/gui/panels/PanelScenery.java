@@ -21,6 +21,7 @@ import objects.scenery.ScenerySelection;
 import objects.wire.connectors.Connector;
 import protocols.PackageEther;
 import protocols.mail.MailPackaging;
+import protocols.mail.UserPackaging;
 import services.DNS;
 
 /**
@@ -192,6 +193,19 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                                     message="No se pudo auteticar el correo";
                                                 }
                                                 driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
+                                            }
+                                            break;
+                                        }
+                                        case POP:{
+                                            if(driver2.server_pop==null){
+                                                UserPackaging user_pack=(UserPackaging)send_package.object;
+                                                driver_source.addLog("No se encontró el servidor POP");
+                                                Object message;
+                                                if(driver2.server_pop.auth(user_pack.address,user_pack.password)){
+                                                    message=driver2.server_pop.getMailsRecipient(user_pack.address);
+                                                }else{
+                                                    message="No se pudo auteticar el correo";
+                                                }
                                             }
                                             break;
                                         }
