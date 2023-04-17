@@ -93,8 +93,6 @@ public final class FormMain extends javax.swing.JFrame{
             this.box_package_log.setText("");
             if(driver.client_smtp==null){
                 this.panel_protocols.setEnabled(rootPaneCheckingEnabled);
-            }else{
-                this.box_smtp_host.setText(driver.client_smtp.server_smtp);
             }
         });
         this.panel_scenery.updateUI();
@@ -221,8 +219,12 @@ public final class FormMain extends javax.swing.JFrame{
         box_pop_email = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         box_pop_password = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        box_ppp_destination = new javax.swing.JTextField();
         btn_smtp = new javax.swing.JButton();
         btn_pop = new javax.swing.JButton();
+        btn_ppp = new javax.swing.JButton();
         panel_connectors = new javax.swing.JPanel();
         panel_entries = new javax.swing.JPanel();
         panel_config = new javax.swing.JPanel();
@@ -560,6 +562,33 @@ public final class FormMain extends javax.swing.JFrame{
 
         jTabbedPane2.addTab("POP (recibir correos)", jPanel7);
 
+        jLabel10.setText("Dirección de destino (IPv4 pública)");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(0, 140, Short.MAX_VALUE))
+                    .addComponent(box_ppp_destination))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(box_ppp_destination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("PPP (establecer conexión de punto a punto)", jPanel9);
+
         btn_smtp.setText("SMTP");
         btn_smtp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -574,6 +603,13 @@ public final class FormMain extends javax.swing.JFrame{
             }
         });
 
+        btn_ppp.setText("PPP");
+        btn_ppp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pppActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -582,11 +618,13 @@ public final class FormMain extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(btn_create_mail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_ppp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_smtp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_pop)
                 .addContainerGap())
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,7 +633,8 @@ public final class FormMain extends javax.swing.JFrame{
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_create_mail)
                     .addComponent(btn_smtp)
-                    .addComponent(btn_pop))
+                    .addComponent(btn_pop)
+                    .addComponent(btn_ppp))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane2)
                 .addContainerGap())
@@ -869,6 +908,14 @@ public final class FormMain extends javax.swing.JFrame{
         driver.createPackage(PackageType.POP,EtherType.TCP,driver.client_pop.server_pop,user_pack);
     }//GEN-LAST:event_btn_popActionPerformed
 
+    private void btn_pppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pppActionPerformed
+        Driver driver=this.scenery.selection.driver;
+        if(driver==null || driver.client_smtp==null){
+            return;
+        }
+        driver.createPackage(PackageType.PPP,EtherType.TCP,this.box_ppp_destination.getText(),"Solicitando conexión PPP con "+driver.ipv4_public);
+    }//GEN-LAST:event_btn_pppActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -883,6 +930,7 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JTextField box_pop_email;
     private javax.swing.JTextField box_pop_host;
     private javax.swing.JTextField box_pop_password;
+    private javax.swing.JTextField box_ppp_destination;
     private javax.swing.JTextArea box_smtp_body;
     private javax.swing.JTextField box_smtp_email;
     private javax.swing.JTextField box_smtp_email_destination;
@@ -895,9 +943,11 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JButton btn_log_remove;
     private javax.swing.JButton btn_package;
     private javax.swing.JButton btn_pop;
+    private javax.swing.JButton btn_ppp;
     private javax.swing.JButton btn_smtp;
     private javax.swing.JToggleButton btn_sumulator;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -918,6 +968,7 @@ public final class FormMain extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

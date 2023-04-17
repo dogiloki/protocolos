@@ -196,7 +196,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                                     }
                                                 }else{
                                                     message="No se pudo auteticar el correo";
-                                                    driver2.addLog("No se pudo auteticar el correo");
+                                                    driver2.addLog("No se pudo autenticar el correo");
                                                 }
                                                 driver2.addLog("Enviado paquete de repuesta");
                                                 driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
@@ -215,11 +215,17 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                                     message=driver2.server_pop.getMailsRecipient(user_pack.address);
                                                 }else{
                                                     message="No se pudo auteticar el correo";
-                                                    driver2.addLog("No se pudo auteticar el correo");
+                                                    driver2.addLog("No se pudo autenticar el correo");
                                                 }
                                                 driver2.addLog("Enviado paquete de repuesta");
                                                 driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
                                             }
+                                            break;
+                                        }
+                                        case PPP:{
+                                            driver2.addLog("Comprobando credenciales...");
+                                            String message="Conexión PPP establecido con "+driver2.ipv4_public;
+                                            driver2.createPackage(send_package.header.sequence_number,PackageType.NORMAL,EtherType.TCP,driver_source.ipv4_public,message);
                                             break;
                                         }
                                     }

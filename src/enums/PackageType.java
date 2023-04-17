@@ -7,6 +7,6 @@ package enums;
 
 public enum PackageType{
     
-    SMTP, POP, NORMAL
+    SMTP, POP, PPP, NORMAL
     
 }
