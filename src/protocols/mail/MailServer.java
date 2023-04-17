@@ -58,6 +58,10 @@ public class MailServer{
         return mails;
     }
     
+    public Map<String,MailUser> getUsers(){
+        return this.users;
+    }
+    
     public void setMailUser(){
         this.users.put("julio@example.com",new MailUser("Julio","Villanueva","julio@example.com","123"));
         this.users.put("juan@example.com",new MailUser("Juan","Lopéz","juan@example.com","123"));

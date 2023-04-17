@@ -1,11 +1,10 @@
 package gui;
 
-import enums.EtherType;
 import gui.panels.PanelScenery;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
 import objects.drivers.Driver;
-import protocols.mail.Mail;
-import protocols.mail.MailPackaging;
-
+import protocols.mail.MailUser;
 /**
  *
  * @author dogi_
@@ -26,6 +25,25 @@ public class DialogMail extends javax.swing.JDialog {
            return; 
         }
         this.driver=scenery.selection.driver;
+        if(this.driver.mail_server==null){
+            return;
+        }
+        this.setTitle(this.driver.ipv4_public);
+        this.getMailUsers();
+    }
+    
+    public void getMailUsers(){
+        DefaultTableModel model_mail=new DefaultTableModel();
+        model_mail.addColumn("Correo electrónico");
+        model_mail.addColumn("Contraseña");
+        this.driver.mail_server.getUsers().forEach((address,mail_user)->{
+            String[] data={
+                address,
+                mail_user.password
+            };
+            model_mail.addRow(data);
+        });
+        this.table_mails.setModel(model_mail);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,11 +51,11 @@ public class DialogMail extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_mails = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table_mails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -48,7 +66,7 @@ public class DialogMail extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(table_mails);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +99,6 @@ public class DialogMail extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable table_mails;
     // End of variables declaration//GEN-END:variables
 }
