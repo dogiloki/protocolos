@@ -87,7 +87,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     
     public int time_sleep=10;
     public int px_speed=1;
-    public int px_total=20;
+    public int px_total=100;
     public FormMain frame;
     private boolean stop=true;
     
@@ -108,11 +108,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                 if(this.stop){
                     break out;
                 }
+                try{
                 for(Driver driver:this.scenery.drivers){
                     if(this.stop){
                         break out;
                     }
-                    try{
                         // Cambiar valores del paquete para GUI
                         for(Map.Entry<Connector,List<protocols.PackageEther>> entry:driver.sending_packages.entrySet()){
                             if(this.stop){
@@ -250,11 +250,11 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                                 driver.sending_packages.get(connector).remove(send_package);
                             }
                         }
-                        Thread.sleep(this.time_sleep);
                         this.frame.panel_scenery.updateUI();
-                    }catch(Exception ex){
-                        ex.printStackTrace();
                     }
+                Thread.sleep(this.time_sleep);
+                }catch(Exception ex){
+                    ex.printStackTrace();
                 }
             }
         }
