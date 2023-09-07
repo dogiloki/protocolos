@@ -1,10 +1,9 @@
 package objects.wires;
 
+import com.google.gson.annotations.Expose;
 import enums.EntryType;
 import enums.WireType;
 import interfaces.BaseWire;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.FieldType;
 import objects.drivers.Driver;
 import objects.scenery.Line;
 import objects.wire.connectors.Connector;
@@ -16,17 +15,17 @@ import objects.wire.connectors.Connector;
 
 public class Wire extends Line implements BaseWire{
     
-    @Key(value="type_wire",type=FieldType.ENUM)
+    @Expose
     public WireType type_wire;
-    @Key(value="connector1",type=FieldType.CLASS)
+    @Expose
     public Connector connector1;
-    @Key(value="connector2",type=FieldType.CLASS)
+    @Expose
     public Connector connector2;
-    @Key(value="connection1",type=FieldType.CLASS)
+    @Expose
     public Connection connection1;
-    @Key(value="connection2",type=FieldType.CLASS)
+    @Expose
     public Connection connection2;
-    @Key(value="color")
+    @Expose
     public int color;
     
     public Wire(){

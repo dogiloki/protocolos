@@ -1,12 +1,13 @@
 package objects.drivers;
 
+import com.dogiloki.multitaks.Function;
+import com.dogiloki.multitaks.directory.annotations.Execute;
+import com.google.gson.annotations.Expose;
 import enums.ConnectorType;
 import enums.DriverType;
 import enums.EtherType;
 import enums.PackageType;
 import java.util.List;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.FieldType;
 import objects.wire.connectors.Connector;
 import objects.drivers.anotations.Config;
 import objects.drivers.enums.BoxType;
@@ -15,8 +16,6 @@ import interfaces.BaseDriver;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import multitaks.Function;
-import multitaks.annotations.directory.Execute;
 import services.DHCP;
 import protocols.PackageEther;
 import protocols.SequenceNumber;
@@ -33,37 +32,37 @@ import protocols.mail.smtp.ServerSMTP;
 
 public class Driver extends Entity implements BaseDriver{
     
-    @Key(value="count")
+    @Expose
     public static int count=0;
     
-    //@Config(label="Nombre",box=BoxType.TEXT) @Key(value="name")
-    //public String name;
+    @Config(label="Nombre",box=BoxType.TEXT) @Expose
+    public String name;
     
-    @Config(label="Host",box=BoxType.TEXT) @Key(value="host")
+    @Config(label="Host",box=BoxType.TEXT) @Expose
     public String host;
     
-    @Config(label="IPv4",box=BoxType.TEXT) @Key(value="ipv4")
+    @Config(label="IPv4",box=BoxType.TEXT) @Expose
     public String ipv4;
     
-    @Config(label="IPv6",box=BoxType.TEXT) @Key(value="ipv6")
+    @Config(label="IPv6",box=BoxType.TEXT) @Expose
     public String ipv6;
     
-    @Config(label="Máscara de subred",box=BoxType.TEXT) @Key(value="subnet_mask")
+    @Config(label="Máscara de subred",box=BoxType.TEXT) @Expose
     public String subnet_mask;
     
-    @Config(label="Servidor DHCP",box=BoxType.TEXT) @Key(value="server_dhcp")
+    @Config(label="Servidor DHCP",box=BoxType.TEXT) @Expose
     public String server_dhcp;
     
-    @Config(id="ipv4_public",label="IPv4 pública",box=BoxType.TEXT) @Key(value="ipv4_public")
+    @Config(id="ipv4_public",label="IPv4 pública",box=BoxType.TEXT) @Expose
     public String ipv4_public;
     
-    @Config(label="MAC",box=BoxType.TEXT) @Key(value="MAC")
+    @Config(label="MAC",box=BoxType.TEXT) @Expose
     public String mac;
     
-    @Key(value="connectors",type=FieldType.LIST)
+    @Expose
     public List<Connector> connectors=new ArrayList<>();
     
-    @Key(value="type",type=FieldType.ENUM)
+    @Expose
     public DriverType type;
     
     // Dispositivos a los que esta conectado

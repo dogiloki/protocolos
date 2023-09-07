@@ -1,5 +1,6 @@
 package gui.panels;
 
+import com.dogiloki.multitaks.Function;
 import enums.EtherType;
 import enums.PackageType;
 import gui.FormMain;
@@ -13,7 +14,6 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import multitaks.Function;
 import objects.drivers.Driver;
 import objects.scenery.Count;
 import objects.scenery.Scenery;
@@ -172,7 +172,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
                             send_package.x=index_x+x;
                             send_package.y=index_y+y;
                             send_package.count+=this.px_speed;
-                            if(Function.isRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.isRange(send_package.y, driver2.y,driver2.y+driver2.height)){
+                            if(Function.withinRange(send_package.x, driver2.x,driver2.x+driver2.width) && Function.withinRange(send_package.y, driver2.y,driver2.y+driver2.height)){
                                 driver2.addLog("Comprobando dispositivo de destino...");
                                 if(driver2.dhcp==null){
                                     driver2.addReceivingPackage(driver2.getConnector(connector.type_connector),send_package);
@@ -293,7 +293,7 @@ public class PanelScenery extends javax.swing.JPanel implements Runnable{
     
     public void getDriver(int x, int y, gettingDriver action){
         for(Driver driver:this.scenery.drivers){
-            if(Function.isRange(x,driver.x,driver.x+driver.width) && Function.isRange(y,driver.y,driver.y+driver.height)){
+            if(Function.withinRange(x,driver.x,driver.x+driver.width) && Function.withinRange(y,driver.y,driver.y+driver.height)){
                 action.execute(driver);
                 return;
             }

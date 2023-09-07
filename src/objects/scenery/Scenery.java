@@ -1,14 +1,13 @@
 package objects.scenery;
 
+import com.dogiloki.multitaks.directory.annotations.Directory;
+import com.dogiloki.multitaks.directory.annotations.Execute;
+import com.dogiloki.multitaks.directory.enums.DirectoryType;
+import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Execute;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
-import multitaks.enums.FieldType;
 import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;
@@ -27,11 +26,11 @@ public class Scenery{
         public void execute(Driver driver);
     }
     
-    @Key(value="drivers",type=FieldType.LIST)
+    @Expose
     public List<Driver> drivers=new ArrayList<>();
-    @Key(value="wires",type=FieldType.LIST)
+    @Expose
     public List<Wire> wires=new ArrayList<>();
-    @Key(value="counts",type=FieldType.LIST)
+    @Expose
     public List<Count> counts=new ArrayList<>();
     
     // Almacenar conector con ID

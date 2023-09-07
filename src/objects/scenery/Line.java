@@ -1,9 +1,9 @@
 package objects.scenery;
 
-import java.util.UUID;
-import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
+import com.dogiloki.multitaks.ObjectId;
+import com.dogiloki.multitaks.directory.annotations.Directory;
+import com.dogiloki.multitaks.directory.enums.DirectoryType;
+import com.google.gson.annotations.Expose;
 
 /**
  *
@@ -13,15 +13,15 @@ import multitaks.enums.DirectoryType;
 @Directory(type=DirectoryType.JSON)
 public class Line{
     
-    @Key(value="id")
-    public String id=UUID.randomUUID().toString();
-    @Key(value="index_x")
+    @Expose
+    public String id=ObjectId.generate();
+    @Expose
     public int index_x;
-    @Key(value="index_y")
+    @Expose
     public int index_y;
-    @Key(value="end_x")
+    @Expose
     public int end_x;
-    @Key(value="end_y")
+    @Expose
     public int end_y;
     
     public void Line(){

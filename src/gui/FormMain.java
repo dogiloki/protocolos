@@ -1,5 +1,6 @@
 package gui;
 
+import com.dogiloki.multitaks.directory.ModelDirectory;
 import enums.EtherType;
 import enums.PackageType;
 import gui.panels.PanelDrivers;
@@ -14,8 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import multitaks.directory.ModelDirectory;
 import objects.drivers.Driver;
+import objects.scenery.Scenery;
 import protocols.PackageEther;
 import protocols.mail.Mail;
 import protocols.mail.UserPackaging;
@@ -38,11 +39,12 @@ public final class FormMain extends javax.swing.JFrame{
         initComponents();
         //this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setExtendedState(this.MAXIMIZED_BOTH);
+        //this.setExtendedState(this.MAXIMIZED_BOTH);
         this.scenery=new PanelScenery();
         this.drivers=new PanelDrivers();
         // Obtener datos del escenario
-        this.model.run(this.scenery.scenery,"temp_escenary.json");
+        this.model.aim(this.scenery.scenery,"temp_escenary.json");
+        this.scenery.scenery=(Scenery)this.model.builder();
         this.setPanel(this.panel_drivers,this.drivers);
         this.setPanel(this.panel_scenery,this.scenery);
     }
@@ -92,7 +94,7 @@ public final class FormMain extends javax.swing.JFrame{
             this.getLog(driver);
             this.box_package_log.setText("");
             if(driver.client_smtp==null){
-                this.panel_protocols.setEnabled(rootPaneCheckingEnabled);
+                this.panel_protocols.setEnabled(true);
             }
         });
         this.panel_scenery.updateUI();

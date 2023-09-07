@@ -1,5 +1,6 @@
 package gui.panels;
 
+import com.dogiloki.multitaks.Function;
 import enums.ToolType;
 import java.awt.Color;
 import java.awt.Image;
@@ -10,7 +11,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import multitaks.Function;
 import objects.drivers.Driver;
 import objects.wires.Wire;
 import objects.wire.connectors.Connector;

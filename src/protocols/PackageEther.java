@@ -1,11 +1,11 @@
 package protocols;
 
+import com.dogiloki.multitaks.relation.annotations.Relation;
+import com.dogiloki.multitaks.relation.enums.RelationType;
 import enums.EtherType;
 import enums.PackageType;
 import java.util.List;
 import java.util.ArrayList;
-import multitaks.annotations.relation.Relation;
-import multitaks.enums.RelationType;
 import objects.scenery.Entity;
 
 /**

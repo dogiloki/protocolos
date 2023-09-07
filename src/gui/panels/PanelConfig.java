@@ -1,5 +1,7 @@
 package gui.panels;
 
+import com.dogiloki.multitaks.Function;
+import com.google.gson.annotations.Expose;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Field;
@@ -8,8 +10,6 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import multitaks.Function;
-import multitaks.annotations.directory.Key;
 import objects.drivers.Driver;
 import objects.drivers.anotations.Config;
 import services.DNS;
@@ -44,8 +44,8 @@ public class PanelConfig extends javax.swing.JPanel{
         Field[] fields=this.driver.getClass().getFields();
         for(Field field:fields){
             Config annot_config=field.getAnnotation(Config.class);
-            Key annot_key=field.getAnnotation(Key.class);
-            if(annot_config instanceof Config && annot_key instanceof Key){
+            Expose annot_key=field.getAnnotation(Expose.class);
+            if(annot_config instanceof Config && annot_key instanceof Expose){
                 Object value=null;
                 try{
                     value=field.get(this.driver);

@@ -1,10 +1,9 @@
 package objects.scenery;
 
+import com.dogiloki.multitaks.directory.annotations.Directory;
+import com.dogiloki.multitaks.directory.enums.DirectoryType;
+import com.google.gson.annotations.Expose;
 import enums.DriverType;
-import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
-import multitaks.enums.FieldType;
 
 /**
  *
@@ -14,9 +13,9 @@ import multitaks.enums.FieldType;
 @Directory(type=DirectoryType.JSON)
 public class Count{
     
-    @Key(value="type",type=FieldType.ENUM)
+    @Expose
     public DriverType type;
-    @Key(value="value")
+    @Expose
     public int value;
     
     public Count(){

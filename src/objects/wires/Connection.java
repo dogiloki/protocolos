@@ -1,9 +1,8 @@
 package objects.wires;
 
-import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
-import multitaks.enums.FieldType;
+import com.dogiloki.multitaks.directory.annotations.Directory;
+import com.dogiloki.multitaks.directory.enums.DirectoryType;
+import com.google.gson.annotations.Expose;
 import objects.wire.connectors.Connector;
 
 /**
@@ -14,9 +13,9 @@ import objects.wire.connectors.Connector;
 @Directory(type=DirectoryType.JSON)
 public class Connection{
     
-    @Key(value="connector_male",type=FieldType.CLASS)
+    @Expose
     public Connector connector_male;
-    @Key(value="connector_female",type=FieldType.CLASS)
+    @Expose
     public Connector connector_female;
     
     public Connection(){

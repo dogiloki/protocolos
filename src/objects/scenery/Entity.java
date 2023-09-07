@@ -1,31 +1,28 @@
 package objects.scenery;
 
-import java.util.UUID;
-import multitaks.annotations.directory.Directory;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.DirectoryType;
+import com.dogiloki.multitaks.ObjectId;
+import com.google.gson.annotations.Expose;
 
 /**
  *
  * @author dogi_
  */
 
-@Directory(type=DirectoryType.JSON)
 public class Entity{
     
-    @Key(value="id")
-    public String id=UUID.randomUUID().toString();
-    @Key(value="x")
+    @Expose
+    public String id=ObjectId.generate();
+    @Expose
     public int x;
-    @Key(value="y")
+    @Expose
     public int y;
-    @Key(value="width")
+    @Expose
     public int width;
-    @Key(value="height")
+    @Expose
     public int height;
-    @Key(value="src_icon")
+    @Expose
     public String src_icon;
-    @Key(value="log")
+    @Expose
     public String log="";
     
     public int count;

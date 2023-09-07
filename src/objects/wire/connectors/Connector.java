@@ -1,9 +1,8 @@
 package objects.wire.connectors;
 
+import com.google.gson.annotations.Expose;
 import enums.ConnectorType;
 import enums.EntryType;
-import multitaks.annotations.directory.Key;
-import multitaks.enums.FieldType;
 import objects.drivers.Driver;
 import objects.scenery.Entity;
 
@@ -14,13 +13,13 @@ import objects.scenery.Entity;
 
 public class Connector extends Entity{
     
-    @Key(value="type_entry",type=FieldType.ENUM)
+    @Expose
     public EntryType type_entry;
     
-    @Key(value="type_connector",type=FieldType.ENUM)
+    @Expose
     public ConnectorType type_connector;
     
-    @Key(value="connected")
+    @Expose
     public boolean connected=false;
     
     public Driver driver;

@@ -1,5 +1,6 @@
 package gui.panels;
 
+import com.dogiloki.multitaks.Function;
 import enums.DriverType;
 import java.awt.Color;
 import java.awt.Image;
@@ -8,7 +9,6 @@ import java.awt.event.MouseListener;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import multitaks.Function;
 import objects.drivers.Driver;
 import objects.drivers.DriverList;
 import objects.drivers.DriverSelection;
