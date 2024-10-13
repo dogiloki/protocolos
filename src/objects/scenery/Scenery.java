@@ -1,7 +1,6 @@
 package objects.scenery;
 
 import com.dogiloki.multitaks.directory.annotations.Directory;
-import com.dogiloki.multitaks.directory.annotations.Execute;
 import com.dogiloki.multitaks.directory.enums.DirectoryType;
 import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import objects.wires.Wire;
 import objects.wire.connectors.Connector;
 import objects.wires.Connection;
 import services.DNS;
+import com.dogiloki.multitaks.directory.annotations.RunAfter;
 
 /**
  *
@@ -44,7 +44,7 @@ public class Scenery{
     public Map<String,Driver> connector_driver=new HashMap<>();
     public Map<String,Connector> connectors=new HashMap<>();
     
-    @Execute
+    @RunAfter
     public void setConnections(){
         this.drivers.forEach((driver)->{
             DNS.put(driver.ipv4_public,driver);

@@ -1,7 +1,6 @@
 package objects.drivers;
 
 import com.dogiloki.multitaks.Function;
-import com.dogiloki.multitaks.directory.annotations.Execute;
 import com.google.gson.annotations.Expose;
 import enums.ConnectorType;
 import enums.DriverType;
@@ -24,6 +23,7 @@ import protocols.mail.pop.ClientPOP;
 import protocols.mail.pop.ServerPOP;
 import protocols.mail.smtp.ClientSMTP;
 import protocols.mail.smtp.ServerSMTP;
+import com.dogiloki.multitaks.directory.annotations.RunAfter;
 
 /**
  *
@@ -211,7 +211,7 @@ public class Driver extends Entity implements BaseDriver{
         this.status=false;
     }
 
-    @Override @Execute
+    @Override @RunAfter
     public void setFields(){
         this.mac=Function.assign(this.mac,this.generateMac());
         this.ipv4_public=Function.assign(this.ipv4_public,this.generateIPv4Public());
